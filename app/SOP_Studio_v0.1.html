@@ -232,6 +232,38 @@
   .oitem.drop-after{border-bottom-color:var(--orange);}
   .oitem.locked .ogrip{cursor:not-allowed;color:var(--g300);}
 
+  /* Detail-level preview: a generic page shape, no real content — just the layout you get. */
+  .dprev{border:1px solid var(--g200);background:var(--g50);padding:12px;display:flex;gap:14px;
+    align-items:flex-start;margin-top:10px;}
+  .dpages{display:flex;gap:8px;flex:none;}
+  .dpage{width:88px;height:114px;background:#fff;border:1px solid var(--g200);
+    display:flex;flex-direction:column;padding:5px;gap:3px;flex:none;}
+  .dpage .dh{height:5px;background:var(--ink);opacity:.75;flex:none;}
+  .dpage .df{height:3px;background:var(--g200);flex:none;margin-top:auto;}
+  .dbody{flex:1;display:flex;flex-direction:column;gap:3px;min-height:0;overflow:hidden;}
+  .dline{height:3px;background:var(--g300);flex:none;}
+  .dline.w90{width:90%}.dline.w75{width:75%}.dline.w60{width:60%}.dline.w45{width:45%}
+  .dttl{height:6px;background:var(--g600);width:65%;flex:none;}
+  .dpills{display:flex;gap:3px;flex:none;}
+  .dpill{height:3px;width:16px;background:var(--orange);opacity:.65;}
+  .dcall{height:8px;background:var(--sand-200);border-left:2px solid var(--orange);flex:none;}
+  .dimg{background:var(--g100);border:1px dashed var(--g300);flex:1;min-height:20px;}
+  .dprev-cap{font-size:11.5px;color:var(--g600);line-height:1.5;}
+  .dprev-cap b{color:var(--ink);}
+
+  /* Override: including a section the permission rule dropped. Loud on purpose. */
+  .ovr{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:rgba(211,47,47,.10);
+    color:var(--danger);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+    padding:2px 8px;margin-left:8px;}
+  .blk2.overridden{background:rgba(211,47,47,.05);}
+  .oitem.overridden{border-left-color:var(--danger);opacity:1;}
+  .oitem.overridden .otitle{text-decoration:none;}
+  .ovrnote{border-left:3px solid var(--danger);background:rgba(211,47,47,.06);padding:9px 12px;
+    font-size:11.5px;line-height:1.5;color:var(--g700);margin:0 0 10px;}
+
+  /* Password gate for deleting a template */
+  .pwrow{display:flex;gap:8px;align-items:flex-start;margin-top:8px;}
+  .pwrow input{flex:1;}
   .tally{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 12px;font-size:12px;}
   .tally span{display:inline-flex;align-items:center;gap:6px;color:var(--g600);}
   .tally i{width:8px;height:8px;border-radius:999px;display:inline-block;}
@@ -338,6 +370,17 @@
         <legend>Manage</legend>
         <button id="btnSeed">Seed / reset RFI master template</button>
         <button id="btnEditTpl" class="quiet">View / edit selected template JSON</button>
+        <button id="btnDeleteTpl" class="quiet" style="color:var(--danger);">Delete selected template</button>
+        <div id="delRow" style="display:none;margin-top:10px;">
+          <div class="ovrnote">Deleting <b id="delName"></b> removes it from the library for good. Enter the delete password to continue.</div>
+          <label for="fDelPw">Delete password<span class="req" title="Required">*</span></label>
+          <div class="pwrow">
+            <input type="password" id="fDelPw" autocomplete="off" placeholder="Password">
+            <button id="btnDelConfirm" class="primary">Delete template</button>
+            <button id="btnDelCancel" class="quiet">Cancel</button>
+          </div>
+          <div class="status" id="delStatus"></div>
+        </div>
         <textarea id="tplJson" rows="10" style="display:none;margin-top:10px;" spellcheck="false"></textarea>
         <div id="tplEditRow" style="display:none;margin-top:8px;">
           <button id="btnSaveTpl" class="primary">Save template to shared library</button>
@@ -385,6 +428,13 @@
       <h2>Permissions</h2>
       <p class="sub">Set the reader's Procore permissions. This is what scopes the SOP — every block is kept or dropped against the rule you set here, and the Review step shows you each decision.</p>
 
+      <fieldset><legend>Permission template</legend>
+        <div class="drop" id="permDrop" tabindex="0">Upload the client's permission template — drop a file here, or click to choose</div>
+        <ul class="filelist" id="permFileList"></ul>
+        <p class="hint">Accepts an export (.csv, .txt, .json) or a screenshot (.png, .jpg). Text exports are read and the level below is set for you; a screenshot is recorded as the source but you set the level yourself. Nothing is guessed — anything unclear is left for you to choose.</p>
+        <div class="status" id="permFileStatus"></div>
+      </fieldset>
+
       <fieldset><legend>Base permission level</legend>
         <div class="seg" id="permSeg" role="group" aria-label="Base permission level">
           <button data-v="None">None</button>
@@ -405,6 +455,7 @@
           <button data-v="standard" class="on">Standard</button>
           <button data-v="extended">Extended</button>
         </div>
+        <div class="dprev" id="detailPreview" aria-hidden="true"></div>
         <div class="seg-note" id="detailNote">Standard — full steps with role/system/time, key bullets and callouts. The default team standard.</div>
       </fieldset>
 
@@ -716,6 +767,41 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     await saveLibrary('RFI master template seeded to the shared library.');
     syncTplEditor();
   };
+  // Deleting a template is permanent, so it sits behind a shared password. This is a speed bump
+  // against an accidental click by someone who should not be deleting, NOT security — the value
+  // is readable by anyone who opens this file in a text editor.
+  const DELETE_PASSWORD = 'imnotpaidenough';
+  function closeDeleteRow() {
+    $('delRow').style.display = 'none';
+    $('fDelPw').value = '';
+    setStatus('delStatus', '');
+  }
+  $('btnDeleteTpl').onclick = () => {
+    const name = state.selectedTool;
+    if (!name || !state.library || !state.library.tools[name]) {
+      setStatus('libStatus', 'Select a template in the list first, then delete it.', 'err');
+      return;
+    }
+    $('delName').textContent = name;
+    $('delRow').style.display = 'block';
+    $('fDelPw').focus();
+  };
+  $('btnDelCancel').onclick = closeDeleteRow;
+  $('fDelPw').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $('btnDelConfirm').click(); } });
+  $('btnDelConfirm').onclick = async () => {
+    const name = $('delName').textContent;
+    if ($('fDelPw').value !== DELETE_PASSWORD) {
+      setStatus('delStatus', 'That password is not right — the template has not been deleted.', 'err');
+      $('fDelPw').select();
+      return;
+    }
+    delete state.library.tools[name];
+    if (state.selectedTool === name) state.selectedTool = null;
+    closeDeleteRow();
+    syncTplEditor();
+    await saveLibrary('Template “' + name + '” deleted.');
+  };
+
   $('btnEditTpl').onclick = () => {
     const ta = $('tplJson'), row = $('tplEditRow');
     const show = ta.style.display === 'none';
@@ -1022,6 +1108,32 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   };
 
   // detail level
+  // A generic picture of the layout each detail level produces — shapes only, never content,
+  // so nobody mistakes the sample for the document.
+  const page = (inner) => '<div class="dpage"><div class="dh"></div><div class="dbody">' + inner + '</div><div class="df"></div></div>';
+  const lines = (ws) => ws.map(w => '<div class="dline w' + w + '"></div>').join('');
+  const pills = '<div class="dpills"><span class="dpill"></span><span class="dpill"></span></div>';
+  const DETAIL_PREVIEW = {
+    simple: {
+      pages: page(lines([90]) + lines([75, 90, 60]) + lines([90]) + lines([75, 85, 45])) + page(lines([90, 75, 60, 90, 45])),
+      cap: '<b>Simple</b> — short steps packed onto the page, no timings, bullets, callouts or troubleshooting table. Fewest pages.',
+    },
+    standard: {
+      pages: page('<div class="dttl"></div>' + pills + lines([90, 75, 60])) + page('<div class="dttl"></div>' + pills + lines([90, 85, 45])),
+      cap: '<b>Standard</b> — one step per page with role, system and timing, plus its key bullets. The team default.',
+    },
+    extended: {
+      pages: page('<div class="dttl"></div>' + pills + lines([90, 75]) + '<div class="dcall"></div>' + '<div class="dimg"></div>') +
+             page('<div class="dttl"></div>' + pills + lines([90, 60]) + '<div class="dcall"></div>' + '<div class="dimg"></div>'),
+      cap: '<b>Extended</b> — everything in Standard plus common-mistake callouts and a screenshot slot on each step. Most pages.',
+    },
+  };
+  function renderDetailPreview() {
+    const el = $('detailPreview'); if (!el) return;
+    const d = DETAIL_PREVIEW[state.detail] || DETAIL_PREVIEW.standard;
+    el.innerHTML = '<div class="dpages">' + d.pages + '</div><div class="dprev-cap">' + d.cap + '</div>';
+  }
+
   const DETAIL_NOTES = {
     simple: 'Simple — quick-reference: purpose, access panel, one short action per step. No callouts or issues table. One page handout feel.',
     standard: 'Standard — full steps with role/system/time, key bullets and callouts. The default team standard.',
@@ -1031,6 +1143,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     state.detail = b.dataset.v;
     $('detailSeg').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
     $('detailNote').textContent = DETAIL_NOTES[state.detail];
+    renderDetailPreview();
     unconfirm('The detail level changed — confirm the list again before generating.');
     renderReview();
   });
@@ -1151,10 +1264,21 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
    *  detail list. Both surfaces stay in step because both re-render from state.summary. */
   function setIncluded(idx, on) {
     const row = state.summary[idx];
-    if (!row || row.status === 'exclude') return;   // the permission rule wins over a tick
-    row.included = on;
+    if (!row) return;
+    // A section the permission rule dropped CAN be put back, deliberately. It is marked as an
+    // override so the reviewer, the tally and the document's audit trail all show it was a
+    // human decision taken against the rule — not something the rule allowed.
+    if (row.status === 'exclude') {
+      row.override = on;
+      row.included = on;
+    } else {
+      row.included = on;
+      row.override = false;
+    }
     row.touched = true;
-    unconfirm('The section list changed — confirm it again before generating.');
+    unconfirm(on && row.status === 'exclude'
+      ? 'A section was included against the permission rule — confirm the list again before generating.'
+      : 'The section list changed — confirm it again before generating.');
     afterReviewChange();
   }
 
@@ -1176,15 +1300,15 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         '</span><span class="n">' + on + '/' + rows.length + '</span></div>';
       rows.forEach(o => {
         const s = o.s, i = o.i;
-        const locked = s.status === 'exclude';
-        const cls = 'oitem' + (s.included ? ' on' : '') + (locked ? ' out locked' : '') +
-          (s.status === 'ask' ? ' askitem' : '');
+        const dropped = s.status === 'exclude';
+        const cls = 'oitem' + (s.included ? ' on' : '') + (dropped && !s.override ? ' out' : '') +
+          (s.override ? ' overridden' : '') + (s.status === 'ask' ? ' askitem' : '');
         const title = (s.title && s.title.trim()) ? esc(s.title) : '(untitled section)';
-        html += '<div class="' + cls + '" draggable="' + (locked ? 'false' : 'true') + '" data-i="' + i + '"' +
-          (locked ? ' title="Excluded by the permission rule — see the reason beside it"' : '') + '>' +
+        html += '<div class="' + cls + '" draggable="true" data-i="' + i + '"' +
+          (dropped ? ' title="The permission rule dropped this. Tick it to include it anyway — it will be flagged as an override."' : '') + '>' +
           '<span class="ogrip" aria-hidden="true">⠿</span>' +
           '<input type="checkbox" data-oi="' + i + '"' + (s.included ? ' checked' : '') +
-            (locked ? ' disabled' : '') + ' aria-label="Include ' + esc(s.id || '') + '">' +
+          ' aria-label="Include ' + esc(s.id || '') + '">' +
           '<span class="otitle"><span class="oid">' + esc(s.id || '') + '</span> ' + title + '</span>' +
           '</div>';
       });
@@ -1251,7 +1375,13 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       el.innerHTML = state.sop
         ? '<div class="note">Content JSON edited manually — the section toggles do not apply. The JSON as shown will render.</div>'
         : '<div class="note">Start from a template in the Create step first.</div>';
-      $('tallyBox').innerHTML = ''; $('askBox').innerHTML = '';
+      const overrides = state.summary.filter(x => x.override && x.included).length;
+    $('askBox').innerHTML = ($('askBox').innerHTML || '') + (overrides
+      ? '<div class="ovrnote"><b>' + overrides + ' section' + (overrides === 1 ? '' : 's') +
+        ' included against the permission rule.</b> The reader may not be able to do what these describe. ' +
+        'They are recorded on the document as overrides. Untick them to go back to what the rule allows.</div>'
+      : '');
+    $('tallyBox').innerHTML = ''; $('askBox').innerHTML = '';
       renderOutline();
       if (state.sop) { renderConfirm(); } else { $('confirmBox').innerHTML = ''; }
       syncLocks(); return;
@@ -1283,15 +1413,20 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       rows.forEach((o) => {
         const s = o.s, i = o.i;
         const title = (s.title && s.title.trim()) ? esc(s.title) : '<em style="color:var(--g400)">(empty — edit text in the preview)</em>';
-        const cls = 'blk2' + (s.status === 'ask' ? ' askrow' : '') + (s.status === 'exclude' ? ' out' : '');
-        // Rows the rule excluded stay visible and locked — the reviewer must be able to see what
-        // the reader will NOT receive, and must not be able to silently re-add it.
-        html += '<div class="' + cls + '" draggable="' + (s.status === 'exclude' ? 'false' : 'true') + '" data-i="' + i + '">' +
+        const dropped = s.status === 'exclude';
+        const cls = 'blk2' + (s.status === 'ask' ? ' askrow' : '') +
+          (dropped && !s.override ? ' out' : '') + (s.override ? ' overridden' : '');
+        // Rows the rule excluded stay visible, and can be ticked back in deliberately. Doing so
+        // marks them as an override so it is never a silent change.
+        html += '<div class="' + cls + '" draggable="true" data-i="' + i + '">' +
           '<span class="grip" title="Drag to reorder" aria-hidden="true">⠿</span>' +
           '<input type="checkbox" data-i="' + i + '"' + (s.included ? ' checked' : '') +
-            (s.status === 'exclude' ? ' disabled title="Excluded by the permission rule"' : '') + '>' +
-          '<div class="blk2-main"><div class="t">' + esc(s.id || '') + ' · ' + title + '</div>' +
-          '<div class="rule">' + (s.reason || '') + '</div></div>' +
+            (dropped ? ' title="Dropped by the permission rule — tick to include it anyway"' : '') + '>' +
+          '<div class="blk2-main"><div class="t">' + esc(s.id || '') + ' · ' + title +
+            (s.override ? '<span class="ovr">Override</span>' : '') + '</div>' +
+          '<div class="rule">' + (s.reason || '') +
+            (s.override ? ' <strong style="color:var(--danger)">Included anyway by a human decision.</strong>' : '') +
+            '</div></div>' +
           '<button class="ord del" data-del="' + i + '" title="Remove">×</button>' +
           '</div>';
       });
@@ -1459,6 +1594,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (state.confirmed) {
       c._confirmedBy = state.confirmed.by;
       c._confirmedAt = state.confirmed.at;
+      const ovr = state.summary.filter(x => x.override && x.included);
+      if (ovr.length) c._overrides = ovr.map(x => ({ id: x.id, title: x.title, rule: x.reason }));
       c._permissionProfile = {
         level: (state.profile || {}).level || '',
         granular: ((state.profile || {}).granular || []).slice(),
@@ -1850,6 +1987,53 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       body.appendChild(add);
     });
   }
+
+  // ============================================================ permission template upload
+  // Reads a text/CSV/JSON export and sets the level for you. A screenshot cannot be read in the
+  // browser, so it is recorded as the source and you set the level yourself — never guessed.
+  const permFiles = [];
+  function detectFromText(txt) {
+    const t = String(txt).toLowerCase();
+    let level = '';
+    if (/\badmin\b/.test(t)) level = 'Admin';
+    else if (/\bstandard\b/.test(t)) level = 'Standard';
+    else if (/read[\s_-]?only/.test(t)) level = 'ReadOnly';
+    else if (/\bnone\b/.test(t)) level = 'None';
+    const gran = (state.sop ? granularInContent(state.sop) : []).filter(g => t.includes(g.toLowerCase()));
+    return { level, gran };
+  }
+
+  wireDrop('permDrop', async (files) => {
+    const f = files[0]; if (!f) return;
+    permFiles.length = 0; permFiles.push({ name: f.name, kind: 'perm' });
+    renderFileList('permFileList', permFiles, permFiles);
+    state.permSource = f.name;
+    const readable = /.(csv|txt|json|tsv|md)$/i.test(f.name);
+    if (!readable) {
+      setStatus('permFileStatus', 'Recorded <strong>' + esc(f.name) + '</strong> as the permission source. A screenshot cannot be read here — set the level and granular permissions below yourself.', '');
+      unconfirm('The permission source changed — confirm the list again before generating.');
+      return;
+    }
+    try {
+      const txt = await readAsText(f);
+      const { level, gran } = detectFromText(txt);
+      if (!level && !gran.length) {
+        setStatus('permFileStatus', 'Read <strong>' + esc(f.name) + '</strong> but could not identify a permission level in it. Set the level below yourself.', 'err');
+        return;
+      }
+      if (level) { state.profile.level = level; }
+      if (gran.length) { state.profile.granular = gran.slice(); }
+      renderPermissions();
+      unconfirm('The permission profile changed — confirm the list again before generating.');
+      recomputeSummary();
+      setStatus('permFileStatus', 'Read <strong>' + esc(f.name) + '</strong> — ' +
+        (level ? 'set to <strong>' + esc(PERM_LABEL[level] || level) + '</strong>' : 'no level found in it, so the level below is unchanged') +
+        (gran.length ? ' with ' + gran.length + ' granular permission' + (gran.length === 1 ? '' : 's') + ' ticked' : '') +
+        '. Check it against the file before confirming.', 'ok');
+    } catch (e) {
+      setStatus('permFileStatus', 'Could not read that file: ' + esc(e.message), 'err');
+    }
+  }, '.csv,.txt,.json,.tsv,.md,.png,.jpg,.jpeg,.xlsx');
 
   // ============================================================ regional terminology
   // Templates are authored in APAC terms. Choosing another region swaps the wording in the

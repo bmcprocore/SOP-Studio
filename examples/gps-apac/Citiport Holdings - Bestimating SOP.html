@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8" />
+<title>Procore — Estimating & Tendering (Bestimating Beta) SOP · Citiport Holdings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --procore-orange:#FF5200; --procore-orange-pressed:#C84100;
+    --procore-ink:#1A202C; --procore-sand-50:#FBF8F4;
+    --procore-gray-50:#F7F8FA; --procore-gray-100:#EEF0F3; --procore-gray-200:#E1E4E8;
+    --procore-gray-300:#C7CCD3; --procore-gray-400:#9AA1AB; --procore-gray-500:#6B7380;
+    --procore-gray-600:#4A525E; --procore-gray-700:#2F3540;
+    --color-info:#2E6FE6; --color-success:#1F8A5B; --color-warning:#E5A100; --color-danger:#D32F2F;
+    --fg:#000; --fg-muted:var(--procore-gray-500); --bg:#fff; --rule:var(--procore-gray-200);
+    --font-display:'Inter Tight',system-ui,sans-serif;
+    --font-body:'Inter Tight',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --font-mono:'DM Mono',ui-monospace,Menlo,monospace;
+    --fw-medium:500;
+    --page-w:816px; --page-h:1056px; --page-pad-x:56px; --header-h:56px; --footer-h:36px;
+  }
+  html,body{background:#E9E5DF;margin:0;color:var(--fg);font-family:var(--font-body);font-size:11pt;line-height:1.5;}
+  a{color:var(--procore-orange);} a:hover{color:var(--procore-orange-pressed);}
+  .viewer{display:flex;flex-direction:column;align-items:center;gap:32px;padding:40px 0 64px;}
+  .page{position:relative;width:var(--page-w);height:var(--page-h);background:#fff;
+    box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px rgba(20,23,29,.10);overflow:hidden;
+    page-break-after:always;color:var(--procore-ink);}
+  .page:last-child{page-break-after:auto;}
+  .pg-header{height:var(--header-h);padding:0 var(--page-pad-x);border-bottom:1px solid var(--rule);
+    display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .pg-header .logo svg{height:18px;width:auto;display:block;color:var(--procore-ink);}
+  .pg-header .doc-id{display:flex;align-items:center;gap:12px;font-size:9.5pt;color:var(--fg-muted);}
+  .pg-header .doc-id .title{color:var(--procore-ink);font-weight:var(--fw-medium);letter-spacing:-.005em;}
+  .pg-header .doc-id .sep{width:1px;height:14px;background:var(--rule);display:inline-block;}
+  .pg-footer{position:absolute;left:0;right:0;bottom:0;height:var(--footer-h);padding:0 var(--page-pad-x);
+    border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;
+    font-size:9pt;color:var(--fg-muted);}
+  .pg-footer .footer-mark{display:inline-flex;align-items:center;gap:6px;color:var(--procore-gray-600);font-weight:500;}
+  .pg-footer .confidential{text-transform:uppercase;letter-spacing:.08em;font-size:8pt;font-weight:600;color:var(--procore-gray-600);}
+  .pg-footer .pageno{font-variant-numeric:tabular-nums;font-weight:600;color:var(--procore-ink);}
+  .pg-footer .pageno .total{color:var(--fg-muted);font-weight:500;}
+  .hex{width:12px;height:10px;display:inline-block;background:no-repeat center/contain;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 68'%3E%3Cpolygon fill='%23FF5200' points='59.5 6 79.4 40 59.5 74 19.7 74 -0.2 40 19.7 6' transform='translate(0 -6)'/%3E%3C/svg%3E");}
+  .pg-body{position:absolute;top:var(--header-h);bottom:var(--footer-h);left:0;right:0;
+    padding:22px var(--page-pad-x) 18px;display:flex;flex-direction:column;}
+  /* cover */
+  .cover-eyebrow{font-size:9.5pt;text-transform:uppercase;letter-spacing:.14em;font-weight:600;
+    color:var(--procore-orange);display:inline-flex;align-items:center;gap:10px;margin-top:6px;}
+  .beta-pill{display:inline-flex;align-items:center;gap:5px;font-size:8pt;font-weight:700;padding:2px 9px;
+    border-radius:999px;text-transform:uppercase;letter-spacing:.08em;background:rgba(46,111,230,.12);color:var(--color-info);}
+  .beta-pill::before{content:"";width:6px;height:6px;border-radius:999px;background:currentColor;}
+  .cover-title{font-family:var(--font-display);font-size:42pt;line-height:1.03;letter-spacing:-.025em;
+    font-weight:500;color:var(--procore-ink);text-wrap:balance;margin-top:22px;max-width:18ch;}
+  .cover-sub{font-family:var(--font-display);font-size:13.5pt;line-height:1.4;color:var(--procore-gray-600);
+    font-weight:400;margin-top:16px;max-width:58ch;}
+  .cover-meta{margin-top:auto;background:var(--procore-sand-50);border-left:4px solid var(--procore-orange);
+    padding:22px 26px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .cover-meta .field-label{font-size:8.5pt;text-transform:uppercase;letter-spacing:.1em;font-weight:600;
+    color:var(--procore-gray-600);margin-bottom:4px;}
+  .cover-meta .field-value{font-size:11pt;color:var(--procore-ink);font-weight:500;line-height:1.35;}
+  .doc-control{margin-top:24px;border-top:1px solid var(--rule);}
+  .doc-control table{width:100%;border-collapse:collapse;font-size:9.5pt;}
+  .doc-control th,.doc-control td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top;}
+  .doc-control th{font-weight:600;color:var(--procore-gray-600);text-transform:uppercase;letter-spacing:.08em;
+    font-size:8pt;background:var(--procore-gray-50);width:22%;}
+  /* sections */
+  .section{margin-bottom:12px;} .section:last-child{margin-bottom:0;}
+  .section-eyebrow{font-size:8.5pt;text-transform:uppercase;letter-spacing:.12em;font-weight:700;
+    color:var(--procore-orange);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  h1.section-title{font-family:var(--font-display);font-size:19pt;line-height:1.1;letter-spacing:-.02em;
+    font-weight:500;color:var(--procore-ink);margin:0 0 4px;}
+  h2.subhead{font-family:var(--font-display);font-size:12pt;font-weight:600;color:var(--procore-ink);
+    letter-spacing:-.005em;margin:0 0 6px;}
+  .lead{font-size:10pt;color:var(--procore-gray-700);line-height:1.5;max-width:74ch;margin-bottom:6px;}
+  p{margin:0 0 6px;}
+  .page-intro{display:flex;gap:18px;align-items:flex-start;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--rule);}
+  .page-intro .body{flex:1;}
+  .page-intro .meta{flex:0 0 190px;background:var(--procore-sand-50);border-left:3px solid var(--procore-orange);
+    padding:11px 13px;font-size:8.5pt;line-height:1.45;color:var(--procore-gray-700);}
+  .page-intro .meta .label{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;
+    color:var(--procore-gray-600);display:block;margin-bottom:2px;}
+  /* roles table */
+  .roles{width:100%;border-collapse:collapse;font-size:9pt;margin-top:4px;}
+  .roles th,.roles td{text-align:left;padding:5px 10px;border-bottom:1px solid var(--rule);vertical-align:top;}
+  .roles th{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);
+    background:var(--procore-gray-50);font-weight:700;}
+  .roles td.role{font-weight:600;color:var(--procore-ink);width:22%;}
+  .roles td.who{width:20%;color:var(--procore-gray-700);}
+  /* permissions */
+  .perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;}
+  .perm-col{background:var(--procore-gray-50);border:1px solid var(--rule);padding:11px 13px;}
+  .perm-col .lbl{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--procore-gray-600);margin-bottom:6px;}
+  .perm-col ul{margin:0;padding-left:16px;font-size:9pt;color:var(--procore-gray-700);line-height:1.55;}
+  /* phases */
+  .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:6px 0 4px;}
+  .phase{background:var(--bg);border:1px solid var(--rule);padding:12px;position:relative;}
+  .phase .num{font-family:var(--font-mono);font-size:8pt;color:var(--procore-orange);font-weight:500;
+    letter-spacing:.04em;margin-bottom:5px;display:block;}
+  .phase .name{font-family:var(--font-display);font-size:10.5pt;font-weight:600;color:var(--procore-ink);
+    line-height:1.2;margin-bottom:4px;}
+  .phase .desc{font-size:8pt;color:var(--procore-gray-600);line-height:1.4;}
+  /* steps */
+  .steps{margin:2px 0 0;list-style:none;padding:0;}
+  .step{display:grid;grid-template-columns:30px 1fr;column-gap:11px;padding:7px 0 8px;border-bottom:1px solid var(--rule);}
+  .step:last-child{border-bottom:0;}
+  .step .step-num{font-family:var(--font-mono);font-size:12.5pt;font-weight:500;color:var(--procore-orange);
+    line-height:1;padding-top:2px;font-variant-numeric:tabular-nums;}
+  .step .step-title{font-family:var(--font-display);font-size:10.8pt;font-weight:600;color:var(--procore-ink);margin:0 0 2px;line-height:1.2;}
+  .step .step-meta{font-size:7.8pt;color:var(--fg-muted);margin-bottom:3px;display:flex;flex-wrap:wrap;gap:12px;}
+  .step .step-meta .pill{display:inline-flex;align-items:center;gap:4px;}
+  .step .step-meta .pill::before{content:"";width:6px;height:6px;border-radius:999px;background:var(--procore-gray-300);}
+  .step .step-meta .pill.role::before{background:var(--procore-orange);}
+  .step .step-meta .pill.system::before{background:var(--color-info);}
+  .step .step-meta .pill.time::before{background:var(--color-success);}
+  .step p{font-size:9pt;color:var(--procore-gray-700);margin:0 0 3px;line-height:1.42;}
+  .step ul,.step ol{margin:2px 0 3px;padding-left:17px;font-size:9pt;color:var(--procore-gray-700);line-height:1.42;}
+  .callout{margin:5px 0 2px;background:var(--procore-sand-50);border-left:3px solid var(--procore-orange);
+    padding:7px 11px;font-size:8.5pt;color:var(--procore-gray-700);line-height:1.42;display:flex;gap:9px;}
+  .callout .label{font-size:7pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--procore-orange);flex-shrink:0;padding-top:1px;}
+  .callout code{background:rgba(255,82,0,.08);color:var(--procore-orange-pressed);padding:1px 5px;border-radius:3px;font-size:8pt;}
+  .callout.warn{background:rgba(229,161,0,.08);border-left-color:var(--color-warning);}
+  .callout.warn .label{color:var(--color-warning);}
+  /* checklist */
+  .checklist .check-item{display:grid;grid-template-columns:20px 1fr 80px;align-items:start;gap:11px;
+    padding:6px 0;border-bottom:1px solid var(--rule);font-size:9pt;}
+  .check-item .box{width:13px;height:13px;border:1.5px solid var(--procore-gray-400);border-radius:2px;margin-top:2px;}
+  .check-item .text{color:var(--procore-ink);line-height:1.42;}
+  .check-item .text .hint{display:block;color:var(--fg-muted);font-size:8pt;margin-top:2px;}
+  .check-item .owner{font-size:7.5pt;text-transform:uppercase;letter-spacing:.08em;color:var(--procore-gray-600);text-align:right;padding-top:2px;font-weight:600;}
+  /* issues */
+  .issues-table{width:100%;border-collapse:collapse;font-size:8.5pt;margin-top:4px;}
+  .issues-table th,.issues-table td{text-align:left;padding:5px 9px;border-bottom:1px solid var(--rule);vertical-align:top;}
+  .issues-table th{font-size:7pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);background:var(--procore-gray-50);font-weight:700;}
+  .issues-table td.code{font-family:var(--font-mono);color:var(--procore-orange);font-weight:500;width:14%;}
+  .issues-table td.issue{width:36%;color:var(--procore-ink);font-weight:500;}
+  .issues-table td.fix{color:var(--procore-gray-700);}
+  .signoff{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;margin-top:6px;}
+  .sig{border-top:1px solid var(--procore-ink);padding-top:6px;}
+  .sig .role{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);font-weight:700;margin-bottom:3px;}
+  .sig .name{font-size:9.5pt;color:var(--procore-gray-400);font-style:italic;}
+  .sig .date{font-size:8pt;color:var(--fg-muted);margin-top:11px;display:flex;justify-content:space-between;border-top:1px dashed var(--rule);padding-top:4px;}
+  .ph{color:var(--procore-gray-400);font-style:italic;background:rgba(255,82,0,.06);padding:0 4px;border-radius:2px;}
+  .placeholder{color:var(--procore-gray-400);font-style:italic;}
+  .pill-status{display:inline-flex;align-items:center;gap:5px;font-size:8pt;font-weight:600;padding:2px 10px;
+    border-radius:999px;text-transform:uppercase;letter-spacing:.06em;}
+  .pill-status::before{content:"";width:6px;height:6px;border-radius:999px;background:currentColor;}
+  .pill-status.draft{background:var(--procore-gray-100);color:var(--procore-gray-700);}
+  .pill-status.beta{background:rgba(46,111,230,.12);color:var(--color-info);}
+  .considerations-list{margin:4px 0 0;padding:0;list-style:none;}
+  .considerations-list li{display:grid;grid-template-columns:16px 1fr;gap:9px;padding:5px 0;font-size:8.8pt;color:var(--procore-gray-700);line-height:1.45;}
+  .considerations-list li > span{display:block;}
+  .considerations-list li::before{content:"";width:6px;height:6px;border-radius:999px;background:var(--color-warning);margin-top:6px;}
+  .refs{font-size:8.5pt;color:var(--procore-gray-700);line-height:1.6;}
+  @page{size:letter portrait;margin:0;}
+  @media print{html,body{background:#fff;}.viewer{padding:0;gap:0;}.page{box-shadow:none;width:8.5in;height:11in;}}
+</style>
+</head>
+<body>
+<div class="viewer">
+
+  <!-- ===== PAGE 1 · COVER ===== -->
+  <article class="page" data-screen-label="01 · Cover">
+    <header class="pg-header">
+      <span class="logo">
+        <svg viewBox="0 0 2300 300" aria-hidden="true" style="height:18px;width:auto;color:#1A202C">
+          <g fill="currentColor">
+            <path d="M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/>
+            <path d="M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/>
+            <path d="M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/>
+            <path d="M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z"/>
+            <path d="M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/>
+            <path d="M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/>
+            <path d="M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z"/>
+          </g>
+          <polygon fill="#FF5200" points="1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9"/>
+        </svg>
+      </span>
+      <span class="doc-id">
+        <span class="title">Standard Operating Procedure</span>
+        <span class="sep"></span>
+        <span>SOP-PRC-BEST-001 · v0.1</span>
+      </span>
+    </header>
+    <div class="pg-body">
+      <span class="cover-eyebrow"><span class="hex"></span> Procore implementation · Customer SOP <span class="beta-pill">Beta feature</span></span>
+      <h1 class="cover-title">Estimating &amp; Tendering<br/>with Bestimating</h1>
+      <p class="cover-sub">A step-by-step guide for running the estimating-to-tender workflow in Procore's Bidding &amp; Estimating integration (Bestimating), authored for Citiport Holdings.</p>
+      <div class="cover-meta">
+        <div><div class="field-label">Customer</div><div class="field-value">Citiport Holdings</div></div>
+        <div><div class="field-label">Process owner</div><div class="field-value placeholder">[Role · Name]</div></div>
+        <div><div class="field-label">Version · Status</div><div class="field-value">v0.1 · <span class="pill-status beta">Beta</span></div></div>
+        <div><div class="field-label">Effective from</div><div class="field-value placeholder">[DD Mmm YYYY]</div></div>
+      </div>
+      <div class="doc-control">
+        <table><thead><tr><th>Document control</th><th>Detail</th><th>Author / approver</th><th>Date</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Prepared by</strong></td><td>Procore Implementation Manager</td><td class="placeholder">[Author]</td><td class="placeholder">[DD Mmm YYYY]</td></tr>
+          <tr><td><strong>Reviewed by</strong></td><td>Citiport Holdings process owner</td><td class="placeholder">[Reviewer]</td><td class="placeholder">[DD Mmm YYYY]</td></tr>
+          <tr><td><strong>Approved by</strong></td><td>Citiport Holdings project sponsor</td><td class="placeholder">[Approver]</td><td class="placeholder">[DD Mmm YYYY]</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <footer class="pg-footer">
+      <span class="footer-mark"><span class="hex"></span> Procore · Confidential to Citiport Holdings</span>
+      <span class="confidential">Revision 0.1 · Beta — subject to change</span>
+      <span class="pageno">01<span class="total"> / 06</span></span>
+    </footer>
+  </article>
+
+  <!-- ===== PAGE 2 · OVERVIEW ===== -->
+  <article class="page" data-screen-label="02 · Overview">
+    <header class="pg-header">
+      <span class="logo"><svg viewBox="0 0 2300 300" aria-hidden="true" style="height:18px;width:auto;color:#1A202C"><g fill="currentColor"><path d="M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z"/><path d="M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z"/></g><polygon fill="#FF5200" points="1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9"/></svg></span>
+      <span class="doc-id"><span class="title">Estimating &amp; Tendering · Bestimating</span><span class="sep"></span><span>SOP-PRC-BEST-001 · v0.1</span></span>
+    </header>
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 01 · Overview</span>
+          <h1 class="section-title">Purpose, scope and roles</h1>
+          <p class="lead">This SOP defines how Citiport Holdings runs estimating-to-tender using Bestimating — Procore's bi-directional integration between the Estimating and Bidding tools. It replaces re-keying an estimate into a separate bid form: bid packages are generated directly from the estimate, and leveled bid responses flow back in with a single click.</p>
+        </div>
+        <div class="meta"><span class="label">Applies to</span>Preconstruction &amp; Estimating teams on active tender pursuits using Procore Bidding v2.0</div>
+      </div>
+
+      <div class="section"><h2 class="subhead">Roles &amp; responsibilities</h2>
+        <table class="roles"><thead><tr><th>Role</th><th>Procore permission</th><th>Responsibility</th></tr></thead>
+          <tbody>
+            <tr><td class="role">Estimator</td><td class="who">Admin · Estimating</td><td>Builds the takeoff-based estimate; generates the bid package and bid forms; imports leveled bid values back into the estimate.</td></tr>
+            <tr><td class="role">Preconstruction / Bid Manager</td><td class="who">Admin · Bidding, Budget, Commitments</td><td>Owns the bid package, invites and manages bidders, runs bid-day leveling, generates and exports the proposal.</td></tr>
+            <tr><td class="role">Project Manager</td><td class="who">Admin · Budget, Commitments</td><td>Reviews the final proposal, approves sending the awarded estimate to the project Budget.</td></tr>
+            <tr><td class="role">Subcontractor / Bidder</td><td class="who">External · Bid Form</td><td>Submits pricing against the bid form issued from the estimate; resubmits if package is updated.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section"><h2 class="subhead">Permissions required (Admin, unless noted)</h2>
+        <div class="perm-grid">
+          <div class="perm-col"><div class="lbl">Company level</div>
+            <ul><li>Portfolio <span class="ph">(or Read Only + "create new projects" privilege)</span></li></ul>
+          </div>
+          <div class="perm-col"><div class="lbl">Project level</div>
+            <ul><li>Bidding</li><li>Budget</li><li>Commitments</li><li>Drawings</li><li>Estimating</li><li>Documents <em>(if using 3D Models)</em></li><li>Models <em>(if applicable)</em></li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section"><h2 class="subhead">Process at a glance</h2>
+        <div class="phases">
+          <div class="phase"><span class="num">PHASE 01</span><div class="name">Set up &amp; estimate</div><div class="desc">Project, drawings, takeoffs, estimate.</div></div>
+          <div class="phase"><span class="num">PHASE 02</span><div class="name">Bid package</div><div class="desc">Generate package &amp; bid form from the estimate.</div></div>
+          <div class="phase"><span class="num">PHASE 03</span><div class="name">Solicit &amp; level</div><div class="desc">Invite bidders, collect and level responses.</div></div>
+          <div class="phase"><span class="num">PHASE 04</span><div class="name">Award &amp; close out</div><div class="desc">Link bids to estimate, propose, send to Budget.</div></div>
+        </div>
+      </div>
+    </div>
+    <footer class="pg-footer">
+      <span class="footer-mark"><span class="hex"></span> Procore · Confidential to Citiport Holdings</span>
+      <span class="confidential">Revision 0.1 · Beta — subject to change</span>
+      <span class="pageno">02<span class="total"> / 06</span></span>
+    </footer>
+  </article>
+
+  <!-- ===== PAGE 3 · PROCEDURE (Setup, Estimate, Bid Package) ===== -->
+  <article class="page" data-screen-label="03 · Procedure I">
+    <header class="pg-header">
+      <span class="logo"><svg viewBox="0 0 2300 300" aria-hidden="true" style="height:18px;width:auto;color:#1A202C"><g fill="currentColor"><path d="M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z"/><path d="M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z"/></g><polygon fill="#FF5200" points="1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9"/></svg></span>
+      <span class="doc-id"><span class="title">Estimating &amp; Tendering · Bestimating</span><span class="sep"></span><span>SOP-PRC-BEST-001 · v0.1</span></span>
+    </header>
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 02 · Procedure (1 of 2)</span>
+          <h1 class="section-title">Set up the estimate</h1>
+          <p class="lead">Steps 1–6: from project creation through to a completed estimate ready to become a bid package.</p>
+        </div>
+        <div class="meta"><span class="label">Reference tool</span>Estimating · Drawings · Documents</div>
+      </div>
+      <ol class="steps">
+        <li class="step"><div class="step-num">01</div><div class="step-body">
+          <h3 class="step-title">Create the project</h3>
+          <div class="step-meta"><span class="pill role">Estimator</span><span class="pill system">Procore · Portfolio</span><span class="pill time">~10 min</span></div>
+          <p>Create the Citiport Holdings project in Portfolio (or confirm you hold Read Only + "create new projects" privilege).</p>
+        </div></li>
+        <li class="step"><div class="step-num">02</div><div class="step-body">
+          <h3 class="step-title">Upload, review &amp; publish drawings</h3>
+          <div class="step-meta"><span class="pill role">Estimator</span><span class="pill system">Procore · Drawings</span><span class="pill time">~30 min</span></div>
+          <p>Upload tender drawings, confirm sheet numbering/revisions, then publish so they are available for takeoff.</p>
+        </div></li>
+        <li class="step"><div class="step-num">03</div><div class="step-body">
+          <h3 class="step-title">Add models to Project Documents (if applicable)</h3>
+          <div class="step-meta"><span class="pill role">Estimator</span><span class="pill system">Procore · Documents / Models</span><span class="pill time">~15 min</span></div>
+          <p>For BIM-based takeoff, add the coordinated model to Project Documents before proceeding.</p>
+        </div></li>
+        <li class="step"><div class="step-num">04</div><div class="step-body">
+          <h3 class="step-title">Run takeoffs</h3>
+          <div class="step-meta"><span class="pill role">Estimator</span><span class="pill system">Procore · Estimating</span><span class="pill time">Varies</span></div>
+          <p>Add 2D takeoffs from the published drawings, or 3D takeoffs from the model, to quantify scope.</p>
+        </div></li>
+        <li class="step"><div class="step-num">05</div><div class="step-body">
+          <h3 class="step-title">Add the estimate</h3>
+          <div class="step-meta"><span class="pill role">Estimator</span><span class="pill system">Procore · Estimating</span><span class="pill time">Varies</span></div>
+          <p>Build the estimate from takeoff quantities, organised into groups that mirror how you intend to package the tender.</p>
+          <div class="callout warn"><span class="label">Beta note</span><span class="body">Cost codes are not currently pulled into a bid form — confirm cost coding is reconciled manually after import.</span></div>
+        </li>
+        <li class="step"><div class="step-num">06</div><div class="step-body">
+          <h3 class="step-title">Create the bid package</h3>
+          <div class="step-meta"><span class="pill role">Estimator</span><span class="pill system">Procore · Bidding</span><span class="pill time">~20 min</span></div>
+          <p>Generate the bid package directly from the estimate. Each estimate creates one bid package; a separate bid form is created for each group within the estimate.</p>
+          <div class="callout"><span class="label">Procore</span><span class="body">Line items default to <code>Response Field Type: Amount</code>. Only switch a line to unit quantity if the estimate itself is unit-based — otherwise imported bids will not match on import.</span></div>
+        </div></li>
+      </ol>
+    </div>
+    <footer class="pg-footer">
+      <span class="footer-mark"><span class="hex"></span> Procore · Confidential to Citiport Holdings</span>
+      <span class="confidential">Revision 0.1 · Beta — subject to change</span>
+      <span class="pageno">03<span class="total"> / 06</span></span>
+    </footer>
+  </article>
+
+  <!-- ===== PAGE 4 · PROCEDURE (Solicit, Level, Award) ===== -->
+  <article class="page" data-screen-label="04 · Procedure II">
+    <header class="pg-header">
+      <span class="logo"><svg viewBox="0 0 2300 300" aria-hidden="true" style="height:18px;width:auto;color:#1A202C"><g fill="currentColor"><path d="M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z"/><path d="M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z"/></g><polygon fill="#FF5200" points="1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9"/></svg></span>
+      <span class="doc-id"><span class="title">Estimating &amp; Tendering · Bestimating</span><span class="sep"></span><span>SOP-PRC-BEST-001 · v0.1</span></span>
+    </header>
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 02 · Procedure (2 of 2)</span>
+          <h1 class="section-title">Solicit, level and award</h1>
+          <p class="lead">Steps 7–12: invite bidders, run bid day, and bring the awarded pricing back into the estimate and Budget.</p>
+        </div>
+        <div class="meta"><span class="label">Reference tool</span>Bidding · Estimating · Budget</div>
+      </div>
+      <ol class="steps">
+        <li class="step" style="counter-reset:none;"><div class="step-num">07</div><div class="step-body">
+          <h3 class="step-title">View the bid form &amp; invite bidders</h3>
+          <div class="step-meta"><span class="pill role">Bid Manager</span><span class="pill system">Procore · Bidding</span><span class="pill time">~30 min</span></div>
+          <p>Confirm the auto-generated bid form, add any supporting documents, then invite bidders from your Directory or the Procore Construction Network.</p>
+        </div></li>
+        <li class="step"><div class="step-num">08</div><div class="step-body">
+          <h3 class="step-title">Level bids</h3>
+          <div class="step-meta"><span class="pill role">Bid Manager</span><span class="pill system">Procore · Bidding</span><span class="pill time">Bid day</span></div>
+          <p>As responses arrive, review and level submissions side by side. Estimate groups and line items show response status (responded / selected / included) to speed up comparison.</p>
+        </div></li>
+        <li class="step"><div class="step-num">09</div><div class="step-body">
+          <h3 class="step-title">Link leveled bid values to the estimate</h3>
+          <div class="step-meta"><span class="pill role">Estimator</span><span class="pill system">Procore · Estimating</span><span class="pill time">~20 min</span></div>
+          <p>Include/exclude selected bid response pricing to update the estimate. Multi-select line items to bulk-update several at once.</p>
+          <div class="callout warn"><span class="label">Beta note</span><span class="body">If a bid form was switched to unit quantity but the bidder submitted on <code>Amount</code>, the units will not match and the import will error — have the bidder resubmit, or alter the bid in Bidding before importing.</span></div>
+        </div></li>
+        <li class="step"><div class="step-num">10</div><div class="step-body">
+          <h3 class="step-title">Generate the bid proposal</h3>
+          <div class="step-meta"><span class="pill role">Bid Manager</span><span class="pill system">Procore · Bidding</span><span class="pill time">~15 min</span></div>
+          <p>Compile the updated estimate into the owner-facing proposal.</p>
+        </div></li>
+        <li class="step"><div class="step-num">11</div><div class="step-body">
+          <h3 class="step-title">Export the bid proposal</h3>
+          <div class="step-meta"><span class="pill role">Bid Manager</span><span class="pill system">Procore · Bidding</span><span class="pill time">~10 min</span></div>
+          <p>Export the proposal for internal review and, where required, owner submission.</p>
+        </div></li>
+        <li class="step"><div class="step-num">12</div><div class="step-body">
+          <h3 class="step-title">Send the estimate to Budget</h3>
+          <div class="step-meta"><span class="pill role">Project Manager</span><span class="pill system">Procore · Budget</span><span class="pill time">~10 min</span></div>
+          <p>Once awarded, send the final estimate to the project Budget to establish the baseline for Commitments.</p>
+        </div></li>
+      </ol>
+    </div>
+    <footer class="pg-footer">
+      <span class="footer-mark"><span class="hex"></span> Procore · Confidential to Citiport Holdings</span>
+      <span class="confidential">Revision 0.1 · Beta — subject to change</span>
+      <span class="pageno">04<span class="total"> / 06</span></span>
+    </footer>
+  </article>
+
+  <!-- ===== PAGE 5 · CLOSE-OUT ===== -->
+  <article class="page" data-screen-label="05 · Close-out">
+    <header class="pg-header">
+      <span class="logo"><svg viewBox="0 0 2300 300" aria-hidden="true" style="height:18px;width:auto;color:#1A202C"><g fill="currentColor"><path d="M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z"/><path d="M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z"/></g><polygon fill="#FF5200" points="1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9"/></svg></span>
+      <span class="doc-id"><span class="title">Estimating &amp; Tendering · Bestimating</span><span class="sep"></span><span>SOP-PRC-BEST-001 · v0.1</span></span>
+    </header>
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 03 · Close out</span>
+          <h1 class="section-title">Beta considerations, checks &amp; approvals</h1>
+          <p class="lead">Bestimating is in open beta — confirm the items below before relying on it for a live tender.</p>
+        </div>
+        <div class="meta"><span class="label">Owner</span><span class="placeholder">[Process owner]</span></div>
+      </div>
+
+      <div class="section"><h2 class="subhead">Beta considerations</h2>
+        <ul class="considerations-list">
+          <li><span>You can create multiple bid packages from the project's Estimating tool; each estimate creates one bid package.</span></li>
+          <li><span>A separate bid form is created for each group within an estimate — structure estimate groups to match your intended packages before generating.</span></li>
+          <li><span>Cost codes are not currently pulled into a bid form; reconcile cost coding manually after import.</span></li>
+          <li><span>Editing a bid form to add sections can mismatch data — Unit/Qty items may roll up into a total amount on import back into Estimating.</span></li>
+          <li><span>Bid form line items default to <code>Amount</code>. Switching a line to unit quantity only syncs correctly if the estimate itself is unit-based; otherwise have the bidder resubmit on <code>Amount</code>, or alter the bid in Bidding before importing.</span></li>
+        </ul>
+      </div>
+
+      <div class="section"><h2 class="subhead">Close-out checklist</h2>
+        <div class="checklist">
+          <div class="check-item"><div class="box"></div><div class="text">Bid package generated matches the intended estimate groups<span class="hint">Verify in Bidding · Bid Packages before inviting bidders.</span></div><div class="owner">EST</div></div>
+          <div class="check-item"><div class="box"></div><div class="text">All bidder responses leveled and reconciled<span class="hint">Confirm status shows "included" on every line pulled into the estimate.</span></div><div class="owner">BM</div></div>
+          <div class="check-item"><div class="box"></div><div class="text">Cost codes reconciled post-import<span class="hint">Cost codes are not carried by the bid form in this beta.</span></div><div class="owner">EST</div></div>
+          <div class="check-item"><div class="box"></div><div class="text">Proposal exported and reviewed before submission<span class="hint">PM sign-off required prior to owner submission.</span></div><div class="owner">PM</div></div>
+          <div class="check-item"><div class="box"></div><div class="text">Awarded estimate sent to Budget</div><div class="owner">PM</div></div>
+        </div>
+      </div>
+    </div>
+    <footer class="pg-footer">
+      <span class="footer-mark"><span class="hex"></span> Procore · Confidential to Citiport Holdings</span>
+      <span class="confidential">Revision 0.1 · Beta — subject to change</span>
+      <span class="pageno">05<span class="total"> / 06</span></span>
+    </footer>
+  </article>
+
+  <!-- ===== PAGE 6 · ISSUES, REFERENCES & APPROVALS ===== -->
+  <article class="page" data-screen-label="06 · Approvals">
+    <header class="pg-header">
+      <span class="logo"><svg viewBox="0 0 2300 300" aria-hidden="true" style="height:18px;width:auto;color:#1A202C"><g fill="currentColor"><path d="M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z"/><path d="M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z"/></g><polygon fill="#FF5200" points="1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9"/></svg></span>
+      <span class="doc-id"><span class="title">Estimating &amp; Tendering · Bestimating</span><span class="sep"></span><span>SOP-PRC-BEST-001 · v0.1</span></span>
+    </header>
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 03 · Close out (cont.)</span>
+          <h1 class="section-title">Issues, references &amp; approvals</h1>
+          <p class="lead">Known beta issues, supporting references, and sign-off.</p>
+        </div>
+        <div class="meta"><span class="label">Owner</span><span class="placeholder">[Process owner]</span></div>
+      </div>
+
+      <div class="section"><h2 class="subhead">Common issues &amp; resolution</h2>
+        <table class="issues-table"><thead><tr><th>Reference</th><th>Issue</th><th>Resolution</th></tr></thead>
+          <tbody>
+            <tr><td class="code">ERR-01</td><td class="issue">Unit mismatch on bid import</td><td class="fix">Have bidder resubmit on "Amount", or convert the bid in Bidding before importing.</td></tr>
+            <tr><td class="code">ERR-02</td><td class="issue">Cost codes missing after import</td><td class="fix">Re-apply cost codes manually in Estimating; not currently carried by the bid form.</td></tr>
+            <tr><td class="code">ERR-03</td><td class="issue">Bid form sections edited, data mismatched</td><td class="fix">Revert to the auto-generated form structure where possible; re-verify Unit/Qty totals before import.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section"><h2 class="subhead">References</h2>
+        <p class="refs">Procore Support · <a href="https://v2.support.procore.com/process-guides/user-guide-bidding-and-estimating-integration">User Guide — Bidding and Estimating Integration (Beta)</a></p>
+      </div>
+
+      <div class="section" style="margin-top:auto;"><h2 class="subhead">Approvals</h2>
+        <div class="signoff">
+          <div class="sig"><div class="role">Citiport Holdings process owner</div><div class="name">Signature</div><div class="date"><span>Name &amp; title</span><span>Date</span></div></div>
+          <div class="sig"><div class="role">Procore Implementation Manager</div><div class="name">Signature</div><div class="date"><span>Name &amp; title</span><span>Date</span></div></div>
+        </div>
+      </div>
+    </div>
+    <footer class="pg-footer">
+      <span class="footer-mark"><span class="hex"></span> Procore · Confidential to Citiport Holdings</span>
+      <span class="confidential">Revision 0.1 · Beta — subject to change</span>
+      <span class="pageno">06<span class="total"> / 06</span></span>
+    </footer>
+  </article>
+
+</div>
+</body>
+</html>

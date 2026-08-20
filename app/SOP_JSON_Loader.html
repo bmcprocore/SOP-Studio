@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8" />
+<title>Procore SOP — JSON Loader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--procore-orange:#FF5200;--procore-orange-pressed:#C84100;--procore-ink:#1A202C;--procore-sand-50:#FBF8F4;--procore-gray-50:#F7F8FA;--procore-gray-100:#EEF0F3;--procore-gray-200:#E1E4E8;--procore-gray-300:#C7CCD3;--procore-gray-400:#9AA1AB;--procore-gray-500:#6B7380;--procore-gray-600:#4A525E;--procore-gray-700:#2F3540;--color-info:#2E6FE6;--color-success:#1F8A5B;--color-warning:#E5A100;--color-danger:#D32F2F;--fg:#000;--fg-muted:var(--procore-gray-500);--bg:#fff;--rule:var(--procore-gray-200);--font-display:'Inter Tight',system-ui,sans-serif;--font-body:'Inter Tight',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--font-mono:'DM Mono',ui-monospace,Menlo,monospace;--fw-medium:500;--page-w:816px;--page-h:1056px;--page-pad-x:56px;--header-h:56px;--footer-h:36px}
+html,body{background:#E9E5DF;margin:0;color:var(--fg);font-family:var(--font-body);font-size:11pt;line-height:1.5}
+/* ---- Loader chrome (screen only) ---- */
+.loader-shell{display:flex;gap:24px;padding:24px;max-width:1500px;margin:0 auto}
+.loader-panel{flex:0 0 380px;background:#fff;border:1px solid var(--rule);padding:18px;position:sticky;top:24px;align-self:flex-start;height:calc(100vh - 48px);display:flex;flex-direction:column;gap:10px}
+.loader-panel h1{font-family:var(--font-display);font-size:15pt;font-weight:600;margin:0 0 2px;color:var(--procore-ink)}
+.loader-panel p{font-size:9pt;color:var(--procore-gray-600);margin:0 0 6px;line-height:1.5}
+.loader-panel textarea{flex:1;width:100%;box-sizing:border-box;resize:none;font-family:var(--font-mono);font-size:8.5pt;padding:10px;border:1px solid var(--rule);color:var(--procore-ink);background:var(--procore-gray-50)}
+.loader-actions{display:flex;gap:8px}
+.btn{font-family:var(--font-body);font-size:9.5pt;font-weight:600;padding:9px 14px;border:none;border-radius:4px;cursor:pointer}
+.btn-primary{background:var(--procore-orange);color:#fff}
+.btn-primary:hover{background:var(--procore-orange-pressed)}
+.btn-secondary{background:var(--procore-gray-100);color:var(--procore-ink)}
+.btn-secondary:hover{background:var(--procore-gray-200)}
+.loader-status{font-size:8.5pt;min-height:14px}
+.loader-status.err{color:var(--color-danger)}
+.loader-status.ok{color:var(--color-success)}
+.loader-hint{font-size:8pt;color:var(--procore-gray-500)}
+.doc-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:32px}
+@media print{.loader-panel{display:none}.loader-shell{display:block;padding:0}.doc-wrap{gap:0}}
+
+.page{position:relative;width:var(--page-w);height:var(--page-h);background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px rgba(20,23,29,.10);overflow:hidden;page-break-after:always;color:var(--procore-ink)}
+.page:last-child{page-break-after:auto}
+.pg-header{height:var(--header-h);padding:0 var(--page-pad-x);border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.pg-header .logo{color:var(--procore-ink);display:inline-flex;align-items:center}
+.pg-header .logo svg{height:18px;width:auto;display:block}
+.pg-header .doc-id{display:flex;align-items:center;gap:12px;font-size:9.5pt;color:var(--fg-muted)}
+.pg-header .doc-id .title{color:var(--procore-ink);font-weight:var(--fw-medium);letter-spacing:-.005em}
+.pg-header .doc-id .sep{width:1px;height:14px;background:var(--rule);display:inline-block}
+.pg-footer{position:absolute;left:0;right:0;bottom:0;height:var(--footer-h);padding:0 var(--page-pad-x);border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;font-size:9pt;color:var(--fg-muted)}
+.pg-footer .footer-mark{display:inline-flex;align-items:center;gap:6px;color:var(--procore-gray-600);font-weight:500}
+.pg-footer .pageno{font-variant-numeric:tabular-nums;font-weight:600;color:var(--procore-ink)}
+.pg-footer .pageno .total{color:var(--fg-muted);font-weight:500}
+.hex{width:12px;height:10px;display:inline-block;background:no-repeat center/contain;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 68'%3E%3Cpolygon fill='%23FF5200' points='59.5 6 79.4 40 59.5 74 19.7 74 -0.2 40 19.7 6' transform='translate(0 -6)'/%3E%3C/svg%3E")}
+.pg-body{position:absolute;top:var(--header-h);bottom:var(--footer-h);left:0;right:0;padding:22px var(--page-pad-x) 18px;display:flex;flex-direction:column}
+.cover-eyebrow{font-size:9.5pt;text-transform:uppercase;letter-spacing:.14em;font-weight:600;color:var(--procore-orange);display:inline-flex;align-items:center;gap:10px;margin-top:6px}
+.cover-title{font-family:var(--font-display);font-size:44pt;line-height:1.02;letter-spacing:-.025em;font-weight:500;color:var(--procore-ink);text-wrap:balance;margin-top:22px;max-width:18ch}
+.cover-sub{font-family:var(--font-display);font-size:14pt;line-height:1.35;color:var(--procore-gray-600);font-weight:400;margin-top:16px;max-width:56ch}
+.cover-meta{margin-top:auto;background:var(--procore-sand-50);border-left:4px solid var(--procore-orange);padding:22px 26px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.cover-meta .field-label{font-size:8.5pt;text-transform:uppercase;letter-spacing:.1em;font-weight:600;color:var(--procore-gray-600);margin-bottom:4px}
+.cover-meta .field-value{font-size:11pt;color:var(--procore-ink);font-weight:500;line-height:1.35}
+.section{margin-bottom:12px}.section:last-child{margin-bottom:0}
+.section-eyebrow{font-size:8.5pt;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--procore-orange);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+h1.section-title{font-family:var(--font-display);font-size:20pt;line-height:1.08;letter-spacing:-.02em;font-weight:500;color:var(--procore-ink);margin:0 0 4px}
+h2.subhead{font-family:var(--font-display);font-size:12.5pt;font-weight:600;color:var(--procore-ink);letter-spacing:-.005em;margin:0 0 6px}
+h3.minihead{font-family:var(--font-display);font-size:11pt;font-weight:600;color:var(--procore-ink);margin:0 0 4px}
+.lead{font-size:10.5pt;color:var(--procore-gray-700);line-height:1.5;max-width:72ch;margin-bottom:8px}
+p{margin:0 0 6px}
+.page-intro{display:flex;gap:18px;align-items:flex-start;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.page-intro .body{flex:1}
+.page-intro .meta{flex:0 0 200px;background:var(--procore-sand-50);border-left:3px solid var(--procore-orange);padding:12px 14px;font-size:9pt;line-height:1.45;color:var(--procore-gray-700)}
+.page-intro .meta .label{font-size:8pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--procore-gray-600);display:block;margin-bottom:2px}
+.roles{width:100%;border-collapse:collapse;font-size:9.5pt;margin-top:4px}
+.roles th,.roles td{text-align:left;padding:6px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+.roles th{font-size:8pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);background:var(--procore-gray-50);font-weight:700}
+.roles td.role{font-weight:600;color:var(--procore-ink);width:28%}
+.roles td.who{width:24%;color:var(--procore-gray-700)}
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 4px}
+.phase{background:var(--bg);border:1px solid var(--rule);padding:14px 14px 12px;position:relative}
+.phase .num{font-family:var(--font-mono);font-size:8.5pt;color:var(--procore-orange);font-weight:500;letter-spacing:.04em;margin-bottom:6px;display:block}
+.phase .name{font-family:var(--font-display);font-size:11pt;font-weight:600;color:var(--procore-ink);line-height:1.2;margin-bottom:4px}
+.phase .desc{font-size:8.5pt;color:var(--procore-gray-600);line-height:1.4}
+.steps{margin:4px 0 0;list-style:none;padding:0}
+.step{display:grid;grid-template-columns:34px 1fr;column-gap:12px;padding:9px 0 10px;border-bottom:1px solid var(--rule)}
+.step:last-child{border-bottom:0}
+.step .step-num{font-family:var(--font-mono);font-size:14pt;font-weight:500;color:var(--procore-orange);line-height:1;padding-top:2px;font-variant-numeric:tabular-nums}
+.step .step-body{min-width:0}
+.step .step-title{font-family:var(--font-display);font-size:11.5pt;font-weight:600;color:var(--procore-ink);margin:0 0 3px;line-height:1.2}
+.step .step-meta{font-size:8.5pt;color:var(--fg-muted);margin-bottom:4px;display:flex;flex-wrap:wrap;gap:14px}
+.step .step-meta .pill{display:inline-flex;align-items:center;gap:4px}
+.step .step-meta .pill::before{content:"";width:6px;height:6px;border-radius:999px;background:var(--procore-gray-300)}
+.step .step-meta .pill.role::before{background:var(--procore-orange)}
+.step .step-meta .pill.system::before{background:var(--color-info)}
+.step .step-meta .pill.time::before{background:var(--color-success)}
+.step p{font-size:9.5pt;color:var(--procore-gray-700);margin:0 0 4px;line-height:1.45}
+.step ul{margin:3px 0 4px;padding-left:18px;font-size:9.5pt;color:var(--procore-gray-700);line-height:1.45}
+.step li{margin-bottom:1px}
+.step li::marker{color:var(--procore-gray-400)}
+.callout{margin:6px 0 2px;background:var(--procore-sand-50);border-left:3px solid var(--procore-orange);padding:8px 12px;font-size:9pt;color:var(--procore-gray-700);line-height:1.45;display:flex;gap:10px}
+.callout .label{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--procore-orange);flex-shrink:0;padding-top:1px}
+.callout .body{flex:1}
+.checklist{margin:4px 0 0}
+.check-item{display:grid;grid-template-columns:22px 1fr 90px;align-items:start;gap:12px;padding:7px 0;border-bottom:1px solid var(--rule);font-size:9.5pt}
+.check-item .box{width:14px;height:14px;border:1.5px solid var(--procore-gray-400);border-radius:2px;margin-top:2px}
+.check-item .text{color:var(--procore-ink);line-height:1.45}
+.check-item .text .hint{display:block;color:var(--fg-muted);font-size:8.5pt;margin-top:2px}
+.check-item .owner{font-size:8pt;text-transform:uppercase;letter-spacing:.08em;color:var(--procore-gray-600);text-align:right;padding-top:2px;font-weight:600}
+.issues-table{width:100%;border-collapse:collapse;font-size:9pt;margin-top:4px}
+.issues-table th,.issues-table td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+.issues-table th{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);background:var(--procore-gray-50);font-weight:700}
+.issues-table td.code{font-family:var(--font-mono);color:var(--procore-orange);font-weight:500;width:16%;font-size:9pt}
+.issues-table td.issue{width:38%;color:var(--procore-ink);font-weight:500}
+.issues-table td.fix{color:var(--procore-gray-700)}
+.refs{font-size:9pt;color:var(--procore-gray-700)}
+.refs li{margin-bottom:4px}
+.refs a{color:var(--procore-orange);font-weight:500}
+.ph{color:var(--procore-gray-400);font-style:italic;background:rgba(255,82,0,.06);padding:0 4px;border-radius:2px}
+.pill-status{display:inline-flex;align-items:center;gap:5px;font-size:8pt;font-weight:600;padding:2px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.06em}
+.pill-status::before{content:"";width:6px;height:6px;border-radius:999px;background:currentColor}
+.pill-status.draft{background:var(--procore-gray-100);color:var(--procore-gray-700)}
+.pill-status.approved{background:rgba(31,138,91,.12);color:var(--color-success)}
+@page{size:letter portrait;margin:0}
+@media print{html,body{background:#fff}.page{box-shadow:none;width:8.5in;height:11in}}
+</style>
+</head>
+<body>
+<div class="loader-shell">
+  <div class="loader-panel">
+    <h1>SOP JSON Loader</h1>
+    <p>Paste the JSON object produced by the Procore SOP Gem (from a call transcript or NotebookLM notes) below, then click Render. The document updates in place, on-brand, ready to print to PDF.</p>
+    <textarea id="jsonInput" placeholder="Paste SOP JSON here…"></textarea>
+    <div class="loader-actions">
+      <button class="btn btn-primary" onclick="renderDoc()">Render SOP</button>
+      <button class="btn btn-secondary" onclick="loadSample()">Load sample</button>
+    </div>
+    <div id="status" class="loader-status"></div>
+    <p class="loader-hint">Schema: prompts/procore-sop-json-schema.md · Gem prompt: prompts/procore-sop-gem-system-prompt.md</p>
+  </div>
+  <div class="doc-wrap" id="docWrap"></div>
+</div>
+
+<script>
+const WORDMARK = `<svg viewBox="0 0 2300 300" aria-hidden="true"><g fill="currentColor"><path d="M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z"/><path d="M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z"/><path d="M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z"/><path d="M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z"/></g><polygon fill="#FF5200" points="1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9"/></svg>`;
+
+function esc(s){ if(s===null||s===undefined) return null; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function val(s, fallback){ const e = esc(s); return (e===null||e==='') ? `<span class="ph">[${fallback}]</span>` : e; }
+
+function header(d, pageTitle){
+  return `<header class="pg-header"><span class="logo" aria-label="Procore">${WORDMARK}</span>
+  <span class="doc-id"><span class="title">${esc(pageTitle)||''}</span><span class="sep"></span>
+  <span>${val(d.docId,'SOP-PRC-000')} · v${val(d.version,'1.0')}</span></span></header>`;
+}
+function footer(n, total){
+  return `<footer class="pg-footer"><span class="footer-mark"><span class="hex"></span> Procore</span>
+  <span class="pageno">${String(n).padStart(2,'0')}<span class="total"> / ${String(total).padStart(2,'0')}</span></span></footer>`;
+}
+
+function renderDoc(){
+  const statusEl = document.getElementById('status');
+  let d;
+  try {
+    d = JSON.parse(document.getElementById('jsonInput').value);
+  } catch(e) {
+    statusEl.textContent = 'Invalid JSON: ' + e.message;
+    statusEl.className = 'loader-status err';
+    return;
+  }
+  const total = 4;
+  const roles = (d.roles||[]).map(r=>`<tr><td class="role">${esc(r.role)}</td><td class="who">${esc(r.permission)}</td><td>${esc(r.responsibility)}</td></tr>`).join('');
+  const phases = (d.phases||[]).map((p,i)=>`<div class="phase"><span class="num">PHASE ${String(i+1).padStart(2,'0')}</span><div class="name">${esc(p.name)}</div><div class="desc">${esc(p.desc)}</div></div>`).join('');
+  const prereqs = (d.prerequisites||[]).map(p=>`<li>${esc(p)}</li>`).join('');
+  const steps = (d.steps||[]).map((s,i)=>`<li class="step"><div class="step-num">${String(i+1).padStart(2,'0')}</div><div class="step-body">
+    <h3 class="step-title">${esc(s.title)}</h3>
+    <div class="step-meta">${s.role?`<span class="pill role">${esc(s.role)}</span>`:''}${s.system?`<span class="pill system">${esc(s.system)}</span>`:''}${s.time?`<span class="pill time">${esc(s.time)}</span>`:''}</div>
+    <p>${esc(s.body)||''}</p>
+    ${s.actions&&s.actions.length?`<ul>${s.actions.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}
+    ${s.callout?`<div class="callout"><span class="label">${esc(s.callout.label)}</span><span class="body">${esc(s.callout.body)}</span></div>`:''}
+  </div></li>`).join('');
+  const checklist = (d.checklist||[]).map(c=>`<div class="check-item"><div class="box"></div><div class="text">${esc(c.text)}${c.hint?`<span class="hint">${esc(c.hint)}</span>`:''}</div><div class="owner">${esc(c.owner)||''}</div></div>`).join('');
+  const issues = (d.issues||[]).map(i=>`<tr><td class="code">${esc(i.code)}</td><td class="issue">${esc(i.issue)}</td><td class="fix">${esc(i.fix)}</td></tr>`).join('');
+  const refs = (d.references||[]).map(r=>`<li>${esc(r)}</li>`).join('');
+  const pageTitle = d.processName ? `${esc(d.processName)} · SOP` : null;
+
+  const html = `
+  <article class="page" data-screen-label="01 Cover">
+    ${header(d, 'Standard Operating Procedure')}
+    <div class="pg-body">
+      <span class="cover-eyebrow"><span class="hex"></span> Procore implementation · Customer SOP</span>
+      <h1 class="cover-title">${val(d.processName,'Process name')}<br/>Standard operating procedure</h1>
+      <p class="cover-sub">${val(d.coverSummary, `A step-by-step guide for executing ${d.processName||'[process]'} within Procore.`)}</p>
+      <div class="cover-meta">
+        <div><div class="field-label">Customer</div><div class="field-value">${val(d.customerName,'Customer name')}</div></div>
+        <div><div class="field-label">Process owner</div><div class="field-value">${val(d.processOwner,'Role · Name')}</div></div>
+        <div><div class="field-label">Version · Status</div><div class="field-value">v${val(d.version,'1.0')} · <span class="pill-status draft">${esc(d.status)||'Draft'}</span></div></div>
+        <div><div class="field-label">Effective from</div><div class="field-value">${val(d.effectiveDate,'DD Mmm YYYY')}</div></div>
+      </div>
+    </div>
+    ${footer(1,total)}
+  </article>
+
+  <article class="page" data-screen-label="02 Overview">
+    ${header(d, pageTitle)}
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 01 · Overview</span>
+          <h1 class="section-title">Purpose, scope and roles</h1>
+          <p class="lead">${val(d.purpose,'Purpose of this SOP.')}</p>
+        </div>
+        <div class="meta"><span class="label">Applies to</span>${val(d.appliesTo,'Business unit / region / project type')}</div>
+      </div>
+      <div class="section"><h2 class="subhead">Scope</h2>
+        <p style="font-size:9.5pt;color:var(--procore-gray-700);max-width:72ch;"><strong>In scope:</strong> ${val(d.scopeIn,'Activities covered.')}<br/><strong>Out of scope:</strong> ${val(d.scopeOut,'Activities excluded.')}</p>
+      </div>
+      <div class="section"><h2 class="subhead">Roles &amp; responsibilities</h2>
+        <table class="roles"><thead><tr><th style="width:28%">Role</th><th style="width:24%">Procore permission</th><th>Responsibility in this SOP</th></tr></thead>
+        <tbody>${roles || '<tr><td class="role"><span class="ph">[Role]</span></td><td class="who"></td><td></td></tr>'}</tbody></table>
+      </div>
+      <div class="section"><h2 class="subhead">Process at a glance</h2><div class="phases">${phases || ''}</div></div>
+      <div class="section"><h2 class="subhead">Prerequisites</h2><ul style="font-size:9.5pt;color:var(--procore-gray-700);margin:0;padding-left:18px;line-height:1.4;">${prereqs || '<li><span class="ph">[Prerequisite]</span></li>'}</ul></div>
+    </div>
+    ${footer(2,total)}
+  </article>
+
+  <article class="page" data-screen-label="03 Procedure">
+    ${header(d, pageTitle)}
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 02 · Procedure</span>
+          <h1 class="section-title">Step-by-step in Procore</h1>
+          <p class="lead">Steps below describe the day-to-day actions inside the platform.</p>
+        </div>
+        <div class="meta"><span class="label">Reference tool</span>${val(d.referenceTool,'Procore tool')}</div>
+      </div>
+      <ol class="steps">${steps || ''}</ol>
+    </div>
+    ${footer(3,total)}
+  </article>
+
+  <article class="page" data-screen-label="04 Validation">
+    ${header(d, pageTitle)}
+    <div class="pg-body">
+      <div class="page-intro">
+        <div class="body">
+          <span class="section-eyebrow"><span class="hex"></span> Section 03 · Close out</span>
+          <h1 class="section-title">Validate, troubleshoot &amp; approve</h1>
+          <p class="lead">Use the close-out checklist to verify the work meets the acceptance criteria.</p>
+        </div>
+        <div class="meta"><span class="label">Owner</span>${val(d.processOwner,'Process owner')}</div>
+      </div>
+      <div class="section"><h2 class="subhead">Close-out checklist</h2><div class="checklist">${checklist || ''}</div></div>
+      <div class="section"><h2 class="subhead">Common issues &amp; resolution</h2>
+        <table class="issues-table"><thead><tr><th>Reference</th><th>Issue</th><th>Resolution</th></tr></thead><tbody>${issues || ''}</tbody></table>
+      </div>
+      <div class="section"><h2 class="subhead">References</h2><ul class="refs" style="margin:0;padding-left:16px;">${refs || ''}</ul></div>
+    </div>
+    ${footer(4,total)}
+  </article>`;
+
+  document.getElementById('docWrap').innerHTML = html;
+  statusEl.textContent = 'Rendered ' + (d.processName || 'SOP') + '.';
+  statusEl.className = 'loader-status ok';
+}
+
+function loadSample(){
+  const sample = {
+    docId:"SOP-PRC-EST", version:"1.0", status:"Draft",
+    processName:"Bestimating Estimating & Tendering", customerName:"Citiport Holdings",
+    processOwner:"Estimating Manager · TBC", effectiveDate:null,
+    coverSummary:"A step-by-step guide for running estimating and tendering through Bestimating (beta) within Procore.",
+    appliesTo:"All tendered civil and building projects",
+    purpose:"Ensure every tender is estimated, priced and submitted in Bestimating with a consistent cost structure and full audit trail.",
+    scopeIn:"Estimating and tendering activities from opportunity through submitted bid.",
+    scopeOut:"Post-award budget setup and contract administration.",
+    roles:[{role:"Estimator",permission:"Standard",responsibility:"Builds the estimate, applies rates and assembles the tender."}],
+    phases:[{name:"Prepare",desc:"Set up the estimate and cost structure."},{name:"Price",desc:"Apply rates and markups."},{name:"Review",desc:"Internal review and adjustment."},{name:"Submit",desc:"Finalise and submit the tender."}],
+    prerequisites:["Active Bestimating licence.","Cost code library configured at company level."],
+    referenceTool:"Bestimating (beta)",
+    steps:[{title:"Create the estimate",role:"Estimator",system:"Procore · Bestimating",time:"~20 min",body:"Start a new estimate from the opportunity record.",actions:["Open Bestimating and select New Estimate.","Link to the originating opportunity."]}],
+    checklist:[{text:"All line items priced.",hint:"Filter by Status ≠ Priced to confirm zero gaps.",owner:"Est"}],
+    issues:[{code:"ERR-01",issue:"Rate not found for a cost code.",fix:"Add the rate to the company rate library, then re-price the line."}],
+    references:["Procore Support — support.procore.com"]
+  };
+  document.getElementById('jsonInput').value = JSON.stringify(sample, null, 2);
+  renderDoc();
+}
+loadSample();
+</script>
+</body>
+</html>

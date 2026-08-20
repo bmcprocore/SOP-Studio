@@ -31,6 +31,12 @@
     --logomark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='2' y='2' width='60' height='60' rx='13' fill='%23000000'/%3E%3Cpath fill='%23FFFFFF' d='M21.5 13.5h21l6.81 12H62v13H49.31l-6.81 12h-21L11 32z'/%3E%3Cpath fill='%23FF5200' d='M26.5 22.5h11L43 32l-5.5 9.5h-11L21 32z'/%3E%3C/svg%3E");
   }
   html,body{margin:0;height:100%;}
+  /* Shown only when scripts are not running — otherwise the app fails silently and the
+     rail just looks broken. Hidden the instant JavaScript boots. */
+  #jswarn{flex:none;background:var(--danger);color:#fff;padding:12px 20px;font-size:13px;
+    line-height:1.5;font-weight:500;}
+  #jswarn strong{font-weight:700;}
+  body.js-ok #jswarn{display:none;}
   body{font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);
     background:var(--sand);display:flex;flex-direction:column;height:100vh;font-size:13.5px;}
   header.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 20px;height:58px;
@@ -190,6 +196,24 @@
 </style>
 </head>
 <body class="no-preview">
+<div id="jswarn">
+  <strong>This page can’t run here.</strong> The Studio needs JavaScript, and whatever is showing
+  this file has it switched off — so the rail buttons will not respond and the library will stay on
+  “Loading library…”. Save the file and open it directly in Chrome, Edge or Firefox.
+</div>
+<script>
+  /* Marks the page as live so the banner above hides itself. Also wires the rail as a delegated
+     click handler right away, so navigation keeps working even if something later in the app
+     throws during start-up. The main handler below does the same thing; running both is harmless. */
+  document.body.classList.add('js-ok');
+  document.addEventListener('click', function (e) {
+    var gate = e.target.closest && e.target.closest('.rail .gate');
+    if (!gate || !gate.dataset.p) return;
+    var p = gate.dataset.p;
+    document.querySelectorAll('.rail .gate').forEach(function (g) { g.classList.toggle('active', g === gate); });
+    document.querySelectorAll('.panel').forEach(function (pn) { pn.classList.toggle('active', pn.id === 'p-' + p); });
+  });
+</script>
 <header class="bar">
   <div class="brand"><span class="hexmark"></span> Procore SOP Studio <small>· permission-scoped SOPs · locked design v2</small></div>
   <div class="actions">

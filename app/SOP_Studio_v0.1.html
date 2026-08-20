@@ -181,6 +181,46 @@
   .ord.del:hover:not(:disabled){border-color:var(--danger);color:var(--danger);background:#fff;}
   .ord:disabled{opacity:.3;cursor:not-allowed;}
   /* Container blocks stay square */
+  /* required fields + persistent hints (hints must not live in placeholders — they vanish on focus) */
+  label .req{color:var(--danger);margin-left:3px;font-weight:700;}
+  .hint{font-size:11px;color:var(--g500);line-height:1.45;margin:3px 0 0;}
+  .missing{border-color:var(--danger)!important;}
+
+  /* review rows carry the permission rule that decided them */
+  .blk2 .rule{font-size:10.5px;line-height:1.4;color:var(--g500);}
+  .blk2 .rule b{color:var(--g600);font-weight:600;}
+  .blk2.out{opacity:.6;}
+  .blk2.out .t{text-decoration:line-through;text-decoration-color:var(--g300);}
+  .blk2.out .rule{color:var(--danger);}
+  .blk2.askrow{background:rgba(229,161,0,.09);border-radius:var(--r-btn);}
+  .blk2.askrow .rule{color:var(--orange-press);}
+
+  .tally{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 12px;font-size:12px;}
+  .tally span{display:inline-flex;align-items:center;gap:6px;color:var(--g600);}
+  .tally i{width:8px;height:8px;border-radius:999px;display:inline-block;}
+  .tally b{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600;}
+
+  .askbox{background:rgba(229,161,0,.10);border-left:3px solid var(--warn);
+    padding:12px 14px;margin-bottom:14px;font-size:12.5px;line-height:1.5;}
+  .askbox h4{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--orange-press);}
+
+  /* the approval gate */
+  .confirmbar{border:1px solid var(--g300);background:var(--sand);padding:14px 16px;margin-top:16px;}
+  .confirmbar.done{border-color:var(--ok);background:rgba(31,138,91,.07);}
+  .confirmbar h4{margin:0 0 4px;font-size:13px;font-weight:600;}
+  .confirmbar .who{display:flex;gap:10px;align-items:flex-end;margin-top:10px;}
+  .confirmbar .who>div{flex:1;}
+  .locknote{background:rgba(211,47,47,.07);border-left:3px solid var(--danger);
+    padding:12px 14px;font-size:12.5px;line-height:1.5;margin-bottom:14px;}
+  .locknote b{color:var(--danger);}
+  .okline{color:var(--ok);font-size:12.5px;line-height:1.5;}
+
+  .draftchip{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.08em;padding:2px 9px;border-radius:var(--r-pill);
+    background:var(--g100);color:var(--g600);}
+  .draftchip::before{content:"";width:5px;height:5px;border-radius:999px;background:currentColor;}
+  .draftchip.ready{background:rgba(31,138,91,.14);color:var(--ok);}
+
   .profilebox{background:var(--sand);border-left:3px solid var(--orange);padding:10px 12px;font-size:12px;
     line-height:1.55;margin-bottom:12px;border-radius:var(--r-container);}
   .profilebox b{font-weight:600;}
@@ -224,23 +264,28 @@
   });
 </script>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <small>· permission-scoped SOPs · locked design v2</small></div>
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio
+    <small id="docLabel">· no document started</small>
+    <span class="draftchip" id="draftChip">Draft</span>
+  </div>
   <div class="actions">
-    <button id="btnRender">Render preview</button>
+    <button id="btnRender" disabled>Render preview</button>
     <button id="btnDownload" class="primary" disabled>Download PDF</button>
   </div>
 </header>
 <main>
   <nav class="rail" aria-label="Workflow">
     <div class="rail-group">
-      <div class="rail-label">Templates</div>
+      <div class="rail-label">Library</div>
       <button class="gate active" data-p="templates"><span class="dot"></span><small>Templates</small></button>
     </div>
     <span class="spine"></span>
     <div class="rail-group">
       <div class="rail-label">SOP<br>Generation</div>
       <button class="gate" data-p="create"><span class="dot"></span><small>Create</small></button>
-      <button class="gate" data-p="clientreview"><span class="dot"></span><small>Client &amp; Review</small></button>
+      <button class="gate" data-p="permissions"><span class="dot"></span><small>Permissions</small></button>
+      <button class="gate" data-p="details"><span class="dot"></span><small>Details</small></button>
+      <button class="gate" data-p="review"><span class="dot"></span><small>Review</small></button>
       <button class="gate" data-p="generate"><span class="dot"></span><small>Generate</small></button>
     </div>
   </nav>
@@ -267,31 +312,45 @@
       <h2>Create an SOP</h2>
       <p class="sub">Start a new SOP by uploading a content JSON, or from one of your saved templates.</p>
       <div class="seg" id="createMode" role="group" aria-label="Create mode">
-        <button data-v="new" class="on">Create new</button>
-        <button data-v="template">From template</button>
+        <button data-v="template" class="on">From a template</button>
+        <button data-v="new">Import existing work</button>
       </div>
 
-      <div id="createNew" style="margin-top:14px;">
-        <fieldset><legend>Upload content JSON</legend>
-          <div class="drop" id="jsonDrop" tabindex="0">Drop a content JSON file here (.json), or click to choose</div>
-          <ul class="filelist" id="jsonList"></ul>
-          <div class="note">The file must follow the required content JSON schema. Any missing fields render as visible placeholders for later review.</div>
+      <div id="createTemplate" style="margin-top:14px;">
+        <fieldset><legend>Choose a saved template</legend>
+          <div id="createTplList"></div>
+          <div class="note">Templates are managed in the Templates section. Picking one loads every block in it — the Permissions step then decides which of them this reader is allowed to see.</div>
         </fieldset>
       </div>
 
-      <div id="createTemplate" style="display:none;margin-top:14px;">
-        <fieldset><legend>Choose a saved template</legend>
-          <div id="createTplList"></div>
-          <div class="note">Templates are managed in the Templates section. Picking one loads all of its blocks — untick what you don't need in the next step.</div>
+      <div id="createNew" style="display:none;margin-top:14px;">
+        <fieldset><legend>Import a content JSON file</legend>
+          <div class="drop" id="jsonDrop" tabindex="0">Drop a content JSON file here (.json), or click to choose</div>
+          <ul class="filelist" id="jsonList"></ul>
+          <div class="note">For resuming work you exported earlier, or content produced outside the Studio. It must follow the content JSON schema. Missing fields render as visible placeholders.</div>
         </fieldset>
       </div>
 
       <div class="status" id="createStatus"></div>
     </div>
 
-    <div class="panel" id="p-clientreview">
-      <h2>Client &amp; Review</h2>
-      <p class="sub">Set the detail level, enter the client and document details, then review what will be included. Leave a field blank and it renders as a visible placeholder.</p>
+    <div class="panel" id="p-permissions">
+      <h2>Permissions</h2>
+      <p class="sub">Set the reader's Procore permissions. This is what scopes the SOP — every block is kept or dropped against the rule you set here, and the Review step shows you each decision.</p>
+
+      <fieldset><legend>Base permission level</legend>
+        <div class="seg" id="permSeg" role="group" aria-label="Base permission level">
+          <button data-v="None">None</button>
+          <button data-v="ReadOnly">Read Only</button>
+          <button data-v="Standard" class="on">Standard</button>
+          <button data-v="Admin">Admin</button>
+        </div>
+        <div class="seg-note" id="permNote"></div>
+      </fieldset>
+
+      <fieldset><legend>Granular permissions</legend>
+        <div id="granList"><div class="note">Load a template first — the granular permissions it uses will appear here.</div></div>
+      </fieldset>
 
       <fieldset><legend>SOP detail level</legend>
         <div class="seg" id="detailSeg" role="group" aria-label="Detail level">
@@ -302,61 +361,88 @@
         <div class="seg-note" id="detailNote">Standard — full steps with role/system/time, key bullets and callouts. The default team standard.</div>
       </fieldset>
 
+      <div class="status" id="permStatus"></div>
+    </div>
+
+    <div class="panel" id="p-details">
+      <h2>Details</h2>
+      <p class="sub">Who the document is for and who signs it off. Anything left blank prints as a visible placeholder — required fields are marked.</p>
+
       <fieldset><legend>Client</legend>
-        <label for="fCustomer">Client name</label><input type="text" id="fCustomer" placeholder="e.g. Kingsmede Constructions Pty Ltd">
+        <label for="fCustomer">Client name<span class="req" title="Required">*</span></label>
+        <input type="text" id="fCustomer">
+        <p class="hint">The company the SOP is written for, as it should appear on the cover. For example, Kingsmede Constructions Pty Ltd.</p>
         <label>Client logo (cover, optional)</label>
         <div class="drop" id="logoDrop" tabindex="0">Drop a logo image here, or click to choose</div>
         <img id="logoPrev" class="logoprev" alt="Client logo preview" style="display:none;">
         <button id="logoClear" class="quiet" style="display:none;">Remove logo</button>
       </fieldset>
+
       <fieldset><legend>Document</legend>
         <div class="row2">
-          <div><label for="fDocId">Doc ID</label><input type="text" id="fDocId" placeholder="SOP-XXX-000"></div>
-          <div><label for="fVersion">Version</label><input type="text" id="fVersion" value="1.0"></div>
+          <div><label for="fDocId">Doc ID<span class="req" title="Required">*</span></label><input type="text" id="fDocId">
+            <p class="hint">Format SOP-XXX-000.</p></div>
+          <div><label for="fVersion">Version<span class="req" title="Required">*</span></label><input type="text" id="fVersion" value="1.0"></div>
         </div>
         <div class="row2">
-          <div><label for="fOwner">Process owner (Name · Role)</label><input type="text" id="fOwner" placeholder="S. Okafor · Project Manager"></div>
+          <div><label for="fOwner">Process owner<span class="req" title="Required">*</span></label><input type="text" id="fOwner">
+            <p class="hint">Name and role, for example S. Okafor · Project Manager.</p></div>
           <div><label for="fEffective">Effective from</label><input type="date" id="fEffective"></div>
         </div>
-        <label for="fAppliesTo">Applies to</label><input type="text" id="fAppliesTo" placeholder="Projects / teams / scope">
+        <label for="fAppliesTo">Applies to</label><input type="text" id="fAppliesTo">
+        <p class="hint">Which projects, teams or scope this covers.</p>
       </fieldset>
+
       <fieldset><legend>Sign-off people</legend>
         <div class="row2">
-          <div><label for="fPrepared">Prepared by</label><input type="text" id="fPrepared" placeholder="Name"></div>
+          <div><label for="fPrepared">Prepared by<span class="req" title="Required">*</span></label><input type="text" id="fPrepared"></div>
           <div><label for="fPreparedD">Date</label><input type="date" id="fPreparedD"></div>
         </div>
         <div class="row2">
-          <div><label for="fReviewed">Reviewed by</label><input type="text" id="fReviewed" placeholder="Name"></div>
+          <div><label for="fReviewed">Reviewed by</label><input type="text" id="fReviewed"></div>
           <div><label for="fReviewedD">Date</label><input type="date" id="fReviewedD"></div>
         </div>
         <div class="row2">
-          <div><label for="fApproved">Approved by</label><input type="text" id="fApproved" placeholder="Name"></div>
+          <div><label for="fApproved">Approved by</label><input type="text" id="fApproved"></div>
           <div><label for="fApprovedD">Date</label><input type="date" id="fApprovedD"></div>
         </div>
-      </fieldset>
-      <fieldset><legend>Process specifics</legend>
-        <div class="row2">
-          <div><label for="fSla">Response SLA (business days)</label><input type="text" id="fSla" placeholder="e.g. 5"></div>
-          <div><label for="fNaming">RFI subject naming convention</label><input type="text" id="fNaming" placeholder="Location – Trade – Query"></div>
-        </div>
-        <label for="fEscalation">Escalation path for overdue items</label><input type="text" id="fEscalation" placeholder="e.g. PM chases at +2 days; CM raises at contract meeting">
+        <p class="hint">Reviewed and approved are usually filled in after the draft has been read. Leave them blank and the document prints signature lines.</p>
       </fieldset>
 
-      <fieldset><legend>Review inclusion</legend>
-        <div id="profileBox"></div>
-        <div id="blockList"><div class="note">Create or load content in the Create step first — every block appears here to include or exclude.</div></div>
+      <fieldset><legend>Process specifics</legend>
+        <div class="row2">
+          <div><label for="fSla">Response SLA (business days)</label><input type="text" id="fSla"></div>
+          <div><label for="fNaming">RFI subject naming convention</label><input type="text" id="fNaming">
+            <p class="hint">For example, Location – Trade – Query.</p></div>
+        </div>
+        <label for="fEscalation">Escalation path for overdue items</label><input type="text" id="fEscalation">
+        <p class="hint">For example, PM chases at +2 days; CM raises at the contract meeting.</p>
       </fieldset>
-      <fieldset><legend>Advanced</legend>
+
+      <div class="status" id="detailsStatus"></div>
+    </div>
+
+    <div class="panel" id="p-review">
+      <h2>Review</h2>
+      <p class="sub">Everything the permission rule kept or dropped, with the reason for each. Nothing can be generated until you confirm this list — that confirmation is recorded on the document.</p>
+      <div id="profileBox"></div>
+      <div id="askBox"></div>
+      <div id="tallyBox"></div>
+      <div id="blockList"><div class="note">Start from a template in the Create step first — every block appears here to include or exclude.</div></div>
+      <div id="confirmBox"></div>
+      <fieldset style="margin-top:16px;"><legend>Advanced</legend>
         <button id="btnShowJson" class="quiet">View / edit assembled content JSON</button>
         <textarea id="sopJson" rows="12" style="display:none;margin-top:10px;" spellcheck="false"></textarea>
       </fieldset>
     </div>
 
+
     <div class="panel" id="p-generate">
       <h2>Generate</h2>
       <p class="sub">Renders the SOP in the locked step-per-page design — identical to the standalone builder output.</p>
+      <div id="genGate"></div>
       <div id="genSummary" class="profilebox" style="display:none;"></div>
-      <button id="btnRender2" class="primary" style="width:100%;padding:11px;">Render preview</button>
+      <button id="btnRender2" class="primary" style="width:100%;padding:11px;" disabled>Render preview</button>
       <button id="btnDownload2" style="width:100%;padding:11px;margin-top:8px;" disabled>Download PDF</button>
       <div class="status" id="genStatus"></div>
       <div class="note">File name follows the standard: Client_Tool_Persona_vX.Y.pdf. The checklist boxes and the sign-off name/date lines are fillable form fields — tick and type in any PDF reader.</div>
@@ -405,6 +491,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     summary: [],            // [{id,title,status,reason,included}]
     sop: null,              // assembled content JSON (with _id on blocks)
     rendered: false,
+    confirmed: null,        // { by, at } — Gate 3. Nothing renders until this is set.
   };
 
   // ============================================================ seed template (RFI master v0.2)
@@ -483,6 +570,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       st.className = 'status';
     }
     renderTplList();
+    try { renderCreateTplList(); } catch (_) {}
   }
   async function saveLibrary(msg) {
     const st = $('libStatus');
@@ -497,6 +585,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       st.className = 'status err';
     }
     renderTplList();
+    try { renderCreateTplList(); } catch (_) {}
   }
   function renderTplList() {
     const el = $('tplList');
@@ -595,8 +684,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       renderFileList(listId, files, removeFrom);
     });
   }
-  // ---- create mode toggle (new / from template)
-  let createMode = 'new';
+  // ---- create mode toggle. Templates lead: importing a JSON file is the specialist path.
+  let createMode = 'template';
   document.querySelectorAll('#createMode button').forEach(b => b.onclick = () => {
     createMode = b.dataset.v;
     document.querySelectorAll('#createMode button').forEach(x => x.classList.toggle('on', x === b));
@@ -607,12 +696,77 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   // build the inclusion summary straight from an assembled content JSON.
   // `type` groups the review panel; summary ORDER drives the rendered order.
+  // ============================================================ permission model
+  // Blocks carry _perm { min, granular } from the master library. A block is in scope when the
+  // reader's base level reaches _perm.min AND they hold any granular permission it names.
+  const PERM_ORDER = ['None', 'ReadOnly', 'Standard', 'Admin'];
+  const PERM_LABEL = { None: 'None', ReadOnly: 'Read Only', Standard: 'Standard', Admin: 'Admin' };
+  const PERM_RANK = (lvl) => {
+    const i = PERM_ORDER.indexOf(String(lvl || '').replace(/\s+/g, ''));
+    return i < 0 ? -1 : i;
+  };
+
+  /** Decide one block against the current profile and say why, in words a human can check. */
+  function decide(block) {
+    const p = state.profile || {};
+    const perm = block && block._perm;
+    if (block && block._ask) {
+      return { status: 'ask', included: false,
+        reason: String(block._ask) || 'Depends on how this client has configured Procore — confirm before including.' };
+    }
+    if (!perm || !perm.min) {
+      return { status: 'include', included: true, reason: 'No permission restriction — applies to everyone.' };
+    }
+    const need = PERM_RANK(perm.min), have = PERM_RANK(p.level);
+    const needLabel = PERM_LABEL[String(perm.min).replace(/\s+/g, '')] || perm.min;
+    if (have < need) {
+      return { status: 'exclude', included: false,
+        reason: 'Needs <b>' + esc(needLabel) + '</b> — this reader has ' + esc(PERM_LABEL[p.level] || p.level || 'no level set') + '.' };
+    }
+    if (perm.granular && !(p.granular || []).includes(perm.granular)) {
+      return { status: 'exclude', included: false,
+        reason: 'Needs the <b>' + esc(perm.granular) + '</b> permission, which this reader does not hold.' };
+    }
+    return { status: 'include', included: true,
+      reason: 'Requires <b>' + esc(needLabel) + '</b>' + (perm.granular ? ' plus <b>' + esc(perm.granular) + '</b>' : '') + '.' };
+  }
+
+  /** Every granular permission named anywhere in the loaded content, for the Permissions screen. */
+  function granularInContent(sop) {
+    const set = [];
+    ['steps', 'checklist', 'issues'].forEach(k => (sop && sop[k] || []).forEach(b => {
+      const g = b._perm && b._perm.granular;
+      if (g && !set.includes(g)) set.push(g);
+    }));
+    return set;
+  }
+
   function buildSummaryFromSop(sop) {
     const rows = [];
-    (sop.steps || []).forEach(s => rows.push({ id: s._id, title: s.title || '', type: 'step', status: 'include', reason: 'Procedure step', included: true }));
-    (sop.checklist || []).forEach(c => rows.push({ id: c._id, title: c.text || '', type: 'check', status: 'include', reason: 'Checklist item', included: true }));
-    (sop.issues || []).forEach(e => rows.push({ id: e._id, title: e.issue || e.code || '', type: 'issue', status: 'include', reason: 'Common issue', included: true }));
+    const add = (b, type, title) => {
+      const d = decide(b);
+      rows.push({ id: b._id, title: title || '', type: type, status: d.status, reason: d.reason, included: d.included });
+    };
+    (sop.steps || []).forEach(s => add(s, 'step', s.title));
+    (sop.checklist || []).forEach(c => add(c, 'check', c.text));
+    (sop.issues || []).forEach(e => add(e, 'issue', e.issue || e.code));
     return rows;
+  }
+
+  /** Recompute every decision after the permission profile changes, keeping any manual overrides
+   *  the reviewer has already made on rows the rule still allows. */
+  function recomputeSummary() {
+    if (!state.sop) return;
+    const manual = {};
+    state.summary.forEach(r => { if (r.touched) manual[r.id] = r.included; });
+    state.summary = buildSummaryFromSop(state.sop);
+    state.summary.forEach(r => {
+      if (Object.prototype.hasOwnProperty.call(manual, r.id) && r.status !== 'exclude') {
+        r.included = manual[r.id]; r.touched = true;
+      }
+    });
+    unconfirm('The permission profile changed, so this list needs confirming again.');
+    renderReview();
   }
 
   // ensure every step/checklist/issue has a stable _id — the join key used by both
@@ -635,11 +789,56 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     state.sop = ensureIds(sop);
     state.sop.status = state.sop.status || 'draft';
     state.selectedTool = toolName || (sop.access && sop.access.tool) || sop.referenceTool || state.selectedTool || null;
+    state.profile = {
+      tool: (sop.access && sop.access.tool) || toolName || '',
+      level: state.profile && state.profile.level ? state.profile.level : 'Standard',
+      granular: [],
+    };
     state.summary = buildSummaryFromSop(sop);
-    state.profile = { tool: (sop.access && sop.access.tool) || toolName || '', level: (sop.access && sop.access.level) || '', granular: [] };
+    state.confirmed = null;
+    state.rendered = false;
+    renderPermissions();
     setStatus('createStatus', msg, 'ok');
     renderReview();
-    goGate('clientreview');
+    goGate('permissions');   // permissions must be set before the review means anything
+  }
+
+  // ============================================================ permissions screen
+  function renderPermissions() {
+    const p = state.profile || {};
+    document.querySelectorAll('#permSeg button').forEach(b =>
+      b.classList.toggle('on', b.dataset.v === p.level));
+    const note = $('permNote');
+    if (note) {
+      note.textContent = {
+        None: 'No access to the tool. Almost nothing will be included — useful only to show someone what they cannot do.',
+        ReadOnly: 'Can view and respond where they are on distribution, but cannot create or manage.',
+        Standard: 'Can create and work items they own. Managing others’ items needs a granular permission below.',
+        Admin: 'Full access including tool configuration and settings.',
+      }[p.level] || 'Choose the base level from the client’s Procore permission template.';
+    }
+
+    const el = $('granList');
+    if (!el) return;
+    const list = state.sop ? granularInContent(state.sop) : [];
+    if (!state.sop) {
+      el.innerHTML = '<div class="note">Load a template first — the granular permissions it uses will appear here.</div>';
+    } else if (!list.length) {
+      el.innerHTML = '<div class="note">This template does not depend on any granular permissions.</div>';
+    } else {
+      el.innerHTML = list.map((g, i) =>
+        '<div class="blk"><input type="checkbox" id="gran' + i + '" data-g="' + esc(g) + '"' +
+        ((p.granular || []).includes(g) ? ' checked' : '') + '>' +
+        '<div><div class="t"><label for="gran' + i + '" style="display:inline;font-size:12.5px;color:var(--ink);margin:0;">' +
+        esc(g) + '</label></div>' +
+        '<div class="r">Tick this if the reader holds it in the client’s permission template.</div></div></div>').join('');
+      el.querySelectorAll('input[type=checkbox]').forEach(cb => cb.onchange = () => {
+        const g = cb.dataset.g, cur = state.profile.granular || [];
+        state.profile.granular = cb.checked ? cur.concat([g]) : cur.filter(x => x !== g);
+        recomputeSummary();
+        setStatus('permStatus', 'Permission profile updated — the Review step now reflects it.', 'ok');
+      });
+    }
   }
 
   // convert a saved tool template (master library) into a content-JSON skeleton
@@ -651,10 +850,12 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       purpose: t.purpose || '',
       access: { tool: t.name || '', level: '', levelMeaning: '', granular: [], notIncluded: [] },
       phases: t.phases || [], procedureIntro: '', referenceTool: t.referenceTool || '',
-      steps: (t.steps || []).map(s => ({ _id: s._id, title: s.title, role: s.role, system: s.system, time: s.time, body: s.body, bullets: s.bullets || [], callout: s.callout || null })),
+      // _perm and _ask are carried through deliberately. The renderer ignores unknown keys, and
+      // without them the Review step cannot show which rule kept or dropped each block.
+      steps: (t.steps || []).map(s => ({ _id: s._id, _perm: s._perm, _ask: s._ask, title: s.title, role: s.role, system: s.system, time: s.time, body: s.body, bullets: s.bullets || [], callout: s.callout || null })),
       closeoutIntro: '', owner: '',
-      checklist: (t.checklist || []).map(c => ({ _id: c._id, text: c.text, hint: c.hint || '', owner: c.owner || '' })),
-      issues: (t.issues || []).map(e => ({ _id: e._id, code: e.code, issue: e.issue, resolution: e.resolution })),
+      checklist: (t.checklist || []).map(c => ({ _id: c._id, _perm: c._perm, _ask: c._ask, text: c.text, hint: c.hint || '', owner: c.owner || '' })),
+      issues: (t.issues || []).map(e => ({ _id: e._id, _perm: e._perm, _ask: e._ask, code: e.code, issue: e.issue, resolution: e.resolution })),
       references: t.references || []
     };
   }
@@ -731,7 +932,77 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     state.detail = b.dataset.v;
     $('detailSeg').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
     $('detailNote').textContent = DETAIL_NOTES[state.detail];
+    unconfirm('The detail level changed — confirm the list again before generating.');
+    renderReview();
   });
+
+  // base permission level
+  $('permSeg').querySelectorAll('button').forEach(b => b.onclick = () => {
+    state.profile = state.profile || { tool: '', level: 'Standard', granular: [] };
+    state.profile.level = b.dataset.v;
+    renderPermissions();
+    if (state.sop) {
+      recomputeSummary();
+      setStatus('permStatus', 'Permission profile set to ' + (PERM_LABEL[b.dataset.v] || b.dataset.v) +
+        ' — the Review step now reflects it.', 'ok');
+    }
+  });
+
+
+  // ============================================================ Gate 3 — the approval lock
+  // The team standard says generation never proceeds without a human confirming the inclusion
+  // summary. That rule is enforced here: every route to a document checks state.confirmed.
+  const REQUIRED_FIELDS = [
+    ['fCustomer', 'Client name'], ['fDocId', 'Doc ID'], ['fVersion', 'Version'],
+    ['fOwner', 'Process owner'], ['fPrepared', 'Prepared by'],
+  ];
+
+  function missingRequired() {
+    return REQUIRED_FIELDS.filter(([id]) => !($(id) && $(id).value.trim())).map(([, label]) => label);
+  }
+
+  function unconfirm(why) {
+    if (!state.confirmed) { syncLocks(); return; }
+    state.confirmed = null;
+    state.rendered = false;
+    if (why) setStatus('genStatus', why, 'err');
+    syncLocks();
+  }
+
+  /** Single place that decides what is available. Called after anything that changes readiness. */
+  function syncLocks() {
+    const ok = !!state.confirmed;
+    ['btnRender', 'btnRender2'].forEach(id => { if ($(id)) $(id).disabled = !ok; });
+    ['btnDownload', 'btnDownload2'].forEach(id => { if ($(id)) $(id).disabled = !(ok && state.rendered); });
+
+    const chip = $('draftChip'), label = $('docLabel');
+    if (label) {
+      const c = state.sop;
+      label.textContent = c
+        ? '· ' + (c.processName || 'Untitled SOP') + ' · ' + ((c.customer || '').trim() || 'no client set')
+        : '· no document started';
+    }
+    if (chip) {
+      chip.textContent = ok ? 'Confirmed draft' : 'Draft — not confirmed';
+      chip.className = 'draftchip' + (ok ? ' ready' : '');
+    }
+
+    const gate = $('genGate');
+    if (gate) {
+      if (!state.sop) {
+        gate.innerHTML = '<div class="locknote"><b>Nothing to generate yet.</b> Start from a template in the Create step.</div>';
+      } else if (!ok) {
+        gate.innerHTML = '<div class="locknote"><b>Waiting on your review.</b> The inclusion list has to be confirmed by a person before an SOP can be produced. ' +
+          'Open the Review step, check what the permission rule kept and dropped, then confirm.</div>';
+      } else {
+        const miss = missingRequired();
+        gate.innerHTML = '<div class="okline">Confirmed by <b>' + esc(state.confirmed.by) + '</b> on ' + esc(state.confirmed.at) + '.</div>' +
+          (miss.length ? '<div class="locknote" style="margin-top:10px;"><b>' + miss.length + ' required field' +
+            (miss.length === 1 ? '' : 's') + ' still blank:</b> ' + esc(miss.join(', ')) +
+            '. These will print as visible placeholders.</div>' : '');
+      }
+    }
+  }
 
   function setStatus(id, msg, cls) {
     const el = $(id);
@@ -775,11 +1046,35 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   function renderReview() {
     const p = state.profile || {};
     $('profileBox').innerHTML = '<div class="profilebox">' +
-      '<b>' + (p.tool || state.selectedTool || 'Content loaded') + '</b>' +
-      (p.level ? ' · ' + p.level : '') +
-      '<br><span style="color:var(--g500)">Detail level: ' + state.detail + ' · drag to reorder, add or remove, untick to exclude.</span></div>';
+      '<b>' + esc(p.tool || state.selectedTool || 'Content loaded') + '</b>' +
+      ' · ' + esc(PERM_LABEL[p.level] || p.level || 'no permission level set') +
+      ((p.granular || []).length ? ' + ' + esc(p.granular.join(', ')) : '') +
+      '<br><span style="color:var(--g500)">Detail level: ' + esc(state.detail) +
+      ' · drag to reorder, untick to drop something the rule allows.</span></div>';
+
     const el = $('blockList');
-    if (!state.summary.length) { el.innerHTML = '<div class="note">Create or load content in the Create step first.</div>'; return; }
+    if (!state.summary.length) {
+      el.innerHTML = '<div class="note">Start from a template in the Create step first.</div>';
+      $('tallyBox').innerHTML = ''; $('askBox').innerHTML = ''; $('confirmBox').innerHTML = '';
+      syncLocks(); return;
+    }
+
+    // counts first, so the reviewer sees the shape of the decision before the detail
+    const nIn = state.summary.filter(s => s.included).length;
+    const nOut = state.summary.filter(s => s.status === 'exclude').length;
+    const nAsk = state.summary.filter(s => s.status === 'ask').length;
+    $('tallyBox').innerHTML = '<div class="tally">' +
+      '<span><i style="background:var(--ok)"></i><b>' + nIn + '</b> included</span>' +
+      '<span><i style="background:var(--g400)"></i><b>' + nOut + '</b> dropped by the permission rule</span>' +
+      '<span><i style="background:var(--warn)"></i><b>' + nAsk + '</b> need a decision</span></div>';
+
+    const asks = state.summary.filter(s => s.status === 'ask');
+    $('askBox').innerHTML = asks.length
+      ? '<div class="askbox"><h4>' + asks.length + ' item' + (asks.length === 1 ? '' : 's') + ' need a decision</h4>' +
+        'These depend on how this client has configured Procore, so the rule cannot decide them. ' +
+        'Tick one below only if you have confirmed it applies.<ul style="margin:8px 0 0;padding-left:18px;">' +
+        asks.map(a => '<li>' + esc(a.id) + ' · ' + esc(a.title) + '</li>').join('') + '</ul></div>'
+      : '';
     let html = '';
     REV_GROUPS.forEach(g => {
       const rows = state.summary.map((s, i) => ({ s, i })).filter(o => o.s.type === g.type);
@@ -790,11 +1085,15 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       rows.forEach((o) => {
         const s = o.s, i = o.i;
         const title = (s.title && s.title.trim()) ? esc(s.title) : '<em style="color:var(--g400)">(empty — edit text in the preview)</em>';
-        html += '<div class="blk2' + (s.status === 'ask' ? ' ask' : '') + (!s.included ? ' excluded' : '') + '" draggable="true" data-i="' + i + '">' +
+        const cls = 'blk2' + (s.status === 'ask' ? ' askrow' : '') + (s.status === 'exclude' ? ' out' : '');
+        // Rows the rule excluded stay visible and locked — the reviewer must be able to see what
+        // the reader will NOT receive, and must not be able to silently re-add it.
+        html += '<div class="' + cls + '" draggable="' + (s.status === 'exclude' ? 'false' : 'true') + '" data-i="' + i + '">' +
           '<span class="grip" title="Drag to reorder" aria-hidden="true">⠿</span>' +
-          '<input type="checkbox" data-i="' + i + '"' + (s.included ? ' checked' : '') + '>' +
+          '<input type="checkbox" data-i="' + i + '"' + (s.included ? ' checked' : '') +
+            (s.status === 'exclude' ? ' disabled title="Excluded by the permission rule"' : '') + '>' +
           '<div class="blk2-main"><div class="t">' + esc(s.id || '') + ' · ' + title + '</div>' +
-          '<div class="r">' + esc(s.reason || '') + '</div></div>' +
+          '<div class="rule">' + (s.reason || '') + '</div></div>' +
           '<button class="ord del" data-del="' + i + '" title="Remove">×</button>' +
           '</div>';
       });
@@ -802,12 +1101,58 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     });
     el.innerHTML = html;
     el.querySelectorAll('input[type=checkbox]').forEach(cb => cb.onchange = () => {
-      state.summary[+cb.dataset.i].included = cb.checked; afterReviewChange();
+      const row = state.summary[+cb.dataset.i];
+      row.included = cb.checked;
+      row.touched = true;                       // remember it was a human call, not the rule
+      unconfirm('The inclusion list changed — confirm it again before generating.');
+      afterReviewChange();
     });
     el.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addItem(b.dataset.add));
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
     wireDnd(el);
+    renderConfirm();
     syncSopEditor();
+    syncLocks();
+  }
+
+  /** Gate 3 itself. Nothing downstream unlocks until someone puts their name to this list. */
+  function renderConfirm() {
+    const box = $('confirmBox');
+    if (!box) return;
+    if (state.confirmed) {
+      box.innerHTML = '<div class="confirmbar done"><h4>Inclusions confirmed</h4>' +
+        '<div class="okline">Confirmed by <b>' + esc(state.confirmed.by) + '</b> on ' + esc(state.confirmed.at) +
+        '. Generate is now available. Changing the permissions or the list above will clear this.</div>' +
+        '<button id="btnUnconfirm" class="quiet" style="margin-top:10px;">Reopen for changes</button></div>';
+      $('btnUnconfirm').onclick = () => { unconfirm(); renderReview(); };
+      return;
+    }
+    const nAsk = state.summary.filter(s => s.status === 'ask' && !s.touched).length;
+    box.innerHTML = '<div class="confirmbar"><h4>Confirm this list before generating</h4>' +
+      '<div style="font-size:12.5px;line-height:1.5;color:var(--g600)">You are confirming that the included items are correct for this reader’s permissions, ' +
+      'and that anything dropped should not reach them. Your name is recorded against the document.</div>' +
+      (nAsk ? '<div class="note warn" style="margin-top:8px;">' + nAsk + ' item' + (nAsk === 1 ? '' : 's') +
+        ' still need a decision. Tick or leave them, then confirm.</div>' : '') +
+      '<div class="who"><div><label for="fConfirmBy">Your name<span class="req">*</span></label>' +
+      '<input type="text" id="fConfirmBy" autocomplete="name"></div>' +
+      '<button id="btnConfirm" class="primary">Confirm inclusions</button></div>' +
+      '<div class="status" id="confirmStatus"></div></div>';
+
+    $('btnConfirm').onclick = () => {
+      const who = $('fConfirmBy').value.trim();
+      if (!who) {
+        $('fConfirmBy').classList.add('missing');
+        setStatus('confirmStatus', 'Enter your name — the confirmation is recorded against the document.', 'err');
+        $('fConfirmBy').focus();
+        return;
+      }
+      state.confirmed = { by: who, at: new Date().toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }) };
+      renderConfirm();
+      syncLocks();
+      syncSopEditor();   // the advanced JSON view must show the audit trail too
+      setStatus('genStatus', 'Inclusions confirmed — you can generate now.', 'ok');
+    };
+    $('fConfirmBy').oninput = () => $('fConfirmBy').classList.remove('missing');
   }
   function includedIds() {
     return new Set(state.summary.filter(s => s.included).map(s => s.id));
@@ -917,6 +1262,15 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       return out;
     };
     c.steps = orderBy(c.steps, 'step'); c.checklist = orderBy(c.checklist, 'check'); c.issues = orderBy(c.issues, 'issue');
+    // audit trail: who approved this inclusion list, and the permission profile it was approved against
+    if (state.confirmed) {
+      c._confirmedBy = state.confirmed.by;
+      c._confirmedAt = state.confirmed.at;
+      c._permissionProfile = {
+        level: (state.profile || {}).level || '',
+        granular: ((state.profile || {}).granular || []).slice(),
+      };
+    }
     // client fields override anything the model left blank or wrong
     c.customer = cd.customer || c.customer || '';
     c.docId = cd.docId || c.docId || '';
@@ -1304,8 +1658,24 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   }
 
   function doRender() {
+    // Gate 3 is enforced here, not only in the interface — this is the single choke point every
+    // route to a document passes through.
+    if (!state.confirmed) {
+      setStatus('genStatus', 'Not confirmed yet. Open the Review step, check what the permission rule kept and dropped, then confirm the list.', 'err');
+      goGate('review');
+      return;
+    }
+    const missing = missingRequired();
+    if (missing.length) {
+      missing.forEach(label => {
+        const pair = REQUIRED_FIELDS.find(([, l]) => l === label);
+        if (pair && $(pair[0])) $(pair[0]).classList.add('missing');
+      });
+      setStatus('genStatus', 'Rendering with ' + missing.length + ' required field' + (missing.length === 1 ? '' : 's') +
+        ' blank (' + missing.join(', ') + '). These print as visible placeholders — fill them in the Details step before this reaches a client.', 'err');
+    }
     const c = assembleFinal();
-    if (!c) { setStatus('genStatus', 'Nothing to render yet — create or load content in the Create step first.', 'err'); return; }
+    if (!c) { setStatus('genStatus', 'Nothing to render yet — start from a template in the Create step first.', 'err'); return; }
     if (!frameReady) { setStatus('genStatus', 'Fonts still loading — try again in a moment.'); return; }
     try {
       const doc = frame.contentDocument;
@@ -1316,11 +1686,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       $('prevEmpty').style.display = 'none';
       document.body.classList.remove('no-preview');   // there is now something to show
       state.rendered = true;
-      $('btnDownload').disabled = false; $('btnDownload2').disabled = false;
+      syncLocks();
+      const prof = state.profile || {};
       $('genSummary').style.display = 'block';
-      $('genSummary').innerHTML = '<b>' + (c.customer || '[Customer]') + '</b> · ' + (c.processName || '') +
-        ' · ' + ((state.profile && state.profile.personaLabel) || 'persona') + ' · ' + state.detail +
-        ' detail · ' + res.total + ' pages';
+      $('genSummary').innerHTML = '<b>' + esc(c.customer || '[Customer]') + '</b> · ' + esc(c.processName || '') +
+        ' · ' + esc(PERM_LABEL[prof.level] || prof.level || 'persona') +
+        ((prof.granular || []).length ? ' + ' + esc(prof.granular.join(', ')) : '') +
+        ' · ' + esc(state.detail) + ' detail · ' + res.total + ' pages' +
+        '<br><span style="color:var(--g500)">Confirmed by ' + esc(state.confirmed.by) + ' on ' + esc(state.confirmed.at) + '</span>';
       setStatus('genStatus', 'Rendered · ' + res.total + ' pages. Review every page before issuing — this is a draft until reviewed and approved.', 'ok');
     } catch (e) {
       setStatus('genStatus', 'Render error: ' + e.message, 'err');
@@ -1419,6 +1792,16 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     }
   };
 
+
+  // required fields: clear the error styling as soon as the person starts fixing it, and
+  // re-check readiness so the Generate screen's warning stays honest
+  REQUIRED_FIELDS.forEach((pair) => {
+    const el = $(pair[0]);
+    if (el) el.addEventListener('input', () => { el.classList.remove('missing'); syncLocks(); });
+  });
+
+  renderPermissions();
+  syncLocks();        // start locked: nothing can be produced before Gate 3 is satisfied
   loadLibrary();
 })();
 

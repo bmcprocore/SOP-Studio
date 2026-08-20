@@ -24,17 +24,16 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
   await step('seed the shared library', () => page.click('#btnSeed'));
   await step('open Create', () => page.click('.rail .gate[data-p="create"]'));
-  await step('choose "From template"', () =>
+    await step('select the seeded template', () =>
     page.evaluate(() => {
-      const b = [...document.querySelectorAll('#p-create .seg button')].find((x) => /template/i.test(x.textContent));
-      if (!b) throw new Error('no "From template" button'); b.click();
-    }));
-  await step('select the seeded template', () =>
-    page.evaluate(() => {
-      const t = document.querySelector('#createTemplate .tpl') || document.querySelector('.tpl');
+      const t = document.querySelector('#createTplList .tpl') || document.querySelector('.tpl');
       if (!t) throw new Error('no template row rendered'); t.click();
     }));
-  await step('open Client & Review', () => page.click('.rail .gate[data-p="clientreview"]'));
+  await step('open Review', () => page.click('.rail .gate[data-p="review"]'));
+  await step('confirm the inclusion list', async () => {
+    await page.evaluate(() => { const i = document.getElementById('fConfirmBy'); i.value = 'Automated check'; i.dispatchEvent(new Event('input', { bubbles: true })); });
+    await page.evaluate(() => document.getElementById('btnConfirm').click());
+  });
   await step('open Generate', () => page.click('.rail .gate[data-p="generate"]'));
   await step('render', () => page.click('#btnRender2'));
   await wait(1800);

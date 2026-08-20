@@ -348,6 +348,16 @@
     <div class="panel" id="p-create">
       <h2>Create an SOP</h2>
       <p class="sub">Start a new SOP by uploading a content JSON, or from one of your saved templates.</p>
+      <fieldset><legend>Region</legend>
+        <label for="fRegion">Where is this SOP for?<span class="req" title="Required">*</span></label>
+        <select id="fRegion">
+          <option value="APAC">APAC — Asia Pacific</option>
+          <option value="NAMER">NAMER — North America</option>
+          <option value="TBC" selected>TBC — not set yet</option>
+        </select>
+        <p class="hint" id="regionHint"></p>
+      </fieldset>
+
       <div class="seg" id="createMode" role="group" aria-label="Create mode">
         <button data-v="template" class="on">From a template</button>
         <button data-v="new">Import existing work</button>
@@ -554,6 +564,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     profile: null,          // parsed permission profile from analysis
     summary: [],            // [{id,title,status,reason,included}]
     sop: null,              // assembled content JSON (with _id on blocks)
+    region: 'TBC',          // APAC | NAMER | TBC — drives the terminology in the output
     rendered: false,
     confirmed: null,        // { by, at } — Gate 3. Nothing renders until this is set.
   };
@@ -1067,7 +1078,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (label) {
       const c = state.sop;
       label.textContent = c
-        ? '· ' + (c.processName || 'Untitled SOP') + ' · ' + ((c.customer || '').trim() || 'no client set')
+        ? '· ' + (c.processName || 'Untitled SOP') + ' · ' + ((c.customer || '').trim() || 'no client set') +
+          ' · ' + (state.region || 'TBC')
         : '· no document started';
     }
     if (chip) {
@@ -1085,6 +1097,9 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       } else {
         const miss = missingRequired();
         gate.innerHTML = '<div class="okline">Confirmed by <b>' + esc(state.confirmed.by) + '</b> on ' + esc(state.confirmed.at) + '.</div>' +
+          (state.region === 'TBC'
+            ? '<div class="locknote" style="margin-top:10px;"><b>Region is still TBC.</b> The document will use the APAC wording it was authored in. ' +
+              'Set the region on the Create step if this is for another market.</div>' : '') +
           (miss.length ? '<div class="locknote" style="margin-top:10px;"><b>' + miss.length + ' required field' +
             (miss.length === 1 ? '' : 's') + ' still blank:</b> ' + esc(miss.join(', ')) +
             '. These will print as visible placeholders.</div>' : '');
@@ -1231,9 +1246,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
     const el = $('blockList');
     if (!state.summary.length) {
-      el.innerHTML = '<div class="note">Start from a template in the Create step first.</div>';
-      $('tallyBox').innerHTML = ''; $('askBox').innerHTML = ''; $('confirmBox').innerHTML = '';
+      // No summary means the content JSON was edited by hand — the toggles do not apply, but
+      // the document still exists and still has to be confirmed before it can be generated.
+      el.innerHTML = state.sop
+        ? '<div class="note">Content JSON edited manually — the section toggles do not apply. The JSON as shown will render.</div>'
+        : '<div class="note">Start from a template in the Create step first.</div>';
+      $('tallyBox').innerHTML = ''; $('askBox').innerHTML = '';
       renderOutline();
+      if (state.sop) { renderConfirm(); } else { $('confirmBox').innerHTML = ''; }
       syncLocks(); return;
     }
 
@@ -1457,7 +1477,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     });
     if (state.logo) c.clientLogo = state.logo;
     c._detail = state.detail;
-    return c;
+    c._region = state.region || 'TBC';
+    return localiseContent(c, c._region);   // regional wording is applied last, to finished prose
   }
   $('btnShowJson').onclick = () => {
     const ta = $('sopJson');
@@ -1830,6 +1851,65 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     });
   }
 
+  // ============================================================ regional terminology
+  // Templates are authored in APAC terms. Choosing another region swaps the wording in the
+  // document's prose. Nothing is guessed: only the pairs listed here are ever substituted,
+  // so an unmapped term is left exactly as authored rather than mistranslated.
+  //
+  // >>> ADD TERMINOLOGY HERE. One [apacTerm, regionalTerm] pair per line, lower case.
+  //     Longer phrases first — 'head contract' must be tried before 'contract'.
+  const TERMS = {
+    APAC: [],          // the language templates are already written in
+    NAMER: [
+      ['head contract', 'prime contract'],
+    ],
+    TBC: [],           // region not chosen — leave the wording untouched
+  };
+  const REGION_LABEL = { APAC: 'APAC — Asia Pacific', NAMER: 'NAMER — North America', TBC: 'TBC — not set' };
+  const termCount = (r) => (TERMS[r] || []).length;
+
+  /** Match the replacement to how the original was capitalised, so "Head contract" becomes
+   *  "Prime contract" and "HEAD CONTRACT" becomes "PRIME CONTRACT". */
+  function matchCase(found, replacement) {
+    if (found === found.toUpperCase() && found !== found.toLowerCase()) return replacement.toUpperCase();
+    if (found[0] === found[0].toUpperCase()) return replacement[0].toUpperCase() + replacement.slice(1);
+    return replacement;
+  }
+
+  /** Swap terms in one string, leaving any inline HTML tags and [bracketed] placeholders alone. */
+  function localiseText(str, region) {
+    const pairs = TERMS[region] || [];
+    if (!str || !pairs.length) return str;
+    // split on tags so we never rewrite inside <code>, <strong> etc. markup itself
+    return String(str).split(/(<[^>]*>)/).map(part => {
+      if (part.startsWith('<')) return part;
+      let out = part;
+      pairs.forEach(([from, to]) => {
+        const re = new RegExp('\\b' + from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi');
+        out = out.replace(re, (m) => matchCase(m, to));
+      });
+      return out;
+    }).join('');
+  }
+
+  /** Apply the region's wording across the document's prose. Identifiers, names, dates, URLs and
+   *  Procore's own permission labels are deliberately left alone. */
+  function localiseContent(c, region) {
+    if (!TERMS[region] || !TERMS[region].length) return c;
+    const t = (s) => localiseText(s, region);
+    ['subtitle', 'purpose', 'procedureIntro', 'closeoutIntro', 'appliesTo', 'processName'].forEach(k => { c[k] = t(c[k]); });
+    (c.phases || []).forEach(p => { p.name = t(p.name); p.desc = t(p.desc); });
+    (c.steps || []).forEach(s => {
+      s.title = t(s.title); s.role = t(s.role); s.body = t(s.body);
+      if (Array.isArray(s.bullets)) s.bullets = s.bullets.map(t);
+      if (s.callout) { s.callout.label = t(s.callout.label); s.callout.body = t(s.callout.body); }
+    });
+    (c.checklist || []).forEach(x => { x.text = t(x.text); x.hint = t(x.hint); x.owner = t(x.owner); });
+    (c.issues || []).forEach(x => { x.issue = t(x.issue); x.resolution = t(x.resolution); });
+    (c.references || []).forEach(r => { r.tool = t(r.tool); });
+    return c;
+  }
+
   // ============================================================ save as template
   // Turn the SOP being generated back into a reusable template. Client-specific facts are
   // deliberately dropped — a template that carried one client's name, dates or sign-off people
@@ -2037,6 +2117,28 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (el) el.addEventListener('input', () => { el.classList.remove('missing'); syncLocks(); });
   });
 
+  // Region — swaps the construction terminology in the finished document.
+  function regionHint() {
+    const r = state.region, n = termCount(r);
+    const el = $('regionHint');
+    if (!el) return;
+    if (r === 'TBC') {
+      el.textContent = 'Templates are written in APAC terms. Until you choose a region the wording is left exactly as authored.';
+    } else if (!n) {
+      el.textContent = REGION_LABEL[r] + ' — no terminology swaps are configured yet, so the wording stays as authored.';
+    } else {
+      el.textContent = REGION_LABEL[r] + ' — ' + n + ' term' + (n === 1 ? '' : 's') +
+        ' will be swapped in the document (for example, head contract becomes prime contract).';
+    }
+  }
+  $('fRegion').onchange = () => {
+    state.region = $('fRegion').value;
+    regionHint();
+    unconfirm('The region changed, so the wording changes — confirm the list again before generating.');
+    if (state.sop) { renderReview(); }
+    syncLocks();
+  };
+
   // "Also save this as a template" — reveal the name field, prefill it, and say plainly
   // whether the name would replace something already in the library.
   $('fSaveTpl').onchange = () => {
@@ -2056,6 +2158,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   }
   $('fTplName').addEventListener('input', () => { $('fTplName').classList.remove('missing'); tplNameFeedback(); });
 
+  regionHint();
   renderPermissions();
   syncLocks();        // start locked: nothing can be produced before Gate 3 is satisfied
   loadLibrary();

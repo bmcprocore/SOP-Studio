@@ -442,6 +442,22 @@
       <p class="sub">Renders the SOP in the locked step-per-page design — identical to the standalone builder output.</p>
       <div id="genGate"></div>
       <div id="genSummary" class="profilebox" style="display:none;"></div>
+
+      <fieldset><legend>Reuse</legend>
+        <div class="blk">
+          <input type="checkbox" id="fSaveTpl">
+          <div>
+            <div class="t"><label for="fSaveTpl" style="display:inline;margin:0;font-size:12.5px;color:var(--ink);">Also save this as a reusable template</label></div>
+            <div class="r">Adds the content to the Templates library when you generate, so the next SOP can start from it. The template keeps <strong>every</strong> block, including the ones this reader’s permissions excluded, so it still works for other roles. Client name, logo, dates and sign-off names are not saved.</div>
+          </div>
+        </div>
+        <div id="saveTplRow" style="display:none;margin-top:10px;">
+          <label for="fTplName">Template name<span class="req" title="Required">*</span></label>
+          <input type="text" id="fTplName">
+          <p class="hint" id="tplNameHint">A template with the same name is replaced.</p>
+        </div>
+      </fieldset>
+
       <button id="btnRender2" class="primary" style="width:100%;padding:11px;" disabled>Render preview</button>
       <button id="btnDownload2" style="width:100%;padding:11px;margin-top:8px;" disabled>Download PDF</button>
       <div class="status" id="genStatus"></div>
@@ -557,16 +573,41 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   // ============================================================ shared library (window.storage)
   const LIB_KEY = 'sop-templates';
+
+  // Two places the library can live. window.storage is the team-shared store and only exists when
+  // the app runs inside Claude; opened as a file from disk it is absent, and every save used to
+  // fail. Fall back to this browser's own storage so the library still works — and say which one
+  // is in use, because "shared with your team" is not true of the local one.
+  const teamStore = () => !!(window.storage && window.storage.get && window.storage.set);
+  async function storeGet(key) {
+    if (teamStore()) { const r = await window.storage.get(key, true); return r.value; }
+    const v = localStorage.getItem(key);
+    if (v == null) throw new Error('nothing stored yet');
+    return v;
+  }
+  async function storeSet(key, value) {
+    if (teamStore()) {
+      const r = await window.storage.set(key, value, true);
+      if (!r) throw new Error('storage returned no result');
+      return 'team';
+    }
+    localStorage.setItem(key, value);
+    return 'local';
+  }
+  const scopeNote = () => teamStore()
+    ? ' Saved to the shared library — visible to your whole team.'
+    : ' Saved on this computer only. Open the Studio inside Claude to share templates with the team.';
+
   async function loadLibrary() {
     const st = $('libStatus');
     try {
-      const res = await window.storage.get(LIB_KEY, true);
-      state.library = JSON.parse(res.value);
-      st.textContent = 'Shared library loaded · ' + Object.keys(state.library.tools).length + ' tool template(s).';
+      state.library = JSON.parse(await storeGet(LIB_KEY));
+      st.textContent = 'Library loaded · ' + Object.keys(state.library.tools).length + ' tool template(s).' +
+        (teamStore() ? ' Shared with your team.' : ' Stored on this computer.');
       st.className = 'status ok';
     } catch (e) {
       state.library = { tools: {}, updated: '' };
-      st.textContent = 'No shared library yet — seed the RFI master template to get started.';
+      st.textContent = 'No library yet — seed the RFI master template to get started.';
       st.className = 'status';
     }
     renderTplList();
@@ -576,9 +617,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     const st = $('libStatus');
     try {
       state.library.updated = new Date().toISOString();
-      const res = await window.storage.set(LIB_KEY, JSON.stringify(state.library), true);
-      if (!res) throw new Error('storage returned no result');
-      st.textContent = msg || 'Shared library saved — visible to your whole team.';
+      await storeSet(LIB_KEY, JSON.stringify(state.library));
+      st.textContent = (msg || 'Library saved.') + scopeNote();
       st.className = 'status ok';
     } catch (e) {
       st.textContent = 'Could not save the library: ' + e.message;
@@ -1657,6 +1697,66 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     });
   }
 
+  // ============================================================ save as template
+  // Turn the SOP being generated back into a reusable template. Client-specific facts are
+  // deliberately dropped — a template that carried one client's name, dates or sign-off people
+  // would leak them into the next client's document.
+  function contentToTemplate(c, name) {
+    return {
+      name: name,
+      version: c.version || '1.0',
+      processName: c.processName || '',
+      purpose: c.purpose || '',
+      phases: c.phases || [],
+      referenceTool: c.referenceTool || '',
+      steps: (c.steps || []).map(s => ({
+        _id: s._id, _perm: s._perm, _ask: s._ask, title: s.title, role: s.role, system: s.system,
+        time: s.time, body: s.body, bullets: s.bullets || [], callout: s.callout || null,
+      })),
+      checklist: (c.checklist || []).map(x => ({ _id: x._id, _perm: x._perm, _ask: x._ask, text: x.text, hint: x.hint || '', owner: x.owner || '' })),
+      issues: (c.issues || []).map(x => ({ _id: x._id, _perm: x._perm, _ask: x._ask, code: x.code, issue: x.issue, resolution: x.resolution })),
+      references: c.references || [],
+      _savedFrom: 'Saved from an SOP on ' + new Date().toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }),
+    };
+  }
+
+  function defaultTemplateName(c) {
+    return ((state.profile && state.profile.tool) || state.selectedTool || c.processName || 'Template').trim();
+  }
+
+  /** A template is a master that gets filtered per reader, so it must keep EVERY block — including
+   *  the ones this reader's permissions excluded. Saving the generated document instead would bake
+   *  one person's permission level into the template and the content would be gone for good.
+   *  Reordering done in the Review step is preserved. */
+  function fullContentForTemplate() {
+    const src = JSON.parse(JSON.stringify(state.sop || {}));
+    if (!state.summary || !state.summary.length) return src;
+    const order = (arr, type) => {
+      const byId = new Map((arr || []).map(x => [x._id, x]));
+      const out = [];
+      state.summary.filter(s => s.type === type).forEach(s => { if (byId.has(s.id)) { out.push(byId.get(s.id)); byId.delete(s.id); } });
+      byId.forEach(v => out.push(v));   // anything not in the summary still survives
+      return out;
+    };
+    src.steps = order(src.steps, 'step');
+    src.checklist = order(src.checklist, 'check');
+    src.issues = order(src.issues, 'issue');
+    return src;
+  }
+
+  /** Called after a successful render when the tickbox is on. Returns a message for the status line. */
+  async function maybeSaveAsTemplate(generated) {
+    if (!$('fSaveTpl') || !$('fSaveTpl').checked) return '';
+    const c = fullContentForTemplate();
+    const name = ($('fTplName').value || '').trim() || defaultTemplateName(generated);
+    if (!name) { $('fTplName').classList.add('missing'); return ' Template not saved — it needs a name.'; }
+    if (!state.library) state.library = { tools: {}, updated: '' };
+    const replaced = Object.prototype.hasOwnProperty.call(state.library.tools, name);
+    state.library.tools[name] = contentToTemplate(c, name);
+    await saveLibrary((replaced ? 'Template “' + name + '” replaced.' : 'Template “' + name + '” added.'));
+    return ' ' + (replaced ? 'Replaced' : 'Saved') + ' the template “' + name + '”.';
+  }
+
   function doRender() {
     // Gate 3 is enforced here, not only in the interface — this is the single choke point every
     // route to a document passes through.
@@ -1694,7 +1794,11 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         ((prof.granular || []).length ? ' + ' + esc(prof.granular.join(', ')) : '') +
         ' · ' + esc(state.detail) + ' detail · ' + res.total + ' pages' +
         '<br><span style="color:var(--g500)">Confirmed by ' + esc(state.confirmed.by) + ' on ' + esc(state.confirmed.at) + '</span>';
-      setStatus('genStatus', 'Rendered · ' + res.total + ' pages. Review every page before issuing — this is a draft until reviewed and approved.', 'ok');
+      const base = 'Rendered · ' + res.total + ' pages. Review every page before issuing — this is a draft until reviewed and approved.';
+      setStatus('genStatus', base, 'ok');
+      maybeSaveAsTemplate(c)
+        .then(extra => { if (extra) setStatus('genStatus', base + extra, 'ok'); })
+        .catch(err => setStatus('genStatus', base + ' The document rendered, but the template could not be saved: ' + err.message, 'err'));
     } catch (e) {
       setStatus('genStatus', 'Render error: ' + e.message, 'err');
     }
@@ -1799,6 +1903,25 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     const el = $(pair[0]);
     if (el) el.addEventListener('input', () => { el.classList.remove('missing'); syncLocks(); });
   });
+
+  // "Also save this as a template" — reveal the name field, prefill it, and say plainly
+  // whether the name would replace something already in the library.
+  $('fSaveTpl').onchange = () => {
+    const on = $('fSaveTpl').checked;
+    $('saveTplRow').style.display = on ? 'block' : 'none';
+    if (on && !$('fTplName').value.trim() && state.sop) $('fTplName').value = defaultTemplateName(state.sop);
+    if (on) tplNameFeedback();
+  };
+  function tplNameFeedback() {
+    const name = ($('fTplName').value || '').trim();
+    const tools = (state.library && state.library.tools) || {};
+    const hint = $('tplNameHint');
+    if (!name) { hint.textContent = 'Give the template a name so it can be found in the library.'; return; }
+    hint.textContent = Object.prototype.hasOwnProperty.call(tools, name)
+      ? 'A template called “' + name + '” already exists — generating will replace it.'
+      : 'This will be added to the library as a new template.';
+  }
+  $('fTplName').addEventListener('input', () => { $('fTplName').classList.remove('missing'); tplNameFeedback(); });
 
   renderPermissions();
   syncLocks();        // start locked: nothing can be produced before Gate 3 is satisfied

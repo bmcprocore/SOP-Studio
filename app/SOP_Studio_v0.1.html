@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Procore SOP Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='2' y='2' width='60' height='60' rx='13' fill='%23000000'/%3E%3Cpath fill='%23FFFFFF' d='M21.5 13.5h21l6.81 12H62v13H49.31l-6.81 12h-21L11 32z'/%3E%3Cpath fill='%23FF5200' d='M26.5 22.5h11L43 32l-5.5 9.5h-11L21 32z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -25,6 +26,9 @@
     /* Restrained motion: no bounce, no overshoot, no scale */
     --ease:cubic-bezier(.2,0,0,1); --t-fast:120ms; --t-base:180ms; --t-slow:280ms;
     --shadow-card:0 1px 3px rgba(20,23,29,.08);
+    /* Brand mark — identical artwork to brand/sop-studio-mark.svg, inlined so the app
+       stays a single self-contained file. Change it in both places or neither. */
+    --logomark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='2' y='2' width='60' height='60' rx='13' fill='%23000000'/%3E%3Cpath fill='%23FFFFFF' d='M21.5 13.5h21l6.81 12H62v13H49.31l-6.81 12h-21L11 32z'/%3E%3Cpath fill='%23FF5200' d='M26.5 22.5h11L43 32l-5.5 9.5h-11L21 32z'/%3E%3C/svg%3E");
   }
   html,body{margin:0;height:100%;}
   body{font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);
@@ -32,7 +36,9 @@
   header.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 20px;height:58px;
     background:#fff;border-bottom:1px solid var(--g200);flex:none;}
   .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14.5px;}
-  .hexmark{width:13px;height:11px;background:var(--orange);clip-path:polygon(50% 0,100% 27%,100% 73%,50% 100%,0 73%,0 27%);}
+  /* Brand mark — the SOP Studio logo, replacing the plain orange hexagon throughout the chrome.
+     Defined once here; same artwork as brand/sop-studio-mark.svg. */
+  .hexmark{width:19px;height:19px;flex:none;background:var(--logomark) no-repeat center/contain;}
   .brand small{color:var(--g500);font-weight:500;}
   /* Buttons — secondary is the default; primary / ghost / quiet are the other documented variants.
      Press moves 1px down; nothing scales. */
@@ -65,12 +71,18 @@
     display:flex;flex-direction:column;align-items:center;gap:5px;border-radius:var(--r-btn);cursor:pointer;
     transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
   .rail .gate:hover{background:rgba(255,255,255,.06);color:#fff;}
-  .rail .gate .dot{width:14px;height:12px;clip-path:polygon(50% 0,100% 27%,100% 73%,50% 100%,0 73%,0 27%);
-    background:var(--g600);transition:background var(--t-base) var(--ease);flex:none;}
+  /* Gate markers use the logo. Against the dark rail the black tile recedes and the white C
+     plus orange hex carry the mark. Progress is shown by weight, never by recolouring the
+     brand: pending is muted grey, done is three-quarter strength, the current gate is full. */
+  .rail .gate .dot{width:17px;height:17px;flex:none;background:var(--logomark) no-repeat center/contain;
+    opacity:.34;filter:grayscale(1);
+    transition:opacity var(--t-base) var(--ease),filter var(--t-base) var(--ease);}
+  .rail .gate:hover .dot{opacity:.6;}
   .rail .gate small{font-size:8px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;
     line-height:1.25;text-align:center;}
-  .rail .gate.active{color:#fff;} .rail .gate.active .dot{background:var(--orange);}
-  .rail .gate.done .dot{background:#fff;}
+  .rail .gate.done .dot{opacity:.8;filter:none;}
+  .rail .gate.active{color:#fff;}
+  .rail .gate.active .dot{opacity:1;filter:none;}
   .rail .spine{width:22px;flex:none;height:1px;background:var(--g600);margin:10px 0;}
 
   /* ---- work column ---- */
@@ -165,7 +177,7 @@
   .preview iframe{flex:1;width:100%;border:0;}
   .preview .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     color:var(--g500);font-size:13px;flex-direction:column;gap:10px;}
-  .preview .empty .hexmark{width:22px;height:19px;opacity:.4;}
+  .preview .empty .hexmark{width:30px;height:30px;opacity:.35;}
 </style>
 </head>
 <body>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Procore SOP Studio">
+  <title>Procore SOP Studio</title>
+  <!-- Tile -->
+  <rect x="2" y="2" width="60" height="60" rx="13" fill="#000000"/>
+  <!-- Hexagonal C: hexagon opened to the right edge so the tile reads as a C -->
+  <path fill="#FFFFFF" d="M21.5 13.5h21l6.81 12H62v13H49.31l-6.81 12h-21L11 32z"/>
+  <!-- Procore hex mark -->
+  <path fill="#FF5200" d="M26.5 22.5h11L43 32l-5.5 9.5h-11L21 32z"/>
+</svg>

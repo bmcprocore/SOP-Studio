@@ -195,6 +195,43 @@
   .blk2.askrow{background:rgba(229,161,0,.09);border-radius:var(--r-btn);}
   .blk2.askrow .rule{color:var(--orange-press);}
 
+  /* ---- Review: outline panel on the left, reasoning on the right ----
+     The outline is the control surface (tick to include, drag to reorder). The right column
+     explains each decision. Square geometry, sand surface, 1px rules — Procore in-app pattern. */
+  #p-review .review-split{display:grid;grid-template-columns:1fr;gap:18px;align-items:start;}
+  body.no-preview #p-review{max-width:1180px;}
+  body.no-preview #p-review .review-split{grid-template-columns:290px 1fr;}
+
+  .outline{border:1px solid var(--g200);background:var(--sand);position:sticky;top:0;
+    max-height:calc(100vh - 190px);display:flex;flex-direction:column;min-height:0;}
+  .outline-head{padding:10px 12px;border-bottom:1px solid var(--g200);background:#fff;flex:none;}
+  .outline-head .ttl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--g600);}
+  .outline-head .sub{font-size:10.5px;color:var(--g500);line-height:1.4;margin-top:3px;}
+  .outline-body{overflow-y:auto;padding:6px 0 10px;min-height:0;}
+  .ogroup{padding:0 6px;}
+  .ogroup-h{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:9px 6px 5px;font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;
+    font-weight:700;color:var(--g600);}
+  .ogroup-h .n{font-family:var(--mono);color:var(--g400);font-weight:500;}
+
+  .oitem{display:grid;grid-template-columns:14px 16px 1fr;gap:8px;align-items:start;
+    padding:6px 6px;border-top:2px solid transparent;border-bottom:2px solid transparent;
+    background:#fff;border-left:2px solid transparent;margin-bottom:2px;cursor:default;}
+  .oitem:hover{background:var(--g50);}
+  .oitem .ogrip{cursor:grab;color:var(--g400);font-size:11px;line-height:1.5;user-select:none;letter-spacing:-2px;}
+  .oitem .ogrip:active{cursor:grabbing;}
+  .oitem input{margin-top:2px;accent-color:var(--orange);}
+  .oitem .otitle{font-size:11.5px;line-height:1.35;color:var(--ink);min-width:0;overflow-wrap:anywhere;}
+  .oitem .oid{font-family:var(--mono);font-size:10px;color:var(--g500);}
+  .oitem.on{border-left-color:var(--orange);}
+  .oitem.out{opacity:.55;}
+  .oitem.out .otitle{text-decoration:line-through;text-decoration-color:var(--g300);}
+  .oitem.askitem{background:rgba(229,161,0,.10);}
+  .oitem.dragging{opacity:.4;}
+  .oitem.drop-before{border-top-color:var(--orange);}
+  .oitem.drop-after{border-bottom-color:var(--orange);}
+  .oitem.locked .ogrip{cursor:not-allowed;color:var(--g300);}
+
   .tally{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 12px;font-size:12px;}
   .tally span{display:inline-flex;align-items:center;gap:6px;color:var(--g600);}
   .tally i{width:8px;height:8px;border-radius:999px;display:inline-block;}
@@ -426,10 +463,21 @@
       <h2>Review</h2>
       <p class="sub">Everything the permission rule kept or dropped, with the reason for each. Nothing can be generated until you confirm this list — that confirmation is recorded on the document.</p>
       <div id="profileBox"></div>
-      <div id="askBox"></div>
-      <div id="tallyBox"></div>
-      <div id="blockList"><div class="note">Start from a template in the Create step first — every block appears here to include or exclude.</div></div>
-      <div id="confirmBox"></div>
+      <div class="review-split">
+        <aside class="outline" aria-label="Section outline">
+          <div class="outline-head">
+            <div class="ttl">Sections</div>
+            <div class="sub">Tick to include a section in the SOP. Drag to reorder within its group.</div>
+          </div>
+          <div class="outline-body" id="outlinePanel"></div>
+        </aside>
+        <div>
+          <div id="askBox"></div>
+          <div id="tallyBox"></div>
+          <div id="blockList"><div class="note">Start from a template in the Create step first — every section appears here with the rule that decided it.</div></div>
+          <div id="confirmBox"></div>
+        </div>
+      </div>
       <fieldset style="margin-top:16px;"><legend>Advanced</legend>
         <button id="btnShowJson" class="quiet">View / edit assembled content JSON</button>
         <textarea id="sopJson" rows="12" style="display:none;margin-top:10px;" spellcheck="false"></textarea>
@@ -1083,6 +1131,95 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     renderReview(); syncSopEditor();
     if (state.rendered) doRender();   // keep the preview in lock-step
   }
+
+  /** One place that records an inclusion change, wherever it was made — the outline panel or the
+   *  detail list. Both surfaces stay in step because both re-render from state.summary. */
+  function setIncluded(idx, on) {
+    const row = state.summary[idx];
+    if (!row || row.status === 'exclude') return;   // the permission rule wins over a tick
+    row.included = on;
+    row.touched = true;
+    unconfirm('The section list changed — confirm it again before generating.');
+    afterReviewChange();
+  }
+
+  /** The left-hand outline: tick to include, drag to reorder. Titles and the tick only —
+   *  the reasoning lives in the detail column beside it. */
+  function renderOutline() {
+    const el = $('outlinePanel');
+    if (!el) return;
+    if (!state.summary.length) {
+      el.innerHTML = '<div class="note" style="padding:10px 12px;">No sections yet.</div>';
+      return;
+    }
+    let html = '';
+    REV_GROUPS.forEach(g => {
+      const rows = state.summary.map((s, i) => ({ s, i })).filter(o => o.s.type === g.type);
+      if (!rows.length) return;
+      const on = rows.filter(o => o.s.included).length;
+      html += '<div class="ogroup"><div class="ogroup-h"><span>' + esc(g.label) +
+        '</span><span class="n">' + on + '/' + rows.length + '</span></div>';
+      rows.forEach(o => {
+        const s = o.s, i = o.i;
+        const locked = s.status === 'exclude';
+        const cls = 'oitem' + (s.included ? ' on' : '') + (locked ? ' out locked' : '') +
+          (s.status === 'ask' ? ' askitem' : '');
+        const title = (s.title && s.title.trim()) ? esc(s.title) : '(untitled section)';
+        html += '<div class="' + cls + '" draggable="' + (locked ? 'false' : 'true') + '" data-i="' + i + '"' +
+          (locked ? ' title="Excluded by the permission rule — see the reason beside it"' : '') + '>' +
+          '<span class="ogrip" aria-hidden="true">⠿</span>' +
+          '<input type="checkbox" data-oi="' + i + '"' + (s.included ? ' checked' : '') +
+            (locked ? ' disabled' : '') + ' aria-label="Include ' + esc(s.id || '') + '">' +
+          '<span class="otitle"><span class="oid">' + esc(s.id || '') + '</span> ' + title + '</span>' +
+          '</div>';
+      });
+      html += '</div>';
+    });
+    el.innerHTML = html;
+    el.querySelectorAll('input[data-oi]').forEach(cb => cb.onchange = () => setIncluded(+cb.dataset.oi, cb.checked));
+    wireOutlineDnd(el);
+  }
+
+  /** Drag-to-reorder inside the outline. Same rule as the detail list: a section can only move
+   *  within its own group, because steps, checklist items and issues are different shapes. */
+  let outlineDrag = null;
+  function wireOutlineDnd(el) {
+    const clear = () => el.querySelectorAll('.oitem').forEach(r => r.classList.remove('dragging', 'drop-before', 'drop-after'));
+    el.querySelectorAll('.oitem[draggable="true"]').forEach(row => {
+      row.addEventListener('dragstart', e => {
+        outlineDrag = +row.dataset.i;
+        row.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', String(outlineDrag)); } catch (_) {}
+      });
+      row.addEventListener('dragend', () => { outlineDrag = null; clear(); });
+      row.addEventListener('dragover', e => {
+        if (outlineDrag === null) return;
+        const from = state.summary[outlineDrag], to = state.summary[+row.dataset.i];
+        if (!from || !to || from.type !== to.type) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const r = row.getBoundingClientRect();
+        const after = (e.clientY - r.top) > r.height / 2;
+        row.classList.toggle('drop-after', after);
+        row.classList.toggle('drop-before', !after);
+      });
+      row.addEventListener('dragleave', () => row.classList.remove('drop-before', 'drop-after'));
+      row.addEventListener('drop', e => {
+        if (outlineDrag === null) return;
+        const toIdx = +row.dataset.i;
+        const from = state.summary[outlineDrag], to = state.summary[toIdx];
+        if (!from || !to || from.type !== to.type) return;
+        e.preventDefault();
+        const r = row.getBoundingClientRect();
+        const after = (e.clientY - r.top) > r.height / 2;
+        clear();
+        unconfirm('The section order changed — confirm the list again before generating.');
+        reorderSummary(outlineDrag, toIdx, after);
+        outlineDrag = null;
+      });
+    });
+  }
   function renderReview() {
     const p = state.profile || {};
     $('profileBox').innerHTML = '<div class="profilebox">' +
@@ -1096,6 +1233,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (!state.summary.length) {
       el.innerHTML = '<div class="note">Start from a template in the Create step first.</div>';
       $('tallyBox').innerHTML = ''; $('askBox').innerHTML = ''; $('confirmBox').innerHTML = '';
+      renderOutline();
       syncLocks(); return;
     }
 
@@ -1140,16 +1278,11 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       html += '</div>';
     });
     el.innerHTML = html;
-    el.querySelectorAll('input[type=checkbox]').forEach(cb => cb.onchange = () => {
-      const row = state.summary[+cb.dataset.i];
-      row.included = cb.checked;
-      row.touched = true;                       // remember it was a human call, not the rule
-      unconfirm('The inclusion list changed — confirm it again before generating.');
-      afterReviewChange();
-    });
+    el.querySelectorAll('input[type=checkbox]').forEach(cb => cb.onchange = () => setIncluded(+cb.dataset.i, cb.checked));
     el.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addItem(b.dataset.add));
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
     wireDnd(el);
+    renderOutline();
     renderConfirm();
     syncSopEditor();
     syncLocks();

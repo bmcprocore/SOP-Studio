@@ -1,0 +1,9 @@
+# Normalise line endings across the team (avoids CRLF/LF churn on Windows vs mac/Linux)
+* text=auto eol=lf
+
+# Treat binaries as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary

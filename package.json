@@ -1,0 +1,9 @@
+{
+  "name": "procore-sop-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Permission-scoped Procore SOP generator — locked design, template library, Claude Code driven",
+  "scripts": {
+    "render": "node scripts/render.js"
+  }
+}

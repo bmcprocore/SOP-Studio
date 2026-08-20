@@ -1,0 +1,492 @@
+{
+  "_library": "Procore RFIs — master content library",
+  "_version": "0.2",
+  "_status": "AI-DRAFT — verify all permission behaviour against the APAC RFIs User Permissions matrix before client use",
+  "_how_to_use": "This file is in the SAME schema as the SOP Builder JSON, plus '_perm' tags and a '_personas' assembly map. To generate a persona SOP: (1) pick the persona in _personas; (2) keep only steps/checklist/issues whose id is listed for that persona; (3) replace cover fields and any [bracketed] placeholders with client values or leave blank to render as placeholders; (4) delete the _library/_personas/_perm keys or leave them — the builder renderer ignores unknown keys; (5) paste into the builder and download. Never invent client names, dates, SLAs or IDs.",
+  "_personas": {
+    "P1_read_only_responder": {
+      "label": "Read Only · Responder / Distribution member",
+      "permission": "Read Only (project RFIs tool)",
+      "steps": [
+        "S05",
+        "S06"
+      ],
+      "checklist": [
+        "C05"
+      ],
+      "issues": [
+        "E01",
+        "E02"
+      ],
+      "phases_note": "Use phases as-is; this persona only acts in 'Respond'.",
+      "cannot_do": "Cannot create RFIs, cannot assign or close them, cannot see private RFIs unless on the distribution list.",
+      "access": {
+        "tool": "RFIs",
+        "level": "Read Only",
+        "levelMeaning": "You can view RFIs you are named on, receive notifications, and respond when you are the assignee. You cannot create, assign or close RFIs.",
+        "granular": [],
+        "notIncluded": [
+          "Create RFIs — handled by Standard users.",
+          "Assign, respond-and-close or manage RFIs — handled by the RFI Manager.",
+          "Private RFIs unless you are on the distribution list."
+        ]
+      }
+    },
+    "P2_standard_creator": {
+      "label": "Standard · RFI Creator (e.g. Site Engineer / Foreman)",
+      "permission": "Standard (project RFIs tool)",
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S05",
+        "S06"
+      ],
+      "checklist": [
+        "C01",
+        "C02",
+        "C05"
+      ],
+      "issues": [
+        "E01",
+        "E02",
+        "E04"
+      ],
+      "cannot_do": "Creates RFIs in Draft only — cannot assign the official RFI number, cannot send the RFI to the design team, cannot respond-and-close. The RFI Manager does this. Visibility of others' RFIs depends on project settings.",
+      "access": {
+        "tool": "RFIs",
+        "level": "Standard",
+        "levelMeaning": "You can create RFIs in Draft with your question, drawings and photos, and submit them to the RFI Manager. You can respond when assigned and track your own items.",
+        "granular": [],
+        "notIncluded": [
+          "Assign the official RFI number or send the RFI to the design team — RFI Manager.",
+          "Respond-and-close or reopen RFIs — RFI Manager / Admin.",
+          "Tool settings and the permissions table — RFIs Admin."
+        ]
+      }
+    },
+    "P3_rfi_manager": {
+      "label": "Standard + 'Act as RFI Manager' granular permission",
+      "permission": "Standard + Act as RFI Manager",
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "checklist": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "issues": [
+        "E01",
+        "E02",
+        "E03",
+        "E04"
+      ],
+      "cannot_do": "Manager actions apply only to RFIs they created or where they are the designated RFI Manager. Cannot edit or delete other users' RFIs, cannot change tool settings or the permissions table.",
+      "access": {
+        "tool": "RFIs",
+        "level": "Standard + RFI Manager rights",
+        "levelMeaning": "You manage the full lifecycle of RFIs you create or are designated RFI Manager for — opening, numbering, distributing, chasing, marking the official response and closing.",
+        "granular": [
+          {
+            "name": "Act as RFI Manager",
+            "meaning": "Open, number and distribute RFIs you create or manage; set assignees and due dates; close RFIs."
+          }
+        ],
+        "notIncluded": [
+          "Edit, reopen or delete other users’ RFIs — RFIs Admin.",
+          "Configure tool settings or the permissions table — RFIs Admin."
+        ]
+      }
+    },
+    "P4_admin": {
+      "label": "Admin (project RFIs tool)",
+      "permission": "Admin",
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10"
+      ],
+      "checklist": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "issues": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "cannot_do": "",
+      "access": {
+        "tool": "RFIs",
+        "level": "Admin",
+        "levelMeaning": "Full control of the project’s RFIs tool: every RFI (edit, reopen, delete), tool configuration, the permissions table and custom reports.",
+        "granular": [],
+        "notIncluded": []
+      }
+    }
+  },
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "RFI management",
+  "subtitle": "",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "This procedure defines how [Customer] raises, manages and closes Requests for Information (RFIs) in Procore so design and site queries are answered within the agreed timeframe, every decision is recorded against the project, and cost or programme impacts are identified early. It covers the full RFI lifecycle from draft to closure.",
+  "phases": [
+    {
+      "name": "Raise",
+      "desc": "Creator drafts the RFI with one clear question, drawings and photos."
+    },
+    {
+      "name": "Review & send",
+      "desc": "RFI Manager checks the draft, numbers it and distributes for response."
+    },
+    {
+      "name": "Respond",
+      "desc": "Assignee answers in Procore; impact on cost and programme is assessed."
+    },
+    {
+      "name": "Close",
+      "desc": "Official response recorded, registers updated, RFI set to Closed."
+    }
+  ],
+  "procedureIntro": "Follow these steps in the Procore <strong>RFIs</strong> tool. Keep one question per RFI so each response is clear and auditable. Your permission level determines which steps you perform — steps outside your access are handled by the RFI Manager or tool Admin.",
+  "referenceTool": "Procore · RFIs (web & mobile)",
+  "steps": [
+    {
+      "_id": "S01",
+      "_perm": {
+        "min": "Standard"
+      },
+      "title": "Prepare the query before opening Procore",
+      "role": "RFI Creator",
+      "system": "Site / drawings",
+      "time": "~5 min",
+      "body": "Confirm the answer is not already available in the current drawing set, specifications or a previous RFI. Gather everything the reviewer needs to answer without a site visit.",
+      "bullets": [
+        "One question per RFI — split multi-part queries into separate RFIs.",
+        "Capture site photos and mark up the affected drawing.",
+        "Note the drawing number, revision and spec section affected."
+      ],
+      "callout": {
+        "label": "Why it matters",
+        "body": "Incomplete RFIs bounce between parties and blow out response times. A well-prepared RFI is usually answered on the first pass."
+      }
+    },
+    {
+      "_id": "S02",
+      "_perm": {
+        "min": "Standard"
+      },
+      "title": "Create the RFI (Draft)",
+      "role": "RFI Creator",
+      "system": "Procore · RFIs",
+      "time": "~5 min",
+      "body": "Open the project's <code>RFIs</code> tool and select <code>+ Create</code>. As a Standard user your RFI is created in <strong>Draft</strong> status — it is not visible to the design team until the RFI Manager opens and distributes it.",
+      "bullets": [
+        "Subject: [Customer naming convention — e.g. Location – Trade – Query].",
+        "Write the question in full, referencing the drawing and spec section.",
+        "Attach marked-up drawings and photos.",
+        "Complete required fields per project configuration (location, cost/schedule impact if enabled)."
+      ],
+      "callout": {
+        "label": "Cannot do",
+        "body": "Standard users cannot set the RFI number or Open status — Procore assigns the number when the RFI Manager opens the RFI."
+      }
+    },
+    {
+      "_id": "S03",
+      "_perm": {
+        "min": "Standard"
+      },
+      "title": "Select the RFI Manager and submit",
+      "role": "RFI Creator",
+      "system": "Procore · RFIs",
+      "time": "~2 min",
+      "body": "Select the <strong>RFI Manager</strong> from the list (only users with Admin permission or the 'Act as RFI Manager' granular permission appear; the project may enforce a default RFI Manager). Add any <strong>Distribution</strong> members who should be notified, then save the draft.",
+      "callout": {
+        "label": "Handoff",
+        "body": "Your draft now sits with the RFI Manager. You will be notified when it is opened, and again when the official response is recorded."
+      }
+    },
+    {
+      "_id": "S04",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "title": "Review the draft and distribute for response",
+      "role": "RFI Manager",
+      "system": "Procore · RFIs",
+      "time": "~5 min",
+      "body": "Open the draft RFI assigned to you and act as gatekeeper. Check the question is answerable, then either respond-and-close it directly (if the answer is known) or open it: Procore assigns the RFI number, and you set the <strong>Assignee(s)</strong> (responsible reviewer) and a <strong>Due date</strong> within the contract SLA.",
+      "bullets": [
+        "Reject or return unclear drafts to the creator rather than sending poor questions to consultants.",
+        "Confirm the assignee is in the project Directory with access to the RFIs tool.",
+        "Set the due date per the contract SLA of [X business days]."
+      ],
+      "callout": {
+        "label": "Scope",
+        "body": "With Standard + 'Act as RFI Manager', you can only manage RFIs you created or where you are the designated RFI Manager."
+      }
+    },
+    {
+      "_id": "S05",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "title": "Respond to an RFI you are assigned",
+      "role": "Assignee",
+      "system": "Procore · RFIs",
+      "time": "~10 min",
+      "body": "Open the RFI from the email notification or the RFIs list and record your response directly in Procore — do not reply by email outside the system. Attach any revised drawings or documents. Your response is time-stamped against the project record.",
+      "bullets": [
+        "Answer the question asked; if you cannot, say what is needed and from whom.",
+        "Attach superseding documents rather than describing them."
+      ]
+    },
+    {
+      "_id": "S06",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "title": "Track RFIs relevant to you",
+      "role": "All users",
+      "system": "Procore · RFIs",
+      "time": "ongoing",
+      "body": "Use the RFIs list filters (status, assignee, due date, overdue) to monitor items you created or are named on. Visibility of other users' RFIs and closed responses depends on project settings.",
+      "callout": {
+        "label": "Note",
+        "body": "Private RFIs are visible only to their distribution list and tool Admins."
+      }
+    },
+    {
+      "_id": "S07",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "title": "Review the response and assess impact",
+      "role": "RFI Manager",
+      "system": "Procore · RFIs",
+      "time": "~5 min",
+      "body": "When the assignee responds, review the answer for completeness and for cost or programme impact. If the response changes scope, trigger the [Customer] variation / change event process before closing.",
+      "bullets": [
+        "Reassign for input if further review is required.",
+        "Flag cost/programme impact to the Commercial Manager per [Customer process]."
+      ]
+    },
+    {
+      "_id": "S08",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "title": "Record the official response and close",
+      "role": "RFI Manager",
+      "system": "Procore · RFIs",
+      "time": "~3 min",
+      "body": "Mark the accepted answer as the <strong>Official Response</strong>, confirm the distribution list covers everyone who acts on the answer, then set the RFI to <code>Closed</code>. Ensure superseded drawings are updated in the Drawings tool.",
+      "callout": {
+        "label": "Why it matters",
+        "body": "An unclosed RFI keeps the query legally 'open'. Closing with an official response fixes the decision and its timestamp for the project record."
+      }
+    },
+    {
+      "_id": "S09",
+      "_perm": {
+        "min": "Admin"
+      },
+      "title": "Edit, reopen or delete RFIs (Admin)",
+      "role": "RFIs Admin",
+      "system": "Procore · RFIs",
+      "time": "as required",
+      "body": "Admins can edit any RFI, reopen closed items when a response is disputed or superseded, and delete RFIs created in error. Record the reason in the RFI before reopening or deleting so the audit trail stays intact.",
+      "callout": {
+        "label": "Control",
+        "body": "Deleting an RFI should be exceptional — prefer closing with a note. [Customer approval rule for deletions]."
+      }
+    },
+    {
+      "_id": "S10",
+      "_perm": {
+        "min": "Admin"
+      },
+      "title": "Configure the RFIs tool (Admin)",
+      "role": "RFIs Admin",
+      "system": "Procore · RFIs · Configure Settings",
+      "time": "setup / periodic",
+      "body": "Set the project's RFI behaviour under <code>Configure Settings</code>: default RFI Manager, RFI number prefix, private RFIs, overdue email reminders, closed-response visibility, and the tool's <strong>Permissions Table</strong>. Review settings at project start-up and after any process change.",
+      "bullets": [
+        "Align the default due-date/SLA settings with the head contract.",
+        "Grant 'Act as RFI Manager' via the permission template, not ad-hoc."
+      ]
+    }
+  ],
+  "closeoutIntro": "Use this checklist before closing any RFI, and the issues table to resolve the most common problems.",
+  "owner": "",
+  "checklist": [
+    {
+      "_id": "C01",
+      "_perm": {
+        "min": "Standard"
+      },
+      "text": "One clear question, with drawing/spec references attached",
+      "hint": "Multi-part queries split into separate RFIs.",
+      "owner": "Creator"
+    },
+    {
+      "_id": "C02",
+      "_perm": {
+        "min": "Standard"
+      },
+      "text": "RFI Manager and distribution list set before submitting",
+      "hint": "Everyone who acts on the answer is on distribution.",
+      "owner": "Creator"
+    },
+    {
+      "_id": "C03",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "text": "Official response recorded and complete",
+      "hint": "Response answers the question; revised documents attached.",
+      "owner": "RFI Mgr"
+    },
+    {
+      "_id": "C04",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "text": "Cost & programme impact assessed before closing",
+      "hint": "Variation / change event raised where scope changed.",
+      "owner": "RFI Mgr"
+    },
+    {
+      "_id": "C05",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "text": "Response actioned on site / in your deliverables",
+      "hint": "Superseded information no longer in use.",
+      "owner": "All"
+    },
+    {
+      "_id": "C06",
+      "_perm": {
+        "min": "Admin"
+      },
+      "text": "Tool settings and permissions table reviewed",
+      "hint": "At project start-up and after process changes.",
+      "owner": "Admin"
+    }
+  ],
+  "issues": [
+    {
+      "_id": "E01",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "code": "RFI-01",
+      "issue": "Assignee can't see the RFI",
+      "resolution": "Confirm they are in the project Directory with RFIs tool access and named as assignee or on distribution; re-add and resend."
+    },
+    {
+      "_id": "E02",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "code": "RFI-02",
+      "issue": "Response given by email, not in Procore",
+      "resolution": "Copy the response into the RFI as the official response (or use the email-in response method if enabled) so the record is complete."
+    },
+    {
+      "_id": "E03",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "code": "RFI-03",
+      "issue": "RFI overdue with no response",
+      "resolution": "Use the overdue filter; chase per the SLA escalation path [Customer escalation]. Overdue email reminders can be enabled in Configure Settings."
+    },
+    {
+      "_id": "E04",
+      "_perm": {
+        "min": "Standard"
+      },
+      "code": "RFI-04",
+      "issue": "Draft stuck — creator can't send the RFI",
+      "resolution": "Expected behaviour: Standard users create drafts only. The designated RFI Manager must open and distribute it — check the correct manager is selected."
+    },
+    {
+      "_id": "E05",
+      "_perm": {
+        "min": "Admin"
+      },
+      "code": "RFI-05",
+      "issue": "Wrong number sequence or prefix on RFIs",
+      "resolution": "Admin reviews the prefix / numbering configuration under Configure Settings; numbering changes affect new RFIs only."
+    }
+  ],
+  "references": [
+    {
+      "tool": "RFIs — user guide",
+      "url": "https://support.procore.com/products/online/user-guide/project-level/rfi"
+    },
+    {
+      "tool": "RFIs — user permissions",
+      "url": "https://support.procore.com/products/online/user-guide/project-level/rfi/permissions"
+    },
+    {
+      "tool": "Drawings",
+      "url": "https://support.procore.com/products/online/user-guide/project-level/drawings"
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "_generated_from": "RFI_master_library_v0.1 · Persona P3 adjusted (Standard + Act as RFI Manager + Mark official responses + View private RFIs same-company + View project RFI insights; View external items OFF) · v1.1 updated for builder v2 access panel",
+  "_variant": "step-per-page",
+  "_status": "AI-DRAFT — review before issuing; verify permission behaviour against APAC RFIs permissions matrix",
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "Contractual RFI management",
+  "subtitle": "User guide for Project Managers / Contract Administrators (Standard permission with RFI Manager rights) raising and managing contractual RFIs with the head contractor in Procore.",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "Contractual RFIs raised to head contractors. Not used for internal queries or general correspondence.",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "This procedure defines how contractual RFIs are raised, tracked and closed in Procore. RFIs are used only for formal contractual queries to the head contractor — design clarifications, discrepancies, and matters with potential cost or programme consequence — so that every question and answer is time-stamped against the project record and can be relied on contractually. It covers the full lifecycle from drafting the question to recording the head contractor's official response.",
+  "access": {
+    "tool": "RFIs",
+    "level": "Standard + RFI Manager rights",
+    "levelMeaning": "You can create contractual RFIs and manage their full lifecycle — issuing to the head contractor, setting due dates, tracking, marking the official response and closing. This applies to RFIs you create or are designated RFI Manager for. Tool configuration and other users' RFIs sit with the RFIs Admin.",
+    "granular": [
+      {
+        "name": "Act as RFI Manager",
+        "meaning": "Open, number and issue RFIs you create or manage; set the assignee and due date; close RFIs."
+      },
+      {
+        "name": "Mark official responses",
+        "meaning": "Designate the head contractor's answer as the Official Response on the RFI record."
+      },
+      {
+        "name": "View private RFIs (same company)",
+        "meaning": "See private RFIs associated with users in your company."
+      },
+      {
+        "name": "View project RFI insights",
+        "meaning": "Access response-time and overdue analytics to monitor head contractor performance against the SLA."
+      }
+    ],
+    "notIncluded": [
+      "View external items from companies you are not party to.",
+      "Edit, reopen or delete other users' RFIs — raise with the RFIs Admin.",
+      "Configure tool settings or the permissions table — raise with the RFIs Admin."
+    ]
+  },
+  "phases": [
+    {
+      "name": "Prepare",
+      "desc": "Confirm the query is contractual, gather drawings, photos and references."
+    },
+    {
+      "name": "Raise",
+      "desc": "Create the RFI, direct it to the head contractor with a due date per the contract."
+    },
+    {
+      "name": "Respond",
+      "desc": "Head contractor answers in Procore; PM assesses cost and programme impact."
+    },
+    {
+      "name": "Close",
+      "desc": "Official response marked, site team informed, RFI set to Closed."
+    }
+  ],
+  "procedureIntro": "Follow these steps in the Procore <strong>RFIs</strong> tool for every contractual query to the head contractor. Keep one question per RFI so each response stands alone contractually. With your permission level you manage the full lifecycle of RFIs you create; tool configuration and editing other users' RFIs sit with the RFIs Admin.",
+  "referenceTool": "Procore · RFIs (web & mobile)",
+  "steps": [
+    {
+      "title": "Confirm the query is contractual and prepare it",
+      "role": "PM / Contract Administrator",
+      "system": "Contract / drawings",
+      "time": "~5 min",
+      "body": "RFIs on this project are reserved for formal contractual queries to the head contractor. Before opening Procore, confirm the answer is not already in the current drawing set, specification or a previous RFI, and gather everything the head contractor needs to answer without a site visit.",
+      "bullets": [
+        "One question per RFI — split multi-part queries into separate RFIs.",
+        "Capture site photos and mark up the affected drawing.",
+        "Note the drawing number, revision and spec/contract clause affected.",
+        "If the matter may have cost or programme consequence, say so in the question."
+      ],
+      "callout": {
+        "label": "Why it matters",
+        "body": "A contractual RFI and its response form part of the project record. A precise, well-evidenced question protects your position and is usually answered on the first pass."
+      }
+    },
+    {
+      "title": "Create the RFI",
+      "role": "PM / Contract Administrator",
+      "system": "Procore · RFIs",
+      "time": "~5 min",
+      "body": "Open the project's <code>RFIs</code> tool and select <code>+ Create</code>. Because you hold RFI Manager rights, you can issue the RFI directly in <strong>Open</strong> status — Procore assigns the RFI number when it is opened.",
+      "bullets": [
+        "Subject: [naming convention — e.g. Location – Trade – Query].",
+        "Write the question in full, referencing the drawing revision and contract clause.",
+        "Attach marked-up drawings and photos.",
+        "Complete location and impact fields per project configuration."
+      ],
+      "callout": {
+        "label": "Procore",
+        "body": "Your RFI Manager rights apply to RFIs you create or manage. You cannot edit RFIs raised by other users — that requires the RFIs Admin."
+      }
+    },
+    {
+      "title": "Set yourself as RFI Manager and direct it to the head contractor",
+      "role": "PM / Contract Administrator",
+      "system": "Procore · RFIs",
+      "time": "~3 min",
+      "body": "Set the <strong>RFI Manager</strong> to yourself (or the nominated contract administrator), set the head contractor's representative as the <strong>Assignee</strong>, and set the <strong>Due date</strong> per the contract response timeframe of [X business days]. Add everyone who must act on the answer to the <strong>Distribution</strong> list.",
+      "bullets": [
+        "Confirm the head contractor's representative is in the project Directory with RFIs access.",
+        "Include your site lead on distribution so the answer reaches the field."
+      ],
+      "callout": {
+        "label": "Handoff",
+        "body": "The RFI now sits with the head contractor. Procore notifies the assignee; you are notified when a response is recorded."
+      }
+    },
+    {
+      "title": "Triage draft RFIs submitted by your team",
+      "role": "PM / Contract Administrator",
+      "system": "Procore · RFIs",
+      "time": "~5 min",
+      "body": "Where the site team drafts RFIs, drafts assigned to you as RFI Manager appear in the RFIs list in <strong>Draft</strong> status. Act as gatekeeper: check the question is genuinely contractual, clear and evidenced, then open and issue it to the head contractor — or return it to the creator for rework.",
+      "bullets": [
+        "Reject internal or operational queries — keep the RFI register strictly contractual.",
+        "Consolidate duplicates before issuing."
+      ]
+    },
+    {
+      "title": "Respond when an RFI is directed to you",
+      "role": "PM / Contract Administrator",
+      "system": "Procore · RFIs",
+      "time": "~10 min",
+      "body": "If the head contractor raises an RFI to your company, respond directly in Procore — never by email outside the system — and attach any supporting documents. Your response is time-stamped against the project record.",
+      "bullets": [
+        "Answer only the question asked; flag anything requiring a variation separately.",
+        "If you cannot answer, state what is needed and from whom."
+      ]
+    },
+    {
+      "title": "Track open RFIs and monitor performance",
+      "role": "PM / Contract Administrator",
+      "system": "Procore · RFIs",
+      "time": "weekly / ongoing",
+      "body": "Use the RFIs list filters (status, assignee, due date, overdue) to review the register at least [weekly]. You can also see private RFIs associated with users in your company, and use <strong>RFI Insights</strong> to monitor response times and overdue trends against the contract SLA.",
+      "bullets": [
+        "Chase overdue RFIs per the escalation path [escalation process].",
+        "Raise persistent late responses at the contract meeting with the Insights data as evidence."
+      ],
+      "callout": {
+        "label": "Note",
+        "body": "Items from external companies you are not party to are not visible with this permission set. Configuration changes (numbering, defaults, permissions) go through your RFIs Admin."
+      }
+    },
+    {
+      "title": "Review the response and assess impact",
+      "role": "PM / Contract Administrator",
+      "system": "Procore · RFIs",
+      "time": "~5 min",
+      "body": "When the head contractor responds, review the answer for completeness and for cost or programme consequence. If the response changes scope, trigger the variation / change process [customer process] before closing — the RFI response is your evidence.",
+      "bullets": [
+        "Reassign or follow up in the RFI if the response is incomplete.",
+        "Record any impact assessment as a comment on the RFI so the trail is complete."
+      ]
+    },
+    {
+      "title": "Mark the official response and close",
+      "role": "PM / Contract Administrator",
+      "system": "Procore · RFIs",
+      "time": "~3 min",
+      "body": "Mark the head contractor's answer as the <strong>Official Response</strong>, confirm the distribution list covers everyone who acts on it, then set the RFI to <code>Closed</code>. Ensure any superseded drawings are updated in the Drawings tool before the site team proceeds.",
+      "callout": {
+        "label": "Why it matters",
+        "body": "An unclosed RFI leaves the contractual question open. Marking the official response fixes the decision, its author and its timestamp on the record."
+      }
+    }
+  ],
+  "closeoutIntro": "Use this checklist before closing any RFI, and the issues table for the most common problems. Anything requiring tool configuration, or editing, reopening or deleting an RFI, is handled by your RFIs Admin — raise it with them rather than working around the tool.",
+  "owner": "",
+  "checklist": [
+    {
+      "text": "One clear contractual question, with drawing/clause references attached",
+      "hint": "Multi-part queries split into separate RFIs.",
+      "owner": "PM"
+    },
+    {
+      "text": "Directed to the head contractor with a due date per the contract",
+      "hint": "Assignee confirmed in the Directory; distribution covers the site team.",
+      "owner": "PM"
+    },
+    {
+      "text": "Official response marked and complete",
+      "hint": "Response answers the question; revised documents attached.",
+      "owner": "PM"
+    },
+    {
+      "text": "Cost & programme impact assessed before closing",
+      "hint": "Variation / change process triggered where scope changed.",
+      "owner": "PM"
+    },
+    {
+      "text": "Response actioned on site and registers updated",
+      "hint": "Superseded information no longer in use.",
+      "owner": "Site"
+    }
+  ],
+  "issues": [
+    {
+      "code": "RFI-01",
+      "issue": "Head contractor's representative can't see the RFI",
+      "resolution": "Confirm they are in the project Directory with RFIs tool access and named as assignee or on distribution; re-add and resend."
+    },
+    {
+      "code": "RFI-02",
+      "issue": "Response received by email, not in Procore",
+      "resolution": "Record the response in the RFI as the official response (or use the email-in method if enabled) so the contractual record is complete."
+    },
+    {
+      "code": "RFI-03",
+      "issue": "RFI overdue with no response",
+      "resolution": "Use the overdue filter and RFI Insights; chase per [escalation process] and record each follow-up as a comment on the RFI."
+    },
+    {
+      "code": "RFI-04",
+      "issue": "Non-contractual queries appearing in the register",
+      "resolution": "Return the draft to the creator and redirect to the correct channel; keep the RFI register strictly for contractual matters."
+    }
+  ],
+  "references": [
+    {
+      "tool": "RFIs — user guide",
+      "url": "https://support.procore.com/products/online/user-guide/project-level/rfi"
+    },
+    {
+      "tool": "RFIs — user permissions",
+      "url": "https://support.procore.com/products/online/user-guide/project-level/rfi/permissions"
+    },
+    {
+      "tool": "Drawings",
+      "url": "https://support.procore.com/products/online/user-guide/project-level/drawings"
+    }
+  ]
+}

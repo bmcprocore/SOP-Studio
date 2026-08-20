@@ -1,0 +1,8 @@
+node_modules/
+output/*
+!output/.gitkeep
+*.pdf
+.DS_Store
+
+# Personal Claude Code overrides (shared config lives in .claude/settings.json)
+.claude/settings.local.json

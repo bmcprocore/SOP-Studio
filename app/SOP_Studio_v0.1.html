@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Procore SOP Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    --orange:#FF5200; --orange-press:#C84100; --ink:#1A202C; --sand:#FBF8F4;
+    --g50:#F7F8FA; --g100:#EEF0F3; --g200:#E1E4E8; --g300:#C7CCD3; --g400:#9AA1AB; --g500:#6B7380; --g600:#4A525E;
+    --info:#2E6FE6; --ok:#1F8A5B; --warn:#E5A100; --danger:#D32F2F;
+    --mono:'DM Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;height:100%;}
+  body{font-family:'Inter Tight',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);
+    background:var(--sand);display:flex;flex-direction:column;height:100vh;font-size:13.5px;}
+  header.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 20px;height:58px;
+    background:#fff;border-bottom:1px solid var(--g200);flex:none;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14.5px;}
+  .hexmark{width:13px;height:11px;background:var(--orange);clip-path:polygon(50% 0,100% 27%,100% 73%,50% 100%,0 73%,0 27%);}
+  .brand small{color:var(--g500);font-weight:500;}
+  button{font:inherit;font-weight:600;font-size:12.5px;cursor:pointer;border-radius:6px;padding:8px 14px;
+    border:1px solid var(--g300);background:#fff;color:var(--ink);transition:all .12s ease;}
+  button:hover{border-color:var(--ink);}
+  button:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+  button.primary{background:var(--orange);border-color:var(--orange);color:#fff;}
+  button.primary:hover{background:var(--orange-press);border-color:var(--orange-press);}
+  button.quiet{border:none;background:transparent;color:var(--g600);padding:6px 8px;}
+  button.quiet:hover{color:var(--ink);}
+  button:disabled{opacity:.45;cursor:not-allowed;}
+  main{flex:1;display:grid;grid-template-columns:76px 470px 1fr;min-height:0;}
+
+  /* ---- gate rail (signature) ---- */
+  nav.rail{background:var(--ink);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:2px;}
+  .rail-group{display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;}
+  .rail-label{font-size:7px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--g500);
+    text-align:center;line-height:1.35;margin:0 0 4px;padding:0 6px;}
+  .rail .gate{width:60px;padding:9px 2px 8px;border:none;background:transparent;color:var(--g400);
+    display:flex;flex-direction:column;align-items:center;gap:5px;border-radius:8px;cursor:pointer;}
+  .rail .gate .dot{width:14px;height:12px;clip-path:polygon(50% 0,100% 27%,100% 73%,50% 100%,0 73%,0 27%);
+    background:var(--g600);transition:background .15s;flex:none;}
+  .rail .gate small{font-size:8px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;
+    line-height:1.25;text-align:center;}
+  .rail .gate.active{color:#fff;} .rail .gate.active .dot{background:var(--orange);}
+  .rail .gate.done .dot{background:#fff;}
+  .rail .spine{width:22px;flex:none;height:1px;background:var(--g600);margin:10px 0;}
+
+  /* ---- work column ---- */
+  .work{background:#fff;border-right:1px solid var(--g200);overflow-y:auto;min-height:0;padding:18px 20px 60px;}
+  .panel{display:none;} .panel.active{display:block;}
+  .panel h2{font-size:16px;margin:0 0 2px;letter-spacing:-.01em;}
+  .panel .sub{font-size:12px;color:var(--g500);margin:0 0 14px;line-height:1.5;}
+  fieldset{border:1px solid var(--g200);border-radius:8px;padding:12px 14px 14px;margin:0 0 14px;}
+  legend{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--g600);padding:0 6px;}
+  label{display:block;font-size:11px;font-weight:600;color:var(--g600);margin:8px 0 3px;}
+  input[type=text],input[type=date],select,textarea{width:100%;font:inherit;font-size:12.5px;padding:7px 9px;
+    border:1px solid var(--g300);border-radius:6px;color:var(--ink);background:#fff;}
+  input:focus,select:focus,textarea:focus{outline:2px solid rgba(255,82,0,.35);border-color:var(--orange);}
+  textarea{resize:vertical;font-family:var(--mono);font-size:11.5px;line-height:1.55;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .drop{border:1.5px dashed var(--g300);border-radius:8px;padding:14px;text-align:center;color:var(--g500);
+    font-size:12px;cursor:pointer;transition:all .15s;background:var(--g50);}
+  .drop:hover,.drop.over{border-color:var(--orange);color:var(--orange-press);background:rgba(255,82,0,.04);}
+  .filelist{list-style:none;margin:8px 0 0;padding:0;font-size:11.5px;}
+  .filelist li{display:flex;justify-content:space-between;gap:10px;padding:5px 8px;background:var(--g50);
+    border-radius:5px;margin-bottom:4px;font-family:var(--mono);}
+  .filelist li button{padding:0 6px;font-size:11px;}
+  .seg{display:flex;border:1px solid var(--g300);border-radius:7px;overflow:hidden;}
+  .seg button{flex:1;border:none;border-radius:0;background:#fff;font-weight:600;padding:9px 4px;color:var(--g600);}
+  .seg button+button{border-left:1px solid var(--g300);}
+  .seg button.on{background:var(--ink);color:#fff;}
+  .seg-note{font-size:11px;color:var(--g500);margin-top:6px;line-height:1.45;min-height:30px;}
+  .note{font-size:11px;color:var(--g500);line-height:1.5;margin-top:8px;}
+  .note.warn{color:var(--warn);}
+  .status{font-size:12px;margin-top:10px;line-height:1.5;color:var(--g600);}
+  .status.err{color:var(--danger);} .status.ok{color:var(--ok);}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--g300);border-top-color:var(--orange);
+    border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:6px;}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation-duration:2s;}}
+
+  /* library list */
+  .tpl{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border:1px solid var(--g200);
+    border-radius:7px;margin-bottom:6px;cursor:pointer;}
+  .tpl:hover{border-color:var(--ink);}
+  .tpl.on{border-color:var(--orange);background:rgba(255,82,0,.05);}
+  .tpl .nm{font-weight:600;font-size:13px;}
+  .tpl .meta{font-size:10.5px;color:var(--g500);font-family:var(--mono);}
+
+  /* review list */
+  .blk{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:8px 6px;border-bottom:1px solid var(--g100);align-items:start;}
+  .blk input{margin-top:2px;accent-color:var(--orange);}
+  .blk .t{font-weight:600;font-size:12.5px;}
+  .blk .r{font-size:11px;color:var(--g500);line-height:1.4;}
+  .blk.ask{background:rgba(229,161,0,.08);border-radius:6px;}
+  .blk.ask .r::before{content:"NEEDS DECISION · ";color:var(--warn);font-weight:700;font-size:9px;letter-spacing:.06em;}
+  .blk.excluded{opacity:.5;}
+  /* grouped review list (steps / checklist / issues) with reorder + add/remove */
+  .rev-group{margin-bottom:14px;}
+  .rev-group-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 6px;}
+  .rev-group-head>span{font-size:10px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--g600);}
+  .rev-count{color:var(--g400);font-family:var(--mono);}
+  .rev-add{border:1px solid var(--g300);background:#fff;border-radius:5px;padding:3px 8px;font-size:10.5px;font-weight:600;color:var(--g600);}
+  .rev-add:hover{border-color:var(--orange);color:var(--orange-press);}
+  .blk2{display:grid;grid-template-columns:14px 18px 1fr auto;gap:8px;align-items:start;padding:7px 4px;
+    border-bottom:1px solid var(--g100);border-top:2px solid transparent;border-block-end:1px solid var(--g100);}
+  .blk2 input{margin-top:2px;accent-color:var(--orange);}
+  .blk2-main{min-width:0;}
+  .blk2 .t{font-weight:600;font-size:12px;line-height:1.3;}
+  .blk2 .r{font-size:10.5px;color:var(--g500);line-height:1.35;}
+  .blk2.ask{background:rgba(229,161,0,.08);border-radius:6px;}
+  .blk2.excluded{opacity:.5;}
+  .grip{cursor:grab;color:var(--g400);font-size:12px;line-height:1.4;user-select:none;letter-spacing:-2px;padding-top:1px;}
+  .grip:active{cursor:grabbing;}
+  .blk2.dragging{opacity:.4;}
+  .blk2.drop-before{box-shadow:inset 0 3px 0 -1px var(--orange);}
+  .blk2.drop-after{box-shadow:inset 0 -3px 0 -1px var(--orange);}
+  .ord{border:1px solid var(--g200);background:#fff;border-radius:4px;padding:1px 6px;font-size:12px;line-height:1.2;color:var(--g600);}
+  .ord:hover:not(:disabled){border-color:var(--ink);color:var(--ink);}
+  .ord.del:hover{border-color:var(--danger);color:var(--danger);}
+  .ord:disabled{opacity:.3;cursor:not-allowed;}
+  .profilebox{background:var(--sand);border-left:3px solid var(--orange);padding:10px 12px;font-size:12px;
+    line-height:1.55;margin-bottom:12px;border-radius:0 6px 6px 0;}
+  .profilebox b{font-weight:700;}
+  .logoprev{max-height:44px;max-width:180px;display:block;margin-top:6px;border:1px solid var(--g200);border-radius:4px;padding:3px 6px;background:#fff;}
+
+  /* preview */
+  .preview{background:#E9E5DF;min-height:0;position:relative;display:flex;flex-direction:column;}
+  .preview .ptools{position:absolute;top:12px;right:16px;z-index:5;display:flex;gap:8px;}
+  .preview iframe{flex:1;width:100%;border:0;}
+  .preview .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:var(--g500);font-size:13px;flex-direction:column;gap:10px;}
+  .preview .empty .hexmark{width:22px;height:19px;opacity:.4;}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <small>· permission-scoped SOPs · locked design v2</small></div>
+  <div class="actions">
+    <button id="btnRender">Render preview</button>
+    <button id="btnDownload" class="primary" disabled>Download PDF</button>
+  </div>
+</header>
+<main>
+  <nav class="rail" aria-label="Workflow">
+    <div class="rail-group">
+      <div class="rail-label">Templates</div>
+      <button class="gate active" data-p="templates"><span class="dot"></span><small>Templates</small></button>
+    </div>
+    <span class="spine"></span>
+    <div class="rail-group">
+      <div class="rail-label">SOP<br>Generation</div>
+      <button class="gate" data-p="create"><span class="dot"></span><small>Create</small></button>
+      <button class="gate" data-p="clientreview"><span class="dot"></span><small>Client &amp; Review</small></button>
+      <button class="gate" data-p="generate"><span class="dot"></span><small>Generate</small></button>
+    </div>
+  </nav>
+
+  <section class="work">
+
+    <div class="panel active" id="p-templates">
+      <h2>Templates</h2>
+      <p class="sub">Shared across your whole team — templates saved here are visible to everyone using this app. Manage them here, then use one in the Create step to start an SOP.</p>
+      <div id="tplList"></div>
+      <div class="status" id="libStatus">Loading library…</div>
+      <fieldset>
+        <legend>Manage</legend>
+        <button id="btnSeed">Seed / reset RFI master template</button>
+        <button id="btnEditTpl" class="quiet">View / edit selected template JSON</button>
+        <textarea id="tplJson" rows="10" style="display:none;margin-top:10px;" spellcheck="false"></textarea>
+        <div id="tplEditRow" style="display:none;margin-top:8px;">
+          <button id="btnSaveTpl" class="primary">Save template to shared library</button>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="panel" id="p-create">
+      <h2>Create an SOP</h2>
+      <p class="sub">Start a new SOP by uploading a content JSON, or from one of your saved templates.</p>
+      <div class="seg" id="createMode" role="group" aria-label="Create mode">
+        <button data-v="new" class="on">Create new</button>
+        <button data-v="template">From template</button>
+      </div>
+
+      <div id="createNew" style="margin-top:14px;">
+        <fieldset><legend>Upload content JSON</legend>
+          <div class="drop" id="jsonDrop" tabindex="0">Drop a content JSON file here (.json), or click to choose</div>
+          <ul class="filelist" id="jsonList"></ul>
+          <div class="note">The file must follow the required content JSON schema. Any missing fields render as visible placeholders for later review.</div>
+        </fieldset>
+      </div>
+
+      <div id="createTemplate" style="display:none;margin-top:14px;">
+        <fieldset><legend>Choose a saved template</legend>
+          <div id="createTplList"></div>
+          <div class="note">Templates are managed in the Templates section. Picking one loads all of its blocks — untick what you don't need in the next step.</div>
+        </fieldset>
+      </div>
+
+      <div class="status" id="createStatus"></div>
+    </div>
+
+    <div class="panel" id="p-clientreview">
+      <h2>Client &amp; Review</h2>
+      <p class="sub">Set the detail level, enter the client and document details, then review what will be included. Leave a field blank and it renders as a visible placeholder.</p>
+
+      <fieldset><legend>SOP detail level</legend>
+        <div class="seg" id="detailSeg" role="group" aria-label="Detail level">
+          <button data-v="simple">Simple</button>
+          <button data-v="standard" class="on">Standard</button>
+          <button data-v="extended">Extended</button>
+        </div>
+        <div class="seg-note" id="detailNote">Standard — full steps with role/system/time, key bullets and callouts. The default team standard.</div>
+      </fieldset>
+
+      <fieldset><legend>Client</legend>
+        <label for="fCustomer">Client name</label><input type="text" id="fCustomer" placeholder="e.g. Kingsmede Constructions Pty Ltd">
+        <label>Client logo (cover, optional)</label>
+        <div class="drop" id="logoDrop" tabindex="0">Drop a logo image here, or click to choose</div>
+        <img id="logoPrev" class="logoprev" alt="Client logo preview" style="display:none;">
+        <button id="logoClear" class="quiet" style="display:none;">Remove logo</button>
+      </fieldset>
+      <fieldset><legend>Document</legend>
+        <div class="row2">
+          <div><label for="fDocId">Doc ID</label><input type="text" id="fDocId" placeholder="SOP-XXX-000"></div>
+          <div><label for="fVersion">Version</label><input type="text" id="fVersion" value="1.0"></div>
+        </div>
+        <div class="row2">
+          <div><label for="fOwner">Process owner (Name · Role)</label><input type="text" id="fOwner" placeholder="S. Okafor · Project Manager"></div>
+          <div><label for="fEffective">Effective from</label><input type="date" id="fEffective"></div>
+        </div>
+        <label for="fAppliesTo">Applies to</label><input type="text" id="fAppliesTo" placeholder="Projects / teams / scope">
+      </fieldset>
+      <fieldset><legend>Sign-off people</legend>
+        <div class="row2">
+          <div><label for="fPrepared">Prepared by</label><input type="text" id="fPrepared" placeholder="Name"></div>
+          <div><label for="fPreparedD">Date</label><input type="date" id="fPreparedD"></div>
+        </div>
+        <div class="row2">
+          <div><label for="fReviewed">Reviewed by</label><input type="text" id="fReviewed" placeholder="Name"></div>
+          <div><label for="fReviewedD">Date</label><input type="date" id="fReviewedD"></div>
+        </div>
+        <div class="row2">
+          <div><label for="fApproved">Approved by</label><input type="text" id="fApproved" placeholder="Name"></div>
+          <div><label for="fApprovedD">Date</label><input type="date" id="fApprovedD"></div>
+        </div>
+      </fieldset>
+      <fieldset><legend>Process specifics</legend>
+        <div class="row2">
+          <div><label for="fSla">Response SLA (business days)</label><input type="text" id="fSla" placeholder="e.g. 5"></div>
+          <div><label for="fNaming">RFI subject naming convention</label><input type="text" id="fNaming" placeholder="Location – Trade – Query"></div>
+        </div>
+        <label for="fEscalation">Escalation path for overdue items</label><input type="text" id="fEscalation" placeholder="e.g. PM chases at +2 days; CM raises at contract meeting">
+      </fieldset>
+
+      <fieldset><legend>Review inclusion</legend>
+        <div id="profileBox"></div>
+        <div id="blockList"><div class="note">Create or load content in the Create step first — every block appears here to include or exclude.</div></div>
+      </fieldset>
+      <fieldset><legend>Advanced</legend>
+        <button id="btnShowJson" class="quiet">View / edit assembled content JSON</button>
+        <textarea id="sopJson" rows="12" style="display:none;margin-top:10px;" spellcheck="false"></textarea>
+      </fieldset>
+    </div>
+
+    <div class="panel" id="p-generate">
+      <h2>Generate</h2>
+      <p class="sub">Renders the SOP in the locked step-per-page design — identical to the standalone builder output.</p>
+      <div id="genSummary" class="profilebox" style="display:none;"></div>
+      <button id="btnRender2" class="primary" style="width:100%;padding:11px;">Render preview</button>
+      <button id="btnDownload2" style="width:100%;padding:11px;margin-top:8px;" disabled>Download PDF</button>
+      <div class="status" id="genStatus"></div>
+      <div class="note">File name follows the standard: Client_Tool_Persona_vX.Y.pdf. The checklist boxes and the sign-off name/date lines are fillable form fields — tick and type in any PDF reader.</div>
+    </div>
+
+  </section>
+
+  <section class="preview">
+    <div class="ptools"><button id="btnZoom" class="quiet" style="background:#fff;border:1px solid var(--g300);">Fit / 100%</button></div>
+    <div class="empty" id="prevEmpty"><span class="hexmark"></span>Preview appears here after you render</div>
+    <iframe id="frame" title="SOP preview"></iframe>
+  </section>
+</main>
+<script>
+// AUTO-GENERATED from assets/sop-template.html — the LOCKED Procore SOP design.
+// Exact copies of the template's font links, CSS, and wordmark SVG. The builder injects
+// content into this fixed design; the design markup is never regenerated.
+window.SOP_DESIGN = {
+  fontLinks: "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap\" rel=\"stylesheet\">",
+  css: "\n  :root{\n    --procore-orange:#FF5200; --procore-orange-pressed:#C84100;\n    --procore-ink:#1A202C; --procore-sand-50:#FBF8F4;\n    --procore-gray-50:#F7F8FA; --procore-gray-100:#EEF0F3; --procore-gray-200:#E1E4E8;\n    --procore-gray-300:#C7CCD3; --procore-gray-400:#9AA1AB; --procore-gray-500:#6B7380;\n    --procore-gray-600:#4A525E; --procore-gray-700:#2F3540;\n    --color-info:#2E6FE6; --color-success:#1F8A5B; --color-warning:#E5A100; --color-danger:#D32F2F;\n    --fg:#000; --fg-muted:var(--procore-gray-500); --bg:#fff; --rule:var(--procore-gray-200);\n    --font-display:'Inter Tight',system-ui,sans-serif;\n    --font-body:'Inter Tight',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;\n    --font-mono:'DM Mono',ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;\n    --fw-medium:500;\n    --page-w:816px; --page-h:1056px; --page-pad-x:56px; --header-h:56px; --footer-h:36px;\n  }\n  html,body{background:#E9E5DF;margin:0;color:var(--fg);font-family:var(--font-body);font-size:11pt;line-height:1.5;}\n  .viewer{display:flex;flex-direction:column;align-items:center;gap:32px;padding:40px 0 64px;}\n  .page{position:relative;width:var(--page-w);height:var(--page-h);background:#fff;\n    box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px rgba(20,23,29,.10);overflow:hidden;\n    page-break-after:always;color:var(--procore-ink);}\n  .page:last-child{page-break-after:auto;}\n  /* header / footer */\n  .pg-header{height:var(--header-h);padding:0 var(--page-pad-x);border-bottom:1px solid var(--rule);\n    display:flex;align-items:center;justify-content:space-between;gap:16px;}\n  .pg-header .logo svg{height:18px;width:auto;display:block;color:var(--procore-ink);}\n  .pg-header .doc-id{display:flex;align-items:center;gap:12px;font-size:9.5pt;color:var(--fg-muted);}\n  .pg-header .doc-id .title{color:var(--procore-ink);font-weight:var(--fw-medium);letter-spacing:-.005em;}\n  .pg-header .doc-id .sep{width:1px;height:14px;background:var(--rule);display:inline-block;}\n  .pg-footer{position:absolute;left:0;right:0;bottom:0;height:var(--footer-h);padding:0 var(--page-pad-x);\n    border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;\n    font-size:9pt;color:var(--fg-muted);}\n  .pg-footer .footer-mark{display:inline-flex;align-items:center;gap:6px;color:var(--procore-gray-600);font-weight:500;}\n  .pg-footer .confidential{text-transform:uppercase;letter-spacing:.08em;font-size:8pt;font-weight:600;color:var(--procore-gray-600);}\n  .pg-footer .pageno{font-variant-numeric:tabular-nums;font-weight:600;color:var(--procore-ink);}\n  .pg-footer .pageno .total{color:var(--fg-muted);font-weight:500;}\n  .hex{width:12px;height:10px;display:inline-block;background:no-repeat center/contain;\n    background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 68'%3E%3Cpolygon fill='%23FF5200' points='59.5 6 79.4 40 59.5 74 19.7 74 -0.2 40 19.7 6' transform='translate(0 -6)'/%3E%3C/svg%3E\");}\n  /* body */\n  .pg-body{position:absolute;top:var(--header-h);bottom:var(--footer-h);left:0;right:0;\n    padding:22px var(--page-pad-x) 18px;display:flex;flex-direction:column;}\n  /* cover */\n  .cover-eyebrow{font-size:9.5pt;text-transform:uppercase;letter-spacing:.14em;font-weight:600;\n    color:var(--procore-orange);display:inline-flex;align-items:center;gap:10px;margin-top:6px;}\n  .cover-title{font-family:var(--font-display);font-size:44pt;line-height:1.02;letter-spacing:-.025em;\n    font-weight:500;color:var(--procore-ink);text-wrap:balance;margin-top:22px;max-width:18ch;}\n  .cover-sub{font-family:var(--font-display);font-size:14pt;line-height:1.35;color:var(--procore-gray-600);\n    font-weight:400;margin-top:16px;max-width:56ch;}\n  .cover-meta{margin-top:auto;background:var(--procore-sand-50);border-left:4px solid var(--procore-orange);\n    padding:22px 26px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}\n  .cover-meta .field-label{font-size:8.5pt;text-transform:uppercase;letter-spacing:.1em;font-weight:600;\n    color:var(--procore-gray-600);margin-bottom:4px;}\n  .cover-meta .field-value{font-size:11pt;color:var(--procore-ink);font-weight:500;line-height:1.35;}\n  .doc-control{margin-top:24px;border-top:1px solid var(--rule);}\n  .doc-control table{width:100%;border-collapse:collapse;font-size:9.5pt;}\n  .doc-control th,.doc-control td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top;}\n  .doc-control th{font-weight:600;color:var(--procore-gray-600);text-transform:uppercase;letter-spacing:.08em;\n    font-size:8pt;background:var(--procore-gray-50);width:22%;}\n  /* sections */\n  .section{margin-bottom:12px;} .section:last-child{margin-bottom:0;}\n  .section-eyebrow{font-size:8.5pt;text-transform:uppercase;letter-spacing:.12em;font-weight:700;\n    color:var(--procore-orange);margin-bottom:6px;display:flex;align-items:center;gap:8px;}\n  h1.section-title{font-family:var(--font-display);font-size:20pt;line-height:1.08;letter-spacing:-.02em;\n    font-weight:500;color:var(--procore-ink);margin:0 0 4px;}\n  h2.subhead{font-family:var(--font-display);font-size:12.5pt;font-weight:600;color:var(--procore-ink);\n    letter-spacing:-.005em;margin:0 0 6px;}\n  .lead{font-size:10.5pt;color:var(--procore-gray-700);line-height:1.5;max-width:72ch;margin-bottom:8px;}\n  p{margin:0 0 6px;}\n  .page-intro{display:flex;gap:18px;align-items:flex-start;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--rule);}\n  .page-intro .body{flex:1;}\n  .page-intro .meta{flex:0 0 200px;background:var(--procore-sand-50);border-left:3px solid var(--procore-orange);\n    padding:12px 14px;font-size:9pt;line-height:1.45;color:var(--procore-gray-700);}\n  .page-intro .meta .label{font-size:8pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;\n    color:var(--procore-gray-600);display:block;margin-bottom:2px;}\n  /* roles table */\n  .roles{width:100%;border-collapse:collapse;font-size:9.5pt;margin-top:4px;}\n  .roles th,.roles td{text-align:left;padding:6px 12px;border-bottom:1px solid var(--rule);vertical-align:top;}\n  .roles th{font-size:8pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);\n    background:var(--procore-gray-50);font-weight:700;}\n  .roles td.role{font-weight:600;color:var(--procore-ink);width:28%;}\n  .roles td.who{width:24%;color:var(--procore-gray-700);}\n  /* phases */\n  .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 4px;}\n  .phase{background:var(--bg);border:1px solid var(--rule);padding:14px;position:relative;}\n  .phase .num{font-family:var(--font-mono);font-size:8.5pt;color:var(--procore-orange);font-weight:500;\n    letter-spacing:.04em;margin-bottom:6px;display:block;}\n  .phase .name{font-family:var(--font-display);font-size:11pt;font-weight:600;color:var(--procore-ink);\n    line-height:1.2;margin-bottom:4px;}\n  .phase .desc{font-size:8.5pt;color:var(--procore-gray-600);line-height:1.4;}\n  /* steps */\n  .steps{margin:4px 0 0;list-style:none;padding:0;}\n  .step{display:grid;grid-template-columns:34px 1fr;column-gap:12px;padding:9px 0 10px;border-bottom:1px solid var(--rule);}\n  .step:last-child{border-bottom:0;}\n  .step .step-num{font-family:var(--font-mono);font-size:14pt;font-weight:500;color:var(--procore-orange);\n    line-height:1;padding-top:2px;font-variant-numeric:tabular-nums;}\n  .step .step-title{font-family:var(--font-display);font-size:11.5pt;font-weight:600;color:var(--procore-ink);margin:0 0 3px;line-height:1.2;}\n  .step .step-meta{font-size:8.5pt;color:var(--fg-muted);margin-bottom:4px;display:flex;flex-wrap:wrap;gap:14px;}\n  .step .step-meta .pill{display:inline-flex;align-items:center;gap:4px;}\n  .step .step-meta .pill::before{content:\"\";width:6px;height:6px;border-radius:999px;background:var(--procore-gray-300);}\n  .step .step-meta .pill.role::before{background:var(--procore-orange);}\n  .step .step-meta .pill.system::before{background:var(--color-info);}\n  .step .step-meta .pill.time::before{background:var(--color-success);}\n  .step p{font-size:9.5pt;color:var(--procore-gray-700);margin:0 0 4px;line-height:1.45;}\n  .step ul,.step ol{margin:3px 0 4px;padding-left:18px;font-size:9.5pt;color:var(--procore-gray-700);line-height:1.45;}\n  /* callout */\n  .callout{margin:6px 0 2px;background:var(--procore-sand-50);border-left:3px solid var(--procore-orange);\n    padding:8px 12px;font-size:9pt;color:var(--procore-gray-700);line-height:1.45;display:flex;gap:10px;}\n  .callout .label{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--procore-orange);flex-shrink:0;padding-top:1px;}\n  .callout code{background:rgba(255,82,0,.08);color:var(--procore-orange-pressed);padding:1px 5px;border-radius:3px;font-size:8.5pt;}\n  /* checklist */\n  .checklist .check-item{display:grid;grid-template-columns:22px 1fr 90px;align-items:start;gap:12px;\n    padding:7px 0;border-bottom:1px solid var(--rule);font-size:9.5pt;}\n  .check-item .box{width:14px;height:14px;border:1.5px solid var(--procore-gray-400);border-radius:2px;margin-top:2px;}\n  .check-item .text{color:var(--procore-ink);line-height:1.45;}\n  .check-item .text .hint{display:block;color:var(--fg-muted);font-size:8.5pt;margin-top:2px;}\n  .check-item .owner{font-size:8pt;text-transform:uppercase;letter-spacing:.08em;color:var(--procore-gray-600);text-align:right;padding-top:2px;font-weight:600;}\n  /* issues */\n  .issues-table{width:100%;border-collapse:collapse;font-size:9pt;margin-top:4px;}\n  .issues-table th,.issues-table td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--rule);vertical-align:top;}\n  .issues-table th{font-size:7.5pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);background:var(--procore-gray-50);font-weight:700;}\n  .issues-table td.code{font-family:var(--font-mono);color:var(--procore-orange);font-weight:500;width:16%;}\n  .issues-table td.issue{width:38%;color:var(--procore-ink);font-weight:500;}\n  .issues-table td.fix{color:var(--procore-gray-700);}\n  /* refs + signoff */\n  .refs{font-size:9pt;color:var(--procore-gray-700);list-style:none;padding:0;margin:0;}\n  .refs li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:5px 0;border-bottom:1px solid var(--procore-gray-100);}\n  .refs li:last-child{border-bottom:0;}\n  .refs .tool{font-weight:600;color:var(--procore-ink);}\n  .refs a{color:var(--procore-orange);font-weight:500;text-decoration:none;font-family:var(--font-mono);font-size:8.5pt;}\n  .signoff{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;margin-top:6px;}\n  .sig{border-top:1px solid var(--procore-ink);padding-top:6px;}\n  .sig .role{font-size:8pt;text-transform:uppercase;letter-spacing:.1em;color:var(--procore-gray-600);font-weight:700;margin-bottom:3px;}\n  .sig .name{font-size:10pt;color:var(--procore-gray-400);font-style:italic;}\n  .sig .date{font-size:8.5pt;color:var(--fg-muted);margin-top:12px;display:flex;justify-content:space-between;border-top:1px dashed var(--rule);padding-top:4px;}\n  /* placeholders + pills */\n  .ph{color:var(--procore-gray-400);font-style:italic;background:rgba(255,82,0,.06);padding:0 4px;border-radius:2px;}\n  .placeholder{color:var(--procore-gray-400);font-style:italic;}\n  .pill-status{display:inline-flex;align-items:center;gap:5px;font-size:8pt;font-weight:600;padding:2px 10px;\n    border-radius:999px;text-transform:uppercase;letter-spacing:.06em;}\n  .pill-status::before{content:\"\";width:6px;height:6px;border-radius:999px;background:currentColor;}\n  .pill-status.draft{background:var(--procore-gray-100);color:var(--procore-gray-700);}\n  .pill-status.in-progress{background:rgba(46,111,230,.12);color:var(--color-info);}\n  .pill-status.review{background:rgba(255,82,0,.12);color:var(--procore-orange-pressed);}\n  .pill-status.approved{background:rgba(31,138,91,.12);color:var(--color-success);}\n  /* print */\n  @page{size:letter portrait;margin:0;}\n  @media print{html,body{background:#fff;}.viewer{padding:0;gap:0;}.page{box-shadow:none;width:8.5in;height:11in;}}\n",
+  wordmark: "<svg viewBox=\"0 0 2300 300\" aria-hidden=\"true\" style=\"height:18px;width:auto;color:#1A202C\">\n  <g fill=\"currentColor\">\n    <path d=\"M220.5,173.6H68.6v97.6H0V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,35.2-24.8,60-60.1,60ZM68.6,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z\"/>\n    <path d=\"M543.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM381.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z\"/>\n    <path d=\"M680.8,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM668.4,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z\"/>\n    <path d=\"M994,271.2c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3h172c31.8,0,54.3,22.5,54.3,54.3v53.9h-56.2l-33.7-58.5h-98.8l-50,86,50,86h98.8l33.7-58.5h56.2v53.9c0,31.8-22.5,54.2-54.3,54.2h-172v-.1Z\"/>\n    <path d=\"M1307.3,0h172c31.8,0,54.3,22.5,54.3,54.3v162.7c0,31.8-22.5,54.2-54.3,54.2h-172c-31.8,0-54.2-22.5-54.2-54.2V54.3c0-31.8,22.5-54.3,54.2-54.3ZM1294.9,135.6l50,86h96.9l50-86-50-86h-96.9l-50,86Z\"/>\n    <path d=\"M1796.5,172.8l56.2,98.4h-74l-55.8-97.6h-88v97.6h-68.6V0h220.5c35.3,0,60.1,24.8,60.1,60.1v53.5c0,31.8-20.5,55.4-50.4,59.3v-.1ZM1634.9,50.7v72.1h124.8c10.5,0,17.4-7,17.4-17.4v-37.2c0-10.5-7-17.4-17.4-17.4h-124.8v-.1Z\"/>\n    <path d=\"M1948.1,160.8v59.7h212v50.8h-280.5V0h280.5v50.8h-212v59.3h148v50.8h-148v-.1Z\"/>\n  </g>\n  <polygon fill=\"#FF5200\" points=\"1107.2 89.9 1133.9 135.6 1107.2 181.3 1054.5 181.3 1027.7 135.6 1054.5 89.9 1107.2 89.9\"/>\n</svg>"
+};
+// v2 addendum: 'Your access in this tool' panel styles (replaces the roles table in Section 1).
+window.SOP_DESIGN.css += "\n  .access-panel{background:var(--procore-sand-50);border-left:4px solid var(--procore-orange);padding:14px 18px 15px;display:flex;gap:22px;align-items:flex-start;margin:4px 0 12px;}\n  .access-panel .lvl{flex:0 0 180px;}\n  .access-panel .lvl-label{display:block;font-size:8pt;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--procore-gray-600);margin-bottom:4px;}\n  .access-panel .lvl-value{font-family:var(--font-display);font-size:15pt;font-weight:600;color:var(--procore-orange-pressed);line-height:1.15;display:block;}\n  .access-panel .lvl-meaning{flex:1;font-size:9.5pt;color:var(--procore-gray-700);line-height:1.5;}\n  .perm-table td.role{width:32%;}";
+// guidance image on a step (rendered in preview + PDF/HTML output)
+window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  .step-figure img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:4px;}\n  .step-figure figcaption{font-size:8pt;color:var(--procore-gray-500);margin-top:3px;}";
+
+</script>
+<script>
+(function () {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const D = window.SOP_DESIGN;
+
+  // ============================================================ state
+  const state = {
+    library: null,          // { tools: { RFIs: {template} }, updated }
+    selectedTool: null,
+    detail: 'standard',
+    logo: null,             // dataURL
+    profile: null,          // parsed permission profile from analysis
+    summary: [],            // [{id,title,status,reason,included}]
+    sop: null,              // assembled content JSON (with _id on blocks)
+    rendered: false,
+  };
+
+  // ============================================================ seed template (RFI master v0.2)
+  const RFI_SEED = {
+    name: 'RFIs', version: '0.2',
+    processName: 'RFI management', referenceTool: 'Procore · RFIs (web & mobile)',
+    purpose: 'This procedure defines how [Customer] raises, manages and closes Requests for Information (RFIs) in Procore so queries are answered within the agreed timeframe, every decision is recorded against the project, and cost or programme impacts are identified early.',
+    phases: [
+      { name: 'Raise', desc: 'Creator drafts the RFI with one clear question, drawings and photos.' },
+      { name: 'Review & send', desc: 'RFI Manager checks the draft, numbers it and distributes for response.' },
+      { name: 'Respond', desc: 'Assignee answers in Procore; impact on cost and programme is assessed.' },
+      { name: 'Close', desc: 'Official response recorded, registers updated, RFI set to Closed.' }
+    ],
+    steps: [
+      { _id: 'S01', _perm: { min: 'Standard' }, title: 'Prepare the query before opening Procore', role: 'RFI Creator', system: 'Site / drawings', time: '~5 min',
+        body: 'Confirm the answer is not already in the current drawing set, specification or a previous RFI, then gather everything the reviewer needs to answer without a site visit.',
+        bullets: ['One question per RFI — split multi-part queries.', 'Capture photos and mark up the affected drawing.', 'Note the drawing number, revision and spec section.'],
+        callout: { label: 'Why it matters', body: 'Incomplete RFIs bounce between parties and blow out response times.' } },
+      { _id: 'S02', _perm: { min: 'Standard' }, title: 'Create the RFI', role: 'RFI Creator', system: 'Procore · RFIs', time: '~5 min',
+        body: 'Open the project\u2019s RFIs tool and select <code>+ Create</code>. Standard users create in <strong>Draft</strong>; users with RFI Manager rights can issue directly in <strong>Open</strong> status.',
+        bullets: ['Subject per [naming convention].', 'Write the question in full with drawing and spec references.', 'Attach marked-up drawings and photos.'] },
+      { _id: 'S03', _perm: { min: 'Standard' }, title: 'Select the RFI Manager and submit', role: 'RFI Creator', system: 'Procore · RFIs', time: '~2 min',
+        body: 'Select the <strong>RFI Manager</strong>, add <strong>Distribution</strong> members, and save. You are notified when the RFI is opened and when a response is recorded.',
+        callout: { label: 'Handoff', body: 'The RFI now sits with the RFI Manager / assignee.' } },
+      { _id: 'S04', _perm: { min: 'Standard', granular: 'Act as RFI Manager' }, title: 'Review the draft and distribute for response', role: 'RFI Manager', system: 'Procore · RFIs', time: '~5 min',
+        body: 'Act as gatekeeper: check the question is answerable, then open it (Procore assigns the number), set the <strong>Assignee</strong> and a <strong>Due date</strong> within the SLA of [X business days] — or return it to the creator.',
+        bullets: ['Reject unclear or duplicate drafts.', 'Confirm the assignee is in the project Directory with RFIs access.'] },
+      { _id: 'S05', _perm: { min: 'ReadOnly' }, title: 'Respond to an RFI you are assigned', role: 'Assignee', system: 'Procore · RFIs', time: '~10 min',
+        body: 'Record your response directly in Procore — never by email outside the system — and attach any revised documents. The response is time-stamped against the project record.' },
+      { _id: 'S06', _perm: { min: 'ReadOnly' }, title: 'Track RFIs relevant to you', role: 'All users', system: 'Procore · RFIs', time: 'ongoing',
+        body: 'Use the list filters (status, assignee, due date, overdue) to monitor items you created or are named on. Visibility of others\u2019 RFIs depends on project settings.' },
+      { _id: 'S07', _perm: { min: 'Standard', granular: 'Act as RFI Manager' }, title: 'Review the response and assess impact', role: 'RFI Manager', system: 'Procore · RFIs', time: '~5 min',
+        body: 'Review the answer for completeness and for cost or programme consequence. If scope changes, trigger the variation / change process before closing.' },
+      { _id: 'S08', _perm: { min: 'Standard', granular: 'Act as RFI Manager' }, title: 'Record the official response and close', role: 'RFI Manager', system: 'Procore · RFIs', time: '~3 min',
+        body: 'Mark the accepted answer as the <strong>Official Response</strong>, confirm distribution, then set the RFI to <code>Closed</code>. Update superseded drawings in the Drawings tool.',
+        callout: { label: 'Why it matters', body: 'An unclosed RFI leaves the question contractually open.' } },
+      { _id: 'S09', _perm: { min: 'Admin' }, title: 'Edit, reopen or delete RFIs (Admin)', role: 'RFIs Admin', system: 'Procore · RFIs', time: 'as required',
+        body: 'Admins can edit any RFI, reopen closed items, and delete RFIs created in error. Record the reason on the RFI so the audit trail stays intact.' },
+      { _id: 'S10', _perm: { min: 'Admin' }, title: 'Configure the RFIs tool (Admin)', role: 'RFIs Admin', system: 'Configure Settings', time: 'setup / periodic',
+        body: 'Set default RFI Manager, number prefix, private RFIs, overdue reminders and the <strong>Permissions Table</strong>. Review at project start-up and after process changes.' }
+    ],
+    checklist: [
+      { _id: 'C01', _perm: { min: 'Standard' }, text: 'One clear question with drawing/spec references attached', hint: 'Multi-part queries split into separate RFIs.', owner: 'Creator' },
+      { _id: 'C02', _perm: { min: 'Standard' }, text: 'RFI Manager and distribution set before submitting', hint: 'Everyone who acts on the answer is on distribution.', owner: 'Creator' },
+      { _id: 'C03', _perm: { min: 'Standard', granular: 'Act as RFI Manager' }, text: 'Official response recorded and complete', hint: 'Revised documents attached.', owner: 'RFI Mgr' },
+      { _id: 'C04', _perm: { min: 'Standard', granular: 'Act as RFI Manager' }, text: 'Cost & programme impact assessed before closing', hint: 'Variation raised where scope changed.', owner: 'RFI Mgr' },
+      { _id: 'C05', _perm: { min: 'ReadOnly' }, text: 'Response actioned and superseded info no longer in use', hint: '', owner: 'All' },
+      { _id: 'C06', _perm: { min: 'Admin' }, text: 'Tool settings and permissions table reviewed', hint: 'At start-up and after process changes.', owner: 'Admin' }
+    ],
+    issues: [
+      { _id: 'E01', _perm: { min: 'ReadOnly' }, code: 'RFI-01', issue: 'Assignee can\u2019t see the RFI', resolution: 'Confirm they are in the project Directory with RFIs access and named on the RFI; re-add and resend.' },
+      { _id: 'E02', _perm: { min: 'ReadOnly' }, code: 'RFI-02', issue: 'Response given by email, not in Procore', resolution: 'Copy the response into the RFI as the official response so the record is complete.' },
+      { _id: 'E03', _perm: { min: 'Standard', granular: 'Act as RFI Manager' }, code: 'RFI-03', issue: 'RFI overdue with no response', resolution: 'Use the overdue filter; chase per [escalation path]; enable overdue reminders in settings.' },
+      { _id: 'E04', _perm: { min: 'Standard' }, code: 'RFI-04', issue: 'Draft stuck — creator can\u2019t send', resolution: 'Expected: Standard users create drafts only; the designated RFI Manager opens and distributes.' },
+      { _id: 'E05', _perm: { min: 'Admin' }, code: 'RFI-05', issue: 'Wrong number sequence or prefix', resolution: 'Admin reviews numbering under Configure Settings; changes affect new RFIs only.' }
+    ],
+    references: [
+      { tool: 'RFIs — user guide', url: 'https://support.procore.com/products/online/user-guide/project-level/rfi' },
+      { tool: 'RFIs — user permissions', url: 'https://support.procore.com/products/online/user-guide/project-level/rfi/permissions' },
+      { tool: 'Drawings', url: 'https://support.procore.com/products/online/user-guide/project-level/drawings' }
+    ]
+  };
+
+  // ============================================================ shared library (window.storage)
+  const LIB_KEY = 'sop-templates';
+  async function loadLibrary() {
+    const st = $('libStatus');
+    try {
+      const res = await window.storage.get(LIB_KEY, true);
+      state.library = JSON.parse(res.value);
+      st.textContent = 'Shared library loaded · ' + Object.keys(state.library.tools).length + ' tool template(s).';
+      st.className = 'status ok';
+    } catch (e) {
+      state.library = { tools: {}, updated: '' };
+      st.textContent = 'No shared library yet — seed the RFI master template to get started.';
+      st.className = 'status';
+    }
+    renderTplList();
+  }
+  async function saveLibrary(msg) {
+    const st = $('libStatus');
+    try {
+      state.library.updated = new Date().toISOString();
+      const res = await window.storage.set(LIB_KEY, JSON.stringify(state.library), true);
+      if (!res) throw new Error('storage returned no result');
+      st.textContent = msg || 'Shared library saved — visible to your whole team.';
+      st.className = 'status ok';
+    } catch (e) {
+      st.textContent = 'Could not save the library: ' + e.message;
+      st.className = 'status err';
+    }
+    renderTplList();
+  }
+  function renderTplList() {
+    const el = $('tplList');
+    const tools = state.library ? state.library.tools : {};
+    const names = Object.keys(tools);
+    if (!names.length) { el.innerHTML = '<div class="note">Library is empty.</div>'; return; }
+    el.innerHTML = names.map(n => {
+      const t = tools[n];
+      return '<div class="tpl' + (state.selectedTool === n ? ' on' : '') + '" data-t="' + n + '" role="button" tabindex="0">' +
+        '<div><div class="nm">' + n + '</div><div class="meta">v' + (t.version || '?') + ' · ' + (t.steps || []).length + ' steps</div></div>' +
+        '<div class="meta">' + (state.selectedTool === n ? 'SELECTED' : 'select') + '</div></div>';
+    }).join('');
+    el.querySelectorAll('.tpl').forEach(t => {
+      const pick = () => { state.selectedTool = t.dataset.t; renderTplList(); syncTplEditor(); };
+      t.onclick = pick;
+      t.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } };
+    });
+  }
+  function syncTplEditor() {
+    const ta = $('tplJson');
+    if (ta.style.display !== 'none' && state.selectedTool) {
+      ta.value = JSON.stringify(state.library.tools[state.selectedTool], null, 2);
+    }
+  }
+  $('btnSeed').onclick = async () => {
+    if (!state.library) state.library = { tools: {}, updated: '' };
+    state.library.tools['RFIs'] = RFI_SEED;
+    state.selectedTool = 'RFIs';
+    await saveLibrary('RFI master template seeded to the shared library.');
+    syncTplEditor();
+  };
+  $('btnEditTpl').onclick = () => {
+    const ta = $('tplJson'), row = $('tplEditRow');
+    const show = ta.style.display === 'none';
+    ta.style.display = show ? 'block' : 'none';
+    row.style.display = show ? 'block' : 'none';
+    if (show) syncTplEditor();
+  };
+  $('btnSaveTpl').onclick = async () => {
+    try {
+      const t = JSON.parse($('tplJson').value);
+      const name = t.name || state.selectedTool || 'Untitled';
+      state.library.tools[name] = t;
+      state.selectedTool = name;
+      await saveLibrary('Template "' + name + '" saved to the shared library.');
+    } catch (e) {
+      $('libStatus').textContent = 'JSON error: ' + e.message;
+      $('libStatus').className = 'status err';
+    }
+  };
+
+  // ============================================================ gates nav
+  const gates = document.querySelectorAll('.rail .gate');
+  function goGate(p) {
+    gates.forEach(g => g.classList.toggle('active', g.dataset.p === p));
+    document.querySelectorAll('.panel').forEach(pn => pn.classList.toggle('active', pn.id === 'p-' + p));
+  }
+  gates.forEach(g => g.onclick = () => goGate(g.dataset.p));
+
+  // ============================================================ uploads
+  function readAsDataURL(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(r.result);
+      r.onerror = () => rej(new Error('Could not read ' + file.name));
+      r.readAsDataURL(file);
+    });
+  }
+  function readAsText(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(r.result);
+      r.onerror = () => rej(new Error('Could not read ' + file.name));
+      r.readAsText(file);
+    });
+  }
+  function wireDrop(dropId, onFiles, accept) {
+    const el = $(dropId);
+    const open = () => {
+      const inp = document.createElement('input');
+      inp.type = 'file'; inp.multiple = true; if (accept) inp.accept = accept;
+      inp.onchange = () => onFiles(Array.from(inp.files || []));
+      inp.click();
+    };
+    el.onclick = open;
+    el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } };
+    el.ondragover = (e) => { e.preventDefault(); el.classList.add('over'); };
+    el.ondragleave = () => el.classList.remove('over');
+    el.ondrop = (e) => { e.preventDefault(); el.classList.remove('over'); onFiles(Array.from(e.dataTransfer.files || [])); };
+  }
+  function renderFileList(listId, files, removeFrom) {
+    $(listId).innerHTML = files.map((f, i) =>
+      '<li><span>' + f.name + ' · ' + f.kind + '</span><button data-i="' + i + '">remove</button></li>').join('');
+    $(listId).querySelectorAll('button').forEach(b => b.onclick = () => {
+      removeFrom.splice(+b.dataset.i, 1);
+      renderFileList(listId, files, removeFrom);
+    });
+  }
+  // ---- create mode toggle (new / from template)
+  let createMode = 'new';
+  document.querySelectorAll('#createMode button').forEach(b => b.onclick = () => {
+    createMode = b.dataset.v;
+    document.querySelectorAll('#createMode button').forEach(x => x.classList.toggle('on', x === b));
+    $('createNew').style.display = createMode === 'new' ? 'block' : 'none';
+    $('createTemplate').style.display = createMode === 'template' ? 'block' : 'none';
+    if (createMode === 'template') renderCreateTplList();
+  });
+
+  // build the inclusion summary straight from an assembled content JSON.
+  // `type` groups the review panel; summary ORDER drives the rendered order.
+  function buildSummaryFromSop(sop) {
+    const rows = [];
+    (sop.steps || []).forEach(s => rows.push({ id: s._id, title: s.title || '', type: 'step', status: 'include', reason: 'Procedure step', included: true }));
+    (sop.checklist || []).forEach(c => rows.push({ id: c._id, title: c.text || '', type: 'check', status: 'include', reason: 'Checklist item', included: true }));
+    (sop.issues || []).forEach(e => rows.push({ id: e._id, title: e.issue || e.code || '', type: 'issue', status: 'include', reason: 'Common issue', included: true }));
+    return rows;
+  }
+
+  // ensure every step/checklist/issue has a stable _id — the join key used by both
+  // the inclusion toggles (keep()) and inline editing (data-edit). Uploaded JSON that
+  // omits _id would otherwise be neither excludable nor editable.
+  function ensureIds(sop) {
+    (sop.steps || []).forEach((s, i) => {
+      if (!s._id) s._id = 'S' + (i + 1);
+      // normalise guidance images to an array of {src,width,caption}; migrate legacy single image
+      if (!Array.isArray(s.images)) s.images = s.image ? [{ src: s.image, width: s.imageWidth || 60, caption: s.imageCaption || '' }] : [];
+      delete s.image; delete s.imageWidth; delete s.imageCaption;
+    });
+    (sop.checklist || []).forEach((c, i) => { if (!c._id) c._id = 'C' + (i + 1); });
+    (sop.issues || []).forEach((e, i) => { if (!e._id) e._id = 'E' + (i + 1); });
+    return sop;
+  }
+
+  // load a content JSON into state, then jump to Client & Review
+  function loadContent(sop, toolName, msg) {
+    state.sop = ensureIds(sop);
+    state.sop.status = state.sop.status || 'draft';
+    state.selectedTool = toolName || (sop.access && sop.access.tool) || sop.referenceTool || state.selectedTool || null;
+    state.summary = buildSummaryFromSop(sop);
+    state.profile = { tool: (sop.access && sop.access.tool) || toolName || '', level: (sop.access && sop.access.level) || '', granular: [] };
+    setStatus('createStatus', msg, 'ok');
+    renderReview();
+    goGate('clientreview');
+  }
+
+  // convert a saved tool template (master library) into a content-JSON skeleton
+  function templateToContent(t) {
+    return {
+      docId: '', version: t.version || '1.0', status: 'draft', customer: '',
+      processName: t.processName || '', subtitle: '', processOwner: '', effectiveFrom: '', appliesTo: '',
+      approvals: { preparedBy: { name: '', date: '' }, reviewedBy: { name: '', date: '' }, approvedBy: { name: '', date: '' }, scheduledReview: { name: '', date: '' } },
+      purpose: t.purpose || '',
+      access: { tool: t.name || '', level: '', levelMeaning: '', granular: [], notIncluded: [] },
+      phases: t.phases || [], procedureIntro: '', referenceTool: t.referenceTool || '',
+      steps: (t.steps || []).map(s => ({ _id: s._id, title: s.title, role: s.role, system: s.system, time: s.time, body: s.body, bullets: s.bullets || [], callout: s.callout || null })),
+      closeoutIntro: '', owner: '',
+      checklist: (t.checklist || []).map(c => ({ _id: c._id, text: c.text, hint: c.hint || '', owner: c.owner || '' })),
+      issues: (t.issues || []).map(e => ({ _id: e._id, code: e.code, issue: e.issue, resolution: e.resolution })),
+      references: t.references || []
+    };
+  }
+
+  // upload a content JSON
+  const jsonFiles = [];
+  wireDrop('jsonDrop', async (files) => {
+    const f = files[0];
+    if (!f) return;
+    try {
+      const sop = JSON.parse(await readAsText(f));
+      jsonFiles.length = 0; jsonFiles.push({ name: f.name, kind: 'json' });
+      renderFileList('jsonList', jsonFiles, jsonFiles);
+      loadContent(sop, null, 'Loaded <strong>' + f.name + '</strong> — set the detail level, add client details and review below.');
+    } catch (e) {
+      setStatus('createStatus', 'Could not read JSON: ' + e.message, 'err');
+    }
+  }, '.json,application/json');
+
+  // list of saved templates to create from
+  function renderCreateTplList() {
+    const el = $('createTplList');
+    const tools = state.library ? state.library.tools : {};
+    const names = Object.keys(tools);
+    if (!names.length) { el.innerHTML = '<div class="note">No templates yet — seed or save one in the Templates section.</div>'; return; }
+    el.innerHTML = names.map(n => {
+      const t = tools[n];
+      return '<div class="tpl" data-t="' + n + '" role="button" tabindex="0">' +
+        '<div><div class="nm">' + n + '</div><div class="meta">v' + (t.version || '?') + ' · ' + (t.steps || []).length + ' steps</div></div>' +
+        '<div class="meta">use →</div></div>';
+    }).join('');
+    el.querySelectorAll('.tpl').forEach(t => {
+      const pick = () => {
+        const tpl = state.library.tools[t.dataset.t];
+        loadContent(templateToContent(tpl), t.dataset.t, 'Loaded template <strong>' + t.dataset.t + '</strong> — set the detail level, add client details and review below.');
+      };
+      t.onclick = pick;
+      t.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } };
+    });
+  }
+
+  // logo
+  wireDrop('logoDrop', async (files) => {
+    const f = files[0];
+    if (!f || !/^image\//.test(f.type)) return;
+    const url = await readAsDataURL(f);
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 380;
+      let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+      const cv = document.createElement('canvas');
+      cv.width = w; cv.height = h;
+      cv.getContext('2d').drawImage(img, 0, 0, w, h);
+      state.logo = cv.toDataURL('image/png');
+      $('logoPrev').src = state.logo; $('logoPrev').style.display = 'block';
+      $('logoClear').style.display = 'inline-block';
+    };
+    img.src = url;
+  }, 'image/*');
+  $('logoClear').onclick = () => {
+    state.logo = null;
+    $('logoPrev').style.display = 'none';
+    $('logoClear').style.display = 'none';
+  };
+
+  // detail level
+  const DETAIL_NOTES = {
+    simple: 'Simple — quick-reference: purpose, access panel, one short action per step. No callouts or issues table. One page handout feel.',
+    standard: 'Standard — full steps with role/system/time, key bullets and callouts. The default team standard.',
+    extended: 'Extended — everything in Standard plus expanded bullets, common-mistake callouts and richer close-out. Training-grade.'
+  };
+  $('detailSeg').querySelectorAll('button').forEach(b => b.onclick = () => {
+    state.detail = b.dataset.v;
+    $('detailSeg').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    $('detailNote').textContent = DETAIL_NOTES[state.detail];
+  });
+
+  function setStatus(id, msg, cls) {
+    const el = $(id);
+    el.innerHTML = msg;
+    el.className = 'status' + (cls ? ' ' + cls : '');
+  }
+
+  // ============================================================ client details
+  // date pickers return ISO (YYYY-MM-DD); render the house format "DD Mmm YYYY"
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function formatDate(v) {
+    if (!v) return '';
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(v).trim());
+    if (!m) return String(v).trim();   // already free text (e.g. from a loaded JSON)
+    return String(+m[3]).padStart(2, '0') + ' ' + MONTHS[+m[2] - 1] + ' ' + m[1];
+  }
+  function clientDetails() {
+    return {
+      customer: $('fCustomer').value.trim(), docId: $('fDocId').value.trim(), version: $('fVersion').value.trim() || '1.0',
+      processOwner: $('fOwner').value.trim(), effectiveFrom: formatDate($('fEffective').value), appliesTo: $('fAppliesTo').value.trim(),
+      approvals: {
+        preparedBy: { name: $('fPrepared').value.trim(), date: formatDate($('fPreparedD').value) },
+        reviewedBy: { name: $('fReviewed').value.trim(), date: formatDate($('fReviewedD').value) },
+        approvedBy: { name: $('fApproved').value.trim(), date: formatDate($('fApprovedD').value) },
+        scheduledReview: { name: '', date: '' }
+      },
+      sla: $('fSla').value.trim(), naming: $('fNaming').value.trim(), escalation: $('fEscalation').value.trim()
+    };
+  }
+
+  // ============================================================ review inclusion (Client & Review)
+  const REV_GROUPS = [
+    { type: 'step', label: 'Section items (procedure steps)', add: 'Add step' },
+    { type: 'check', label: 'Checklist items', add: 'Add checklist item' },
+    { type: 'issue', label: 'Common issues', add: 'Add issue' }
+  ];
+  function afterReviewChange() {
+    renderReview(); syncSopEditor();
+    if (state.rendered) doRender();   // keep the preview in lock-step
+  }
+  function renderReview() {
+    const p = state.profile || {};
+    $('profileBox').innerHTML = '<div class="profilebox">' +
+      '<b>' + (p.tool || state.selectedTool || 'Content loaded') + '</b>' +
+      (p.level ? ' · ' + p.level : '') +
+      '<br><span style="color:var(--g500)">Detail level: ' + state.detail + ' · drag to reorder, add or remove, untick to exclude.</span></div>';
+    const el = $('blockList');
+    if (!state.summary.length) { el.innerHTML = '<div class="note">Create or load content in the Create step first.</div>'; return; }
+    let html = '';
+    REV_GROUPS.forEach(g => {
+      const rows = state.summary.map((s, i) => ({ s, i })).filter(o => o.s.type === g.type);
+      html += '<div class="rev-group"><div class="rev-group-head"><span>' + esc(g.label) +
+        ' <span class="rev-count">' + rows.length + '</span></span>' +
+        '<button class="rev-add" data-add="' + g.type + '">+ ' + esc(g.add) + '</button></div>';
+      if (!rows.length) html += '<div class="note" style="margin:2px 0 6px;">None yet.</div>';
+      rows.forEach((o) => {
+        const s = o.s, i = o.i;
+        const title = (s.title && s.title.trim()) ? esc(s.title) : '<em style="color:var(--g400)">(empty — edit text in the preview)</em>';
+        html += '<div class="blk2' + (s.status === 'ask' ? ' ask' : '') + (!s.included ? ' excluded' : '') + '" draggable="true" data-i="' + i + '">' +
+          '<span class="grip" title="Drag to reorder" aria-hidden="true">⠿</span>' +
+          '<input type="checkbox" data-i="' + i + '"' + (s.included ? ' checked' : '') + '>' +
+          '<div class="blk2-main"><div class="t">' + esc(s.id || '') + ' · ' + title + '</div>' +
+          '<div class="r">' + esc(s.reason || '') + '</div></div>' +
+          '<button class="ord del" data-del="' + i + '" title="Remove">×</button>' +
+          '</div>';
+      });
+      html += '</div>';
+    });
+    el.innerHTML = html;
+    el.querySelectorAll('input[type=checkbox]').forEach(cb => cb.onchange = () => {
+      state.summary[+cb.dataset.i].included = cb.checked; afterReviewChange();
+    });
+    el.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addItem(b.dataset.add));
+    el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
+    wireDnd(el);
+    syncSopEditor();
+  }
+  function includedIds() {
+    return new Set(state.summary.filter(s => s.included).map(s => s.id));
+  }
+  // drag-and-drop reorder — only within the same group (order within a type is all that matters)
+  let dragIdx = null;
+  function wireDnd(el) {
+    const clearMarks = () => el.querySelectorAll('.blk2').forEach(r => r.classList.remove('dragging', 'drop-before', 'drop-after'));
+    el.querySelectorAll('.blk2[draggable]').forEach(row => {
+      row.addEventListener('dragstart', e => {
+        dragIdx = +row.dataset.i;
+        row.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', String(dragIdx)); } catch (_) {}
+      });
+      row.addEventListener('dragend', () => { dragIdx = null; clearMarks(); });
+      row.addEventListener('dragover', e => {
+        if (dragIdx === null) return;
+        const from = state.summary[dragIdx], to = state.summary[+row.dataset.i];
+        if (!from || !to || from.type !== to.type) return;   // only same group is a valid target
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const r = row.getBoundingClientRect();
+        const after = (e.clientY - r.top) > r.height / 2;
+        row.classList.toggle('drop-after', after);
+        row.classList.toggle('drop-before', !after);
+      });
+      row.addEventListener('dragleave', () => row.classList.remove('drop-before', 'drop-after'));
+      row.addEventListener('drop', e => {
+        if (dragIdx === null) return;
+        const toIdx = +row.dataset.i;
+        const from = state.summary[dragIdx], to = state.summary[toIdx];
+        if (!from || !to || from.type !== to.type) return;
+        e.preventDefault();
+        const r = row.getBoundingClientRect();
+        const after = (e.clientY - r.top) > r.height / 2;
+        reorderSummary(dragIdx, toIdx, after);
+      });
+    });
+  }
+  function reorderSummary(fromIdx, toIdx, placeAfter) {
+    const s = state.summary;
+    const from = s[fromIdx], to = s[toIdx];
+    if (!from || !to || from === to || from.type !== to.type) return;
+    s.splice(fromIdx, 1);
+    let ti = s.indexOf(to);
+    if (placeAfter) ti += 1;
+    s.splice(ti, 0, from);
+    afterReviewChange();
+  }
+  function nextId(arr, prefix) {
+    let n = (arr || []).length + 1;
+    while ((arr || []).some(x => x._id === prefix + n)) n++;
+    return prefix + n;
+  }
+  // add a new empty block; its text is then editable inline in the preview
+  function addItem(type) {
+    if (!state.sop) return;
+    const s = state.sop;
+    let id, row;
+    if (type === 'step') {
+      id = nextId(s.steps, 'S');
+      var stepBlock = { _id: id,
+        title: 'New step — describe the action',
+        role: 'Role · e.g. RFI Manager', system: 'Procore · Tool', time: '~5 min',
+        body: 'Describe what the user does in this step. Edit this text in the preview.',
+        bullets: ['Example detail — edit or remove this bullet'],
+        callout: { label: 'Why it matters', body: 'Explain why this step matters. Edit or clear this.' },
+        images: [] };
+      (s.steps = s.steps || []).push(stepBlock);
+      row = { id, title: stepBlock.title, type: 'step', status: 'include', reason: 'Procedure step (added)', included: true };
+    } else if (type === 'check') {
+      id = nextId(s.checklist, 'C');
+      var checkBlock = { _id: id, text: 'New checklist item — describe what to confirm', hint: 'Optional hint — edit or clear', owner: 'Owner' };
+      (s.checklist = s.checklist || []).push(checkBlock);
+      row = { id, title: checkBlock.text, type: 'check', status: 'include', reason: 'Checklist item (added)', included: true };
+    } else {
+      id = nextId(s.issues, 'E');
+      var issueBlock = { _id: id, code: 'REF-00', issue: 'Describe the problem the user might hit', resolution: 'Describe how to resolve it' };
+      (s.issues = s.issues || []).push(issueBlock);
+      row = { id, title: issueBlock.issue, type: 'issue', status: 'include', reason: 'Common issue (added)', included: true };
+    }
+    state.summary.push(row);
+    afterReviewChange();
+  }
+  function removeItem(i) {
+    const row = state.summary[i];
+    if (!row) return;
+    state.summary.splice(i, 1);
+    const key = row.type === 'step' ? 'steps' : row.type === 'check' ? 'checklist' : 'issues';
+    if (state.sop && state.sop[key]) state.sop[key] = state.sop[key].filter(x => x._id !== row.id);
+    afterReviewChange();
+  }
+  function assembleFinal() {
+    if (!state.sop) return null;
+    const useFilter = !!(state.summary && state.summary.length);   // no summary (manual JSON) → keep all as-is
+    const cd = clientDetails();
+    const c = JSON.parse(JSON.stringify(state.sop));
+    // rebuild each array in the summary's order, keeping only included blocks
+    const orderBy = (arr, type) => {
+      if (!useFilter) return arr || [];
+      const byId = new Map((arr || []).map(x => [x._id, x]));
+      const out = [];
+      state.summary.filter(s => s.type === type && s.included).forEach(s => {
+        if (byId.has(s.id)) out.push(byId.get(s.id));
+      });
+      return out;
+    };
+    c.steps = orderBy(c.steps, 'step'); c.checklist = orderBy(c.checklist, 'check'); c.issues = orderBy(c.issues, 'issue');
+    // client fields override anything the model left blank or wrong
+    c.customer = cd.customer || c.customer || '';
+    c.docId = cd.docId || c.docId || '';
+    c.version = cd.version || c.version || '1.0';
+    c.processOwner = cd.processOwner || c.processOwner || '';
+    c.effectiveFrom = cd.effectiveFrom || c.effectiveFrom || '';
+    c.appliesTo = cd.appliesTo || c.appliesTo || '';
+    c.owner = c.owner || cd.processOwner || '';
+    ['preparedBy', 'reviewedBy', 'approvedBy'].forEach(k => {
+      if (cd.approvals[k].name) c.approvals[k] = cd.approvals[k];
+    });
+    if (state.logo) c.clientLogo = state.logo;
+    c._detail = state.detail;
+    return c;
+  }
+  $('btnShowJson').onclick = () => {
+    const ta = $('sopJson');
+    ta.style.display = ta.style.display === 'none' ? 'block' : 'none';
+    syncSopEditor();
+  };
+  function syncSopEditor() {
+    const ta = $('sopJson');
+    if (ta.style.display !== 'none' && state.sop) ta.value = JSON.stringify(assembleFinal(), null, 2);
+  }
+  $('sopJson').onchange = () => {
+    try {
+      state.sop = ensureIds(JSON.parse($('sopJson').value));
+      state.summary = [];   // manual edit supersedes the toggle list
+      $('blockList').innerHTML = '<div class="note">Content JSON edited manually — toggles disabled; the JSON as shown will render.</div>';
+    } catch (e) { alert('JSON error: ' + e.message); }
+  };
+
+  // ============================================================ renderer (locked design, step-per-page, v2 access panel, logo, detail levels)
+  const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const rich = (s) => esc(s)
+    .replace(/&lt;code&gt;/g, '<code>').replace(/&lt;\/code&gt;/g, '</code>')
+    .replace(/&lt;strong&gt;/g, '<strong>').replace(/&lt;\/strong&gt;/g, '</strong>')
+    .replace(/&lt;em&gt;/g, '<em>').replace(/&lt;\/em&gt;/g, '</em>');
+  const ph = (v, label) => (v && String(v).trim()) ? esc(v) : '<span class="placeholder">[' + esc(label) + ']</span>';
+  const phi = (v, label) => (v && String(v).trim()) ? esc(v) : '<span class="ph">[' + esc(label) + ']</span>';
+  const STATUS = { 'in-progress': 'In progress', 'review': 'Under review', 'approved': 'Approved', 'draft': 'Draft' };
+
+  function header(c) {
+    return '<header class="pg-header"><span class="logo">' + D.wordmark + '</span>' +
+      '<span class="doc-id"><span class="title">Standard Operating Procedure</span>' +
+      '<span class="sep"></span><span>' + ph(c.docId, 'SOP-PRC-000') + ' · v' + ph(c.version, '1.0') + '</span></span></header>';
+  }
+  function footer(c, nn, total) {
+    return '<footer class="pg-footer">' +
+      '<span class="footer-mark"><span class="hex"></span> Procore · Confidential to ' + phi(c.customer, 'Customer') + '</span>' +
+      '<span class="confidential">Revision ' + esc(c.version || '1.0') + ' · ' +
+      (c.effectiveFrom && c.effectiveFrom.trim() ? esc(c.effectiveFrom) : '[DD Mmm YYYY]') + '</span>' +
+      '<span class="pageno">' + String(nn).padStart(2, '0') + '<span class="total"> / ' + String(total).padStart(2, '0') + '</span></span></footer>';
+  }
+  const pageEl = (c, bodyHtml, nn, total) =>
+    '<article class="page">' + header(c) + '<div class="pg-body">' + bodyHtml + '</div>' + footer(c, nn, total) + '</article>';
+
+  function cover(c, total) {
+    const status = c.status && STATUS[c.status] ? c.status : 'in-progress';
+    const dc = (label, detail, who, date) =>
+      '<tr><td><strong>' + label + '</strong></td><td>' + esc(detail) + '</td><td>' + ph(who, 'Pending') + '</td><td>' +
+      (date && date.trim() ? esc(date) : '<span class="placeholder">[DD Mmm YYYY]</span>') + '</td></tr>';
+    const a = c.approvals || {};
+    const logo = c.clientLogo
+      ? '<div style="position:absolute;top:78px;right:56px;"><img src="' + c.clientLogo + '" alt="" style="max-height:44px;max-width:190px;object-fit:contain;"/></div>' : '';
+    const body = logo +
+      '<span class="cover-eyebrow"><span class="hex"></span> Procore implementation · Customer SOP</span>' +
+      '<h1 class="cover-title"><span data-edit="processName">' + ph(c.processName, 'Process name') + '</span><br/>Standard operating procedure</h1>' +
+      '<p class="cover-sub" data-edit="subtitle">' + (c.subtitle && c.subtitle.trim() ? rich(c.subtitle)
+        : 'A step-by-step guide for executing ' + phi(c.processName, 'process') + ' within Procore, authored for ' + phi(c.customer, 'Customer name') + '.') + '</p>' +
+      '<div class="cover-meta">' +
+        '<div><div class="field-label">Customer</div><div class="field-value">' + ph(c.customer, 'Customer name') + '</div></div>' +
+        '<div><div class="field-label">Process owner</div><div class="field-value">' + ph(c.processOwner, 'Name · Role') + '</div></div>' +
+        '<div><div class="field-label">Version · Status</div><div class="field-value">v' + esc(c.version || '1.0') +
+          ' · <span class="pill-status ' + status + '">' + STATUS[status] + '</span></div></div>' +
+        '<div><div class="field-label">Effective from</div><div class="field-value">' + ph(c.effectiveFrom, 'DD Mmm YYYY') + '</div></div>' +
+      '</div>' +
+      '<div class="doc-control"><table><thead><tr><th>Document control</th><th>Detail</th><th>Author / approver</th><th>Date</th></tr></thead><tbody>' +
+        dc('Prepared by', 'Procore Implementation Manager', (a.preparedBy || {}).name, (a.preparedBy || {}).date) +
+        dc('Reviewed by', 'Customer process owner', (a.reviewedBy || {}).name, (a.reviewedBy || {}).date) +
+        dc('Approved by', 'Customer project sponsor', (a.approvedBy || {}).name, (a.approvedBy || {}).date) +
+        dc('Scheduled review', 'Customer Success Engineer review', (a.scheduledReview || {}).name, (a.scheduledReview || {}).date) +
+      '</tbody></table></div>';
+    return pageEl(c, body, 1, total);
+  }
+
+  function intro(n, name, title, lead, metaLabel, metaValue, editPath) {
+    return '<div class="page-intro"><div class="body">' +
+      '<span class="section-eyebrow"><span class="hex"></span> Section ' + String(n).padStart(2, '0') + ' · ' + name + '</span>' +
+      '<h1 class="section-title">' + title + '</h1><p class="lead"' + (editPath ? ' data-edit="' + editPath + '"' : '') + '>' + lead + '</p></div>' +
+      '<div class="meta"><span class="label">' + esc(metaLabel) + '</span>' + (metaValue || '') + '</div></div>';
+  }
+  const contEyebrow = (n, name) =>
+    '<span class="section-eyebrow" style="display:flex;margin-bottom:14px;"><span class="hex"></span> Section ' +
+    String(n).padStart(2, '0') + ' · ' + name + ' (continued)</span>';
+
+  function accessBlock(c) {
+    const a = c.access || {};
+    const rows = (a.granular || []).map(g =>
+      '<tr><td class="role">' + ph(g.name, 'Granular permission') + '</td><td>' + rich(g.meaning || '[What it lets you do]') + '</td></tr>').join('');
+    const granTable = rows
+      ? '<table class="roles perm-table"><thead><tr><th>Granular permission</th><th>What it lets you do</th></tr></thead><tbody>' + rows + '</tbody></table>' : '';
+    const notInc = (a.notIncluded && a.notIncluded.length)
+      ? '<div class="callout"><span class="label">Outside your access</span><span class="body">' + a.notIncluded.map(rich).join('<br/>') + '</span></div>' : '';
+    return '<div class="section"><h2 class="subhead">Your access in this tool</h2>' +
+      '<div class="access-panel"><div class="lvl"><span class="lvl-label">' + ph(a.tool, 'Tool') +
+      ' · access level</span><span class="lvl-value">' + ph(a.level, 'Permission level') + '</span></div>' +
+      '<div class="lvl-meaning" data-edit="access.levelMeaning">' + (a.levelMeaning ? rich(a.levelMeaning)
+        : '<span class="placeholder">[What this access level means for this user]</span>') + '</div></div>' +
+      granTable + notInc + '</div>';
+  }
+  function phasesBlock(c) {
+    const ps = (c.phases || []).slice(0, 4);
+    while (ps.length < 4) ps.push({ name: '[Phase]', desc: '[…]' });
+    return '<div class="section"><h2 class="subhead">Process at a glance</h2><div class="phases">' +
+      ps.map((p, i) => '<div class="phase"><span class="num">PHASE ' + String(i + 1).padStart(2, '0') +
+        '</span><div class="name" data-edit="phase.' + i + '.name">' + esc(p.name) + '</div><div class="desc" data-edit="phase.' + i + '.desc">' + rich(p.desc) + '</div></div>').join('') + '</div></div>';
+  }
+  function stepItem(s, i, detail) {
+    const simple = detail === 'simple';
+    const ed = (suffix) => s._id ? ' data-edit="step.' + s._id + '.' + suffix + '"' : '';
+    const meta = [];
+    if (s.role) meta.push('<span class="pill role"' + ed('role') + '>' + esc(s.role) + '</span>');
+    if (s.system) meta.push('<span class="pill system"' + ed('system') + '>' + esc(s.system) + '</span>');
+    if (s.time && !simple) meta.push('<span class="pill time"' + ed('time') + '>' + esc(s.time) + '</span>');
+    const bullets = (!simple && s.bullets && s.bullets.length)
+      ? '<ul>' + s.bullets.map((b, k) => '<li' + (s._id ? ' data-edit="step.' + s._id + '.bullet.' + k + '"' : '') + '>' + rich(b) + '</li>').join('') + '</ul>' : '';
+    const callout = (!simple && s.callout && s.callout.body)
+      ? '<div class="callout"><span class="label"' + ed('calloutLabel') + '>' + esc(s.callout.label || 'Procore') +
+        '</span><span class="body"' + ed('callout') + '>' + rich(s.callout.body) + '</span></div>' : '';
+    const imgs = Array.isArray(s.images) ? s.images : (s.image ? [{ src: s.image, width: s.imageWidth || 60, caption: '' }] : []);
+    const figures = imgs.map((im, k) =>
+      '<figure class="step-figure" data-imgidx="' + k + '" style="width:' + (im.width || 60) + '%">' +
+      '<img src="' + im.src + '" alt="Step guidance image">' +
+      (im.caption && im.caption.trim() ? '<figcaption>' + rich(im.caption) + '</figcaption>' : '') +
+      '</figure>').join('');
+    return '<li class="step" data-step="' + esc(s._id || '') + '"><div class="step-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+      '<div class="step-body"><h3 class="step-title"' + ed('title') + '>' + ph(s.title, 'Step title') + '</h3>' +
+      (meta.length ? '<div class="step-meta">' + meta.join('') + '</div>' : '') +
+      (s.body ? '<p' + ed('body') + '>' + rich(s.body) + '</p>' : '') + bullets + callout + figures + '</div></li>';
+  }
+  function checklistBlock(c) {
+    const items = (c.checklist || []).map(it =>
+      '<div class="check-item"><div class="box" data-field="check"></div><div class="text"><span' + (it._id ? ' data-edit="check.' + it._id + '.text"' : '') + '>' + rich(it.text) + '</span>' +
+      (it.hint ? '<span class="hint"' + (it._id ? ' data-edit="check.' + it._id + '.hint"' : '') + '>' + rich(it.hint) + '</span>' : '') + '</div>' +
+      '<div class="owner"' + (it._id ? ' data-edit="check.' + it._id + '.owner"' : '') + '>' + esc(it.owner || '') + '</div></div>').join('');
+    if (!items) return '';
+    return '<div class="section"><h2 class="subhead">Close-out checklist</h2><div class="checklist">' + items + '</div></div>';
+  }
+  function issuesBlock(c) {
+    if (c._detail === 'simple') return '';
+    const rows = (c.issues || []).map((it, i) =>
+      '<tr><td class="code"' + (it._id ? ' data-edit="issue.' + it._id + '.code"' : '') + '>' + esc(it.code || ('ERR-' + String(i + 1).padStart(2, '0'))) +
+      '</td><td class="issue"' + (it._id ? ' data-edit="issue.' + it._id + '.issue"' : '') + '>' + rich(it.issue) +
+      '</td><td class="fix"' + (it._id ? ' data-edit="issue.' + it._id + '.resolution"' : '') + '>' + rich(it.resolution) + '</td></tr>').join('');
+    if (!rows) return '';
+    return '<div class="section"><h2 class="subhead">Common issues &amp; resolution</h2>' +
+      '<table class="issues-table"><thead><tr><th>Reference</th><th>Issue</th><th>Resolution</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+  function refsBlock(c) {
+    const rows = (c.references || []).map(r =>
+      '<li><span class="tool">' + esc(r.tool) + '</span> <a href="' + esc(r.url) + '">' +
+      esc((r.url || '').replace('https://support.procore.com/products/online/user-guide', 'support.procore.com/…')) + '</a></li>').join('');
+    if (!rows) return '';
+    return '<div class="section"><h2 class="subhead">Procore reference guides</h2><ul class="refs">' + rows + '</ul></div>';
+  }
+  function approvalsBlock() {
+    const sig = (role) =>
+      '<div class="sig"><div class="role">' + esc(role) + '</div>' +
+      '<div class="name" data-field="sig-name" style="min-height:20px;">&nbsp;</div>' +
+      '<div class="date"><span>Name &amp; title</span><span>Date&nbsp;<span data-field="sig-date" ' +
+      'style="display:inline-block;min-width:74px;border-bottom:1px solid var(--rule);">&nbsp;</span></span></div></div>';
+    return '<div class="section"><h2 class="subhead">Approvals</h2><div class="signoff">' +
+      sig('Customer process owner') + sig('Procore Implementation Manager') + '</div></div>';
+  }
+  function paginate(section, measureBody) {
+    const { introHtml, n, name, items, wrapOpen = '', wrapClose = '', onePerPage = false } = section;
+    const bodyFor = (its, first) =>
+      (first ? introHtml : contEyebrow(n, name)) + (its.length ? wrapOpen + its.join('') + wrapClose : '');
+    if (onePerPage) {
+      if (!items.length) return [bodyFor([], true)];
+      return items.map((item, i) => bodyFor([item], i === 0));
+    }
+    const fits = (html) => { measureBody.innerHTML = html; return measureBody.scrollHeight <= measureBody.clientHeight + 1; };
+    const pages = []; let placed = []; let first = true;
+    for (const item of items) {
+      const trial = placed.concat([item]);
+      if (placed.length === 0 || fits(bodyFor(trial, first))) placed = trial;
+      else { pages.push(bodyFor(placed, first)); first = false; placed = [item]; }
+    }
+    pages.push(bodyFor(placed, first));
+    return pages;
+  }
+  function build(c, sandboxDoc) {
+    const measureBody = sandboxDoc.getElementById('sop-measure-body');
+    const stepsOnePer = c._detail !== 'simple';
+    const sections = [
+      { n: 1, name: 'Overview',
+        introHtml: intro(1, 'Overview', 'Purpose, scope and your access',
+          rich(c.purpose) || '[One-paragraph purpose of this SOP.]', 'Applies to',
+          phi(c.appliesTo, 'Business unit / region / project type'), 'purpose'),
+        items: [accessBlock(c), phasesBlock(c)] },
+      { n: 2, name: 'Procedure',
+        introHtml: intro(2, 'Procedure', 'Step-by-step in Procore',
+          rich(c.procedureIntro) || '[Intro to the steps.]', 'Reference tool',
+          phi(c.referenceTool, 'RFIs / Submittals / Inspections'), 'procedureIntro'),
+        items: (c.steps || []).map((s, i) => stepItem(s, i, c._detail)),
+        wrapOpen: '<ol class="steps">', wrapClose: '</ol>', onePerPage: stepsOnePer },
+      { n: 3, name: 'Close out',
+        introHtml: intro(3, 'Close out', 'Validate, troubleshoot &amp; approve',
+          rich(c.closeoutIntro) || '[Intro.]', 'Owner', phi(c.owner, 'Process owner'), 'closeoutIntro'),
+        items: [checklistBlock(c), issuesBlock(c), refsBlock(c), approvalsBlock()].filter(Boolean) }
+    ];
+    const bodies = [];
+    sections.forEach(s => paginate(s, measureBody).forEach(b => bodies.push(b)));
+    const total = 1 + bodies.length;
+    let html = cover(c, total);
+    bodies.forEach((b, i) => { html += pageEl(c, b, i + 2, total); });
+    return { pagesHtml: html, total };
+  }
+  function documentHtml(c, sandboxDoc) {
+    const { pagesHtml } = build(c, sandboxDoc);
+    return '<!doctype html>\n<html lang="en-AU">\n<head>\n<meta charset="utf-8" />\n' +
+      '<title>Procore — ' + esc(c.processName || 'SOP') + '</title>\n' +
+      D.fontLinks + '\n<style>' + D.css + '</style>\n</head>\n<body>\n<div class="viewer">\n' +
+      pagesHtml + '\n</div>\n</body>\n</html>\n';
+  }
+
+  // ============================================================ preview frame
+  const frame = $('frame');
+  let frameReady = false;
+  function sandboxDoc() {
+    return '<!doctype html><html lang="en-AU"><head><meta charset="utf-8">' + D.fontLinks +
+      '<style>' + D.css + '</style>' +
+      '<style>#sop-measure-wrap{position:absolute;left:-99999px;top:0;visibility:hidden;}html,body{background:#E9E5DF;}' +
+      '[data-edit]{cursor:text;border-radius:2px;transition:box-shadow .12s,background .12s;}' +
+      '[data-edit]:hover{box-shadow:0 0 0 1px rgba(255,82,0,.25);background:rgba(255,82,0,.03);}' +
+      '[data-edit]:focus{outline:none;box-shadow:0 0 0 2px rgba(255,82,0,.55);background:rgba(255,82,0,.05);}' +
+      '.step-figure{position:relative;}' +
+      '.step-figure:hover img{box-shadow:0 0 0 2px rgba(255,82,0,.45);}' +
+      '.img-resize{position:absolute;right:-7px;bottom:-3px;width:16px;height:16px;background:#FF5200;border:2px solid #fff;border-radius:3px;cursor:nwse-resize;box-shadow:0 1px 3px rgba(0,0,0,.35);}' +
+      '.img-remove{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(20,23,29,.6);color:#fff;border:none;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;}' +
+      '.img-remove:hover{background:#D32F2F;}' +
+      '.img-add{margin:8px 0 2px;border:1.5px dashed #C7CCD3;border-radius:6px;padding:12px;text-align:center;color:#6B7380;font-size:9pt;cursor:pointer;background:#F7F8FA;}' +
+      '.img-add:hover{border-color:#FF5200;color:#C84100;background:rgba(255,82,0,.04);}' +
+      '.cap-edit{outline:none;min-height:12px;cursor:text;border-radius:2px;}' +
+      '.cap-edit:empty::before{content:\"Add caption…\";color:#9AA1AB;font-style:italic;}' +
+      '.cap-edit:hover{box-shadow:0 0 0 1px rgba(255,82,0,.25);}' +
+      '.cap-edit:focus{box-shadow:0 0 0 2px rgba(255,82,0,.5);background:rgba(255,82,0,.05);}</style></head><body>' +
+      '<div class="viewer" id="viewer"></div>' +
+      '<div id="sop-measure-wrap"><article class="page"><header class="pg-header"></header>' +
+      '<div class="pg-body" id="sop-measure-body"></div><footer class="pg-footer"></footer></article></div></body></html>';
+  }
+  frame.onload = function () {
+    const d = frame.contentDocument;
+    const done = () => { frameReady = true; };
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(done); else done();
+  };
+  frame.srcdoc = sandboxDoc();
+
+  // ---- inline editing of preview content (writes back into state.sop) ----
+  function writeEdit(path, val) {
+    if (!state.sop || !path) return;
+    val = String(val == null ? '' : val).replace(/ /g, ' ').replace(/\s+\n/g, '\n').trim();
+    const p = path.split('.');
+    const s = state.sop, kind = p[0];
+    if (kind === 'step') {
+      const st = (s.steps || []).find(x => x._id === p[1]); if (!st) return;
+      if (p[2] === 'title') st.title = val;
+      else if (p[2] === 'body') st.body = val;
+      else if (p[2] === 'role') st.role = val;
+      else if (p[2] === 'system') st.system = val;
+      else if (p[2] === 'time') st.time = val;
+      else if (p[2] === 'callout') { st.callout = st.callout || {}; st.callout.body = val; }
+      else if (p[2] === 'calloutLabel') { st.callout = st.callout || {}; st.callout.label = val; }
+      else if (p[2] === 'bullet') { st.bullets = st.bullets || []; st.bullets[+p[3]] = val; }
+    } else if (kind === 'check') {
+      const it = (s.checklist || []).find(x => x._id === p[1]); if (!it) return;
+      if (p[2] === 'text') it.text = val; else if (p[2] === 'hint') it.hint = val; else if (p[2] === 'owner') it.owner = val;
+    } else if (kind === 'issue') {
+      const it = (s.issues || []).find(x => x._id === p[1]); if (!it) return;
+      if (p[2] === 'issue') it.issue = val; else if (p[2] === 'resolution') it.resolution = val; else if (p[2] === 'code') it.code = val;
+    } else if (kind === 'phase') {
+      const ph = (s.phases || [])[+p[1]]; if (!ph) return;
+      if (p[2] === 'name') ph.name = val; else if (p[2] === 'desc') ph.desc = val;
+    } else if (kind === 'access') {
+      s.access = s.access || {}; if (p[1] === 'levelMeaning') s.access.levelMeaning = val;
+    } else {
+      s[kind] = val;   // top-level scalars: processName, subtitle, purpose, procedureIntro, closeoutIntro
+    }
+    syncSopEditor();
+  }
+  function enableInlineEdit(doc) {
+    doc.querySelectorAll('[data-edit]').forEach(el => {
+      el.setAttribute('contenteditable', 'true');
+      el.spellcheck = false;
+      el.addEventListener('blur', () => writeEdit(el.getAttribute('data-edit'), el.innerText), { once: false });
+      // stop Enter from inserting <div>/<br> soup in single-line fields
+      el.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.blur(); } });
+    });
+  }
+
+  // ---- per-step guidance images: upload, remove, drag-to-resize (preview only) ----
+  function afterImageChange() { syncSopEditor(); if (state.rendered) doRender(); }
+  function findStep(id) { return state.sop && (state.sop.steps || []).find(x => x._id === id); }
+  // append one uploaded image (downscaled) to a step's images array
+  function pickImage(step) {
+    const inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = 'image/*';
+    inp.onchange = () => {
+      const f = inp.files && inp.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const MAX = 1400;   // downscale big screenshots so the JSON/PDF stay reasonable
+          let w = img.naturalWidth, h = img.naturalHeight;
+          if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+          const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+          cv.getContext('2d').drawImage(img, 0, 0, w, h);
+          if (!Array.isArray(step.images)) step.images = [];
+          step.images.push({ src: cv.toDataURL('image/png'), width: 60, caption: '' });
+          afterImageChange();
+        };
+        img.src = r.result;
+      };
+      r.readAsDataURL(f);
+    };
+    inp.click();
+  }
+  function wireResize(doc, handle, fig, container, im) {
+    handle.addEventListener('mousedown', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      const cw = container.getBoundingClientRect().width;
+      const startX = e.clientX, startW = fig.getBoundingClientRect().width;
+      const onMove = (ev) => {
+        let pct = ((startW + (ev.clientX - startX)) / cw) * 100;
+        pct = Math.max(15, Math.min(100, Math.round(pct)));
+        fig.style.width = pct + '%';
+        im.width = pct;
+      };
+      const onUp = () => {
+        doc.removeEventListener('mousemove', onMove);
+        doc.removeEventListener('mouseup', onUp);
+        syncSopEditor();
+      };
+      doc.addEventListener('mousemove', onMove);
+      doc.addEventListener('mouseup', onUp);
+    });
+  }
+  function enableImageTools(doc) {
+    doc.querySelectorAll('.step[data-step]').forEach(li => {
+      const step = findStep(li.getAttribute('data-step'));
+      if (!step) return;
+      if (!Array.isArray(step.images)) step.images = step.image ? [{ src: step.image, width: step.imageWidth || 60, caption: '' }] : [];
+      const body = li.querySelector('.step-body');
+      li.querySelectorAll('.step-figure[data-imgidx]').forEach(fig => {
+        const k = +fig.getAttribute('data-imgidx');
+        const im = step.images[k];
+        if (!im) return;
+        const rm = doc.createElement('button');
+        rm.className = 'img-remove'; rm.type = 'button'; rm.textContent = '×'; rm.title = 'Remove image';
+        rm.onclick = () => { step.images.splice(k, 1); afterImageChange(); };
+        fig.appendChild(rm);
+        const handle = doc.createElement('span');
+        handle.className = 'img-resize'; handle.title = 'Drag to resize';
+        fig.appendChild(handle);
+        wireResize(doc, handle, fig, body, im);
+        // editable caption (placeholder shown via CSS when empty)
+        let cap = fig.querySelector('figcaption');
+        if (!cap) { cap = doc.createElement('figcaption'); fig.appendChild(cap); }
+        cap.classList.add('cap-edit');
+        cap.setAttribute('contenteditable', 'true');
+        cap.spellcheck = false;
+        cap.addEventListener('blur', () => { im.caption = cap.innerText.trim(); syncSopEditor(); });
+        cap.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cap.blur(); } });
+      });
+      // an add button is always available so more images can be attached
+      const add = doc.createElement('div');
+      add.className = 'img-add'; add.textContent = step.images.length ? '+ Add another image' : '+ Add guidance image';
+      add.onclick = () => pickImage(step);
+      body.appendChild(add);
+    });
+  }
+
+  function doRender() {
+    const c = assembleFinal();
+    if (!c) { setStatus('genStatus', 'Nothing to render yet — create or load content in the Create step first.', 'err'); return; }
+    if (!frameReady) { setStatus('genStatus', 'Fonts still loading — try again in a moment.'); return; }
+    try {
+      const doc = frame.contentDocument;
+      const res = build(c, doc);
+      doc.getElementById('viewer').innerHTML = res.pagesHtml;
+      enableInlineEdit(doc);
+      enableImageTools(doc);
+      $('prevEmpty').style.display = 'none';
+      state.rendered = true;
+      $('btnDownload').disabled = false; $('btnDownload2').disabled = false;
+      $('genSummary').style.display = 'block';
+      $('genSummary').innerHTML = '<b>' + (c.customer || '[Customer]') + '</b> · ' + (c.processName || '') +
+        ' · ' + ((state.profile && state.profile.personaLabel) || 'persona') + ' · ' + state.detail +
+        ' detail · ' + res.total + ' pages';
+      setStatus('genStatus', 'Rendered · ' + res.total + ' pages. Review every page before issuing — this is a draft until reviewed and approved.', 'ok');
+    } catch (e) {
+      setStatus('genStatus', 'Render error: ' + e.message, 'err');
+    }
+  }
+  function outName(c, ext) {
+    const persona = ((state.profile && state.profile.personaLabel) || 'Persona').replace(/[^a-z0-9]+/gi, '-');
+    return ((c.customer || 'Client').replace(/[^a-z0-9]+/gi, '-')) + '_' +
+      ((state.selectedTool || 'Tool')) + '_' + persona + '_v' + (c.version || '1.0') + '.' + ext;
+  }
+  function triggerDownload(blob, name) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  }
+  function doDownloadHTML() {   // kept as a fallback; not wired to a button
+    const c = assembleFinal();
+    if (!c || !frameReady) return;
+    triggerDownload(new Blob([documentHtml(c, frame.contentDocument)], { type: 'text/html' }), outName(c, 'html'));
+  }
+
+  // Export the locked design to PDF. The visual page is captured as an image (so the
+  // design is reproduced exactly), then real AcroForm fields are overlaid on the
+  // [data-field] targets — checklist boxes become checkboxes, sign-off name/date lines
+  // become text fields — so the PDF is fillable in any reader.
+  async function doDownloadPDF() {
+    const c = assembleFinal();
+    if (!c) { setStatus('genStatus', 'Nothing to render yet — create or load content first.', 'err'); return; }
+    if (!frameReady) { setStatus('genStatus', 'Fonts still loading — try again in a moment.'); return; }
+    if (!window.PDFLib || !window.html2canvas) {
+      setStatus('genStatus', 'PDF libraries did not load (offline?). Reconnect and reload the page.', 'err'); return;
+    }
+    $('btnDownload').disabled = true; $('btnDownload2').disabled = true;
+    setStatus('genStatus', '<span class="spin"></span>Building fillable PDF…');
+    try {
+      const doc = frame.contentDocument;
+      const res = build(c, doc);
+      doc.getElementById('viewer').innerHTML = res.pagesHtml;   // fresh render matching c
+      if (doc.fonts && doc.fonts.ready) await doc.fonts.ready;
+      const pages = Array.from(doc.querySelectorAll('#viewer .page'));
+      const { PDFDocument } = window.PDFLib;
+      const pdf = await PDFDocument.create();
+      const form = pdf.getForm();
+      const PT_W = 612, PT_H = 792, SCALE = PT_W / 816;   // design page 816px wide → 0.75 pt/px
+      for (let i = 0; i < pages.length; i++) {
+        setStatus('genStatus', '<span class="spin"></span>Building fillable PDF — page ' + (i + 1) + ' of ' + pages.length + '…');
+        const pageEl = pages[i];
+        const canvas = await window.html2canvas(pageEl, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false });
+        const img = await pdf.embedPng(canvas.toDataURL('image/png'));
+        const page = pdf.addPage([PT_W, PT_H]);
+        page.drawImage(img, { x: 0, y: 0, width: PT_W, height: PT_H });
+        const pr = pageEl.getBoundingClientRect();
+        Array.from(pageEl.querySelectorAll('[data-field]')).forEach((el, k) => {
+          const r = el.getBoundingClientRect();
+          const x = (r.left - pr.left) * SCALE;
+          const w = Math.max(r.width * SCALE, 10);
+          const h = Math.max(r.height * SCALE, 10);
+          const y = PT_H - (r.top - pr.top) * SCALE - h;
+          const kind = el.getAttribute('data-field');
+          const nm = kind + '_p' + i + '_' + k;
+          try {
+            if (kind === 'check') {
+              const s = Math.min(w, h);
+              form.createCheckBox(nm).addToPage(page, { x, y: y + (h - s), width: s, height: s, borderWidth: 0 });
+            } else {
+              const tf = form.createTextField(nm);
+              tf.addToPage(page, { x, y, width: w, height: Math.max(h, 12), borderWidth: 0 });
+              try { tf.setFontSize(9); } catch (_) {}
+            }
+          } catch (_) { /* skip a field that clashes rather than fail the whole export */ }
+        });
+      }
+      const bytes = await pdf.save();
+      const name = outName(c, 'pdf');
+      triggerDownload(new Blob([bytes], { type: 'application/pdf' }), name);
+      setStatus('genStatus', 'Downloaded ' + name + ' — checklist boxes and sign-off name/date fields are fillable in a PDF reader.', 'ok');
+    } catch (e) {
+      setStatus('genStatus', 'PDF export error: ' + e.message, 'err');
+    } finally {
+      $('btnDownload').disabled = false; $('btnDownload2').disabled = false;
+      // restore the interactive preview (edit + image tools) in place — keeps the download status message
+      try { const d = frame.contentDocument; enableInlineEdit(d); enableImageTools(d); } catch (_) {}
+    }
+  }
+  $('btnRender').onclick = doRender; $('btnRender2').onclick = doRender;
+  $('btnDownload').onclick = doDownloadPDF; $('btnDownload2').onclick = doDownloadPDF;
+
+  let zoom = false;
+  $('btnZoom').onclick = () => {
+    zoom = !zoom;
+    const d = frame.contentDocument;
+    if (d && d.getElementById('viewer')) {
+      d.getElementById('viewer').style.transform = zoom ? 'scale(.62)' : '';
+      d.getElementById('viewer').style.transformOrigin = 'top center';
+    }
+  };
+
+  loadLibrary();
+})();
+
+</script>
+</body>
+</html>

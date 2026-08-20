@@ -14,14 +14,6 @@ assembly and template maintenance — **never redesign the document**.
   (Section 1 uses the "Your access in this tool" panel, not a roles table). Never edit the
   `SOP_DESIGN` CSS/wordmark or component markup without an explicit human instruction to
   version the design.
-  **Design v3** (versioned on Brendan McGurk's explicit instruction): the page footer is now
-  two rows — the existing confidential/revision/page-number row, plus an author attribution
-  line — and `--footer-h` is 54px, up from 36px. The attribution text lives in one place per
-  renderer, the `SOP_ATTRIBUTION` constant. The same change is mirrored in
-  `app/SOP_Studio_v0.1.html` and `.claude/skills/procore-sop-builder/assets/sop-skeleton.html`;
-  all three must stay in step or documents will differ depending on which path produced them.
-  Note the attribution names an individual and points at an internal Slack channel, so review
-  it before issuing documents outside the business.
 - `app/SOP_Studio_v0.1.html` — the Claude-artifact app version (reference implementation).
 - `scripts/render.js` — headless render: content JSON → final standalone SOP HTML (and PDF).
 - `examples/` — worked persona JSON examples. `output/` — generated SOPs (never commit client

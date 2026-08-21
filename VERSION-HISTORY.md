@@ -21,6 +21,7 @@ circulation; no technical knowledge assumed.
 | 3.11 | 21 Aug 2026 | Procore tool names adapt to the customer's account type |
 | 3.11.1 | 21 Aug 2026 | Procore permission structure captured as reference (docs only) |
 | 3.12 | 21 Aug 2026 | **Accessibility overhaul** — keyboard reordering, screen-reader support, autosave |
+| 3.13 | 21 Aug 2026 | APAC documents now export on A4 (document design v3) |
 
 ---
 

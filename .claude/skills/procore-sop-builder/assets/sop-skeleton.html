@@ -152,6 +152,10 @@
   .pill-status.approved{background:rgba(31,138,91,.12);color:var(--color-success);}
   /* print */
   @page{size:letter portrait;margin:0;}
+  /* A4 variant (design v3) — for APAC documents, uncomment this block. 210x297mm at 96dpi.
+     :root{--page-w:794px;--page-h:1123px;}
+     @page{size:A4 portrait;margin:0;}
+     @media print{.page{width:210mm;height:297mm;}} */
   @media print{html,body{background:#fff;}.viewer{padding:0;gap:0;}.page{box-shadow:none;width:8.5in;height:11in;}}
 </style>
 </head>

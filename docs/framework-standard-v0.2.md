@@ -92,7 +92,8 @@ The `_id`s (S01…) are the join key. The overarching client workflow map will r
 ## 9. Open items
 
 - [ ] Verify RFI library against current APAC permissions documentation (owner: implementation lead).
-- [ ] Print format: the locked templates are US Letter (`@page size:letter`, 816×1056px). Confirm acceptable for AU/NZ clients or schedule an A4 variant of the locked design.
+- [x] Print format: **resolved in design v3** — page size follows the region, APAC prints A4 and
+      everything else US Letter. Originally: the locked templates are US Letter (`@page size:letter`, 816×1056px). Confirm acceptable for AU/NZ clients or schedule an A4 variant of the locked design.
 - [ ] Confirm whether generated SOPs may carry client logos alongside the Procore wordmark (brand.procore.com co-branding rules).
 - [ ] Agree the shared repository location for master libraries and issued SOPs.
 - [ ] Screenshot standard for the images variant: capture size, redaction of client data, caption convention (suggest `Fig. S02-1 · RFIs → Create`).

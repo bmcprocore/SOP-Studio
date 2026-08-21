@@ -14,6 +14,13 @@ assembly and template maintenance — **never redesign the document**.
   (Section 1 uses the "Your access in this tool" panel, not a roles table). Never edit the
   `SOP_DESIGN` CSS/wordmark or component markup without an explicit human instruction to
   version the design.
+  **Design v3** (versioned on Brendan McGurk's explicit instruction, 21 Aug 2026): page size now
+  follows the document's region. `_region: "APAC"` prints A4 (794x1123px, `@page size:A4`);
+  everything else stays US Letter (816x1056px), which is how the base design is authored. The A4
+  case is an *override* appended after the base CSS — the base design is unchanged. It is applied
+  in three places that must stay in step: `pageSizeCss()` in `app/SOP_Studio_v0.1.html`, the same
+  function in `scripts/render.js` (which also sets the PDF format), and a commented block in the
+  skill skeleton. Pagination is measured at the chosen size, so page counts differ between papers.
 - `app/SOP_Studio_v0.1.html` — the Claude-artifact app version (reference implementation).
 - `scripts/render.js` — headless render: content JSON → final standalone SOP HTML (and PDF).
 - `examples/` — worked persona JSON examples. `output/` — generated SOPs (never commit client

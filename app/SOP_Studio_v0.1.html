@@ -387,7 +387,7 @@
   </span>
 </div>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.12</span>
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.13</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -1965,10 +1965,13 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     return { pagesHtml: html, total };
   }
   function documentHtml(c, sandboxDoc) {
+    applyPageSize(sandboxDoc, c._region);    // measure at the paper this document will print on
     const { pagesHtml } = build(c, sandboxDoc);
-    return '<!doctype html>\n<html lang="en-AU">\n<head>\n<meta charset="utf-8" />\n' +
+    const lang = c._region === 'NAMER' ? 'en-US' : 'en-AU';
+    const extra = pageSizeCss(c._region);
+    return '<!doctype html>\n<html lang="' + lang + '">\n<head>\n<meta charset="utf-8" />\n' +
       '<title>Procore — ' + esc(c.processName || 'SOP') + '</title>\n' +
-      D.fontLinks + '\n<style>' + D.css + '</style>\n</head>\n<body>\n<div class="viewer">\n' +
+      D.fontLinks + '\n<style>' + D.css + (extra ? '\n' + extra : '') + '</style>\n</head>\n<body>\n<div class="viewer">\n' +
       pagesHtml + '\n</div>\n</body>\n</html>\n';
   }
 
@@ -2243,6 +2246,34 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     e.preventDefault(); e.returnValue = '';
   });
 
+  // ============================================================ page size by region (design v3)
+  // The locked design is authored at US Letter. APAC prints on A4, so the page tokens are
+  // overridden rather than the base design being rewritten — one source, two sizes.
+  // A4 = 210x297mm, which at the design's 96dpi is 794 x 1123px.
+  const PAGE_SIZES = {
+    A4:     { w: 794, h: 1123, css: 'A4 portrait',     print: '210mm', printH: '297mm', label: 'A4' },
+    LETTER: { w: 816, h: 1056, css: 'letter portrait', print: '8.5in', printH: '11in',  label: 'US Letter' },
+  };
+  const pageSizeFor = (region) => (region === 'APAC' ? PAGE_SIZES.A4 : PAGE_SIZES.LETTER);
+
+  /** Returns the override stylesheet for a region, or '' when the base design already fits. */
+  function pageSizeCss(region) {
+    const ps = pageSizeFor(region);
+    if (ps === PAGE_SIZES.LETTER) return '';
+    return ':root{--page-w:' + ps.w + 'px;--page-h:' + ps.h + 'px;}' +
+      '@page{size:' + ps.css + ';margin:0;}' +
+      '@media print{.page{width:' + ps.print + ';height:' + ps.printH + ';}}';
+  }
+
+  /** Push the page size into a document — the measuring sandbox or an exported file. Changing the
+   *  :root tokens reflows the pages immediately, so pagination is measured at the real size. */
+  function applyPageSize(doc, region) {
+    if (!doc || !doc.head) return;
+    let st = doc.getElementById('pagesize');
+    if (!st) { st = doc.createElement('style'); st.id = 'pagesize'; doc.head.appendChild(st); }
+    st.textContent = pageSizeCss(region);
+  }
+
   // ============================================================ regional terminology
   // Templates are authored in APAC terms. Choosing another region swaps the wording in the
   // document's prose. Nothing is guessed: only the pairs listed here are ever substituted,
@@ -2426,6 +2457,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (!frameReady) { setStatus('genStatus', 'Fonts still loading — try again in a moment.'); return; }
     try {
       const doc = frame.contentDocument;
+      applyPageSize(doc, c._region);          // set the paper before measuring, not after
       const res = build(c, doc);
       doc.getElementById('viewer').innerHTML = res.pagesHtml;
       enableInlineEdit(doc);
@@ -2576,13 +2608,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     const r = state.region, n = termCount(r);
     const el = $('regionHint');
     if (!el) return;
+    const paper = ' Pages export at <strong>' + pageSizeFor(r).label + '</strong>.';
     if (r === 'TBC') {
-      el.textContent = 'Templates are written in APAC terms. Until you choose a region the wording is left exactly as authored.';
+      el.innerHTML = 'Templates are written in APAC terms. Until you choose a region the wording is left exactly as authored.' + paper;
     } else if (!n) {
-      el.textContent = REGION_LABEL[r] + ' — no terminology swaps are configured yet, so the wording stays as authored.';
+      el.innerHTML = REGION_LABEL[r] + ' — no terminology swaps are configured yet, so the wording stays as authored.' + paper;
     } else {
-      el.textContent = REGION_LABEL[r] + ' — ' + n + ' term' + (n === 1 ? '' : 's') +
-        ' will be swapped in the document (for example, head contract becomes prime contract).';
+      el.innerHTML = REGION_LABEL[r] + ' — ' + n + ' term' + (n === 1 ? '' : 's') +
+        ' will be swapped in the document (for example, head contract becomes prime contract).' + paper;
     }
   }
   // Procore renames tools by account type — its "Point-of-View Dictionaries".
@@ -2611,6 +2644,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     // L2 — screen readers use this for pronunciation; a NAMER document should not be read aloud
     // in an Australian voice.
     document.documentElement.lang = state.region === 'NAMER' ? 'en-US' : 'en-AU';
+    applyPageSize(frame && frame.contentDocument, state.region);
     regionHint();
     unconfirm('The region changed, so the wording changes — confirm the list again before generating.');
     if (state.sop) { renderReview(); }

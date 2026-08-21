@@ -14,6 +14,15 @@
 const fs = require('fs');
 const path = require('path');
 
+// Design v3: the locked design is authored at US Letter; APAC prints on A4. The page tokens are
+// overridden for A4 rather than the base design being rewritten. 210x297mm at 96dpi = 794x1123px.
+function pageSizeCss(region) {
+  if (region !== 'APAC') return '';
+  return ':root{--page-w:794px;--page-h:1123px;}' +
+    '@page{size:A4 portrait;margin:0;}' +
+    '@media print{.page{width:210mm;height:297mm;}}';
+}
+
 async function main() {
   const jsonPath = process.argv[2];
   const wantPdf = process.argv.includes('--pdf');
@@ -32,6 +41,18 @@ async function main() {
     const page = await browser.newPage();
     await page.goto('file://' + builderPath, { waitUntil: 'networkidle0' });
 
+    // set the paper before anything is measured, in the page and in its sandbox iframe
+    const region = content._region || 'TBC';
+    const extraCss = pageSizeCss(region);
+    if (extraCss) {
+      await page.evaluate((css) => {
+        const add = (doc) => { const st = doc.createElement('style'); st.id = 'pagesize'; st.textContent = css; doc.head.appendChild(st); };
+        add(document);
+        const f = document.getElementById('frame');
+        if (f && f.contentDocument) add(f.contentDocument);
+      }, extraCss);
+    }
+
     // Wait for the sandbox iframe + fonts, then build the document via the builder's own renderer.
     const html = await page.evaluate(async (c) => {
       const frame = document.getElementById('frame');
@@ -49,15 +70,19 @@ async function main() {
     }, content);
 
     const outHtml = jsonPath.replace(/\.json$/i, '') + '.html';
-    fs.writeFileSync(outHtml, html);
-    console.log('Wrote ' + outHtml);
+    // the standalone file must carry the same override, or it reverts to Letter when opened
+    const finalHtml = extraCss
+      ? html.replace('</style>', extraCss + '</style>')
+      : html;
+    fs.writeFileSync(outHtml, finalHtml);
+    console.log('Wrote ' + outHtml + '  (' + (region === 'APAC' ? 'A4' : 'US Letter') + ')');
 
     if (wantPdf) {
       const doc = await browser.newPage();
-      await doc.setContent(html, { waitUntil: 'networkidle0' });
+      await doc.setContent(finalHtml, { waitUntil: 'networkidle0' });
       await doc.evaluateHandle('document.fonts.ready');
       const outPdf = jsonPath.replace(/\.json$/i, '') + '.pdf';
-      await doc.pdf({ path: outPdf, format: 'letter', printBackground: true, margin: { top: 0, bottom: 0, left: 0, right: 0 } });
+      await doc.pdf({ path: outPdf, format: region === 'APAC' ? 'a4' : 'letter', printBackground: true, margin: { top: 0, bottom: 0, left: 0, right: 0 } });
       console.log('Wrote ' + outPdf);
     }
   } finally {

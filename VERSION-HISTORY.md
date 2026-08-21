@@ -18,6 +18,7 @@ circulation; no technical knowledge assumed.
 | 3.8 | 20 Aug 2026 | Region selector and regional terminology |
 | 3.9 | 21 Aug 2026 | Permission upload, layout previews, overrides, gated delete |
 | 3.10 | 21 Aug 2026 | Collapsible review; customer-segment file naming |
+| 3.11 | 21 Aug 2026 | Procore tool names adapt to the customer's account type |
 
 ---
 
@@ -151,6 +152,23 @@ The most significant release, following a full interface and experience audit.
 - A customer-segment selector on the Generate step — SMB, Commercial, Enterprise, Strategic —
   which sets the file name prefix: SMB-, COMM-, ENT-, STR-. The resulting file name is shown
   before you download.
+
+## 3.11 — Procore tool names by account type
+
+- Added an account-type selector on the Create step: general contractor, owner or specialty
+  contractor. This applies Procore's own "Point-of-View Dictionaries", which rename tools to
+  match what that customer actually sees on screen — for an owner, prime contract becomes
+  funding and subcontractor becomes contractor; for a specialty contractor, prime contract
+  becomes client contract and invoicing becomes progress billings.
+- Account type is a separate question from region. Region changes construction vocabulary;
+  account type changes Procore tool names. Both apply, region first.
+- Only terms specific enough to be safe are swapped. Rows from Procore's list that are single
+  common words — name, owner, due date, revenue — are deliberately not applied, because
+  replacing every occurrence would corrupt ordinary sentences such as "process owner". Several
+  of those rows also apply only inside Procore's Takeoff and Estimating tool.
+- Two limitations, both surfaced in the tool: Procore states these dictionaries are US English
+  only, and word substitution cannot fix grammar, so a renamed plural can read awkwardly.
+  Read the preview before issuing.
 
 ---
 

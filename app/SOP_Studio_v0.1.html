@@ -418,6 +418,14 @@
           <option value="TBC" selected>TBC — not set yet</option>
         </select>
         <p class="hint" id="regionHint"></p>
+
+        <label for="fAccount" style="margin-top:14px;">What kind of Procore account does the customer have?<span class="req" title="Required">*</span></label>
+        <select id="fAccount">
+          <option value="GC" selected>General contractor</option>
+          <option value="OWNER">Owner</option>
+          <option value="SPECIALTY">Specialty contractor</option>
+        </select>
+        <p class="hint" id="accountHint"></p>
       </fieldset>
 
       <div class="seg" id="createMode" role="group" aria-label="Create mode">
@@ -648,6 +656,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     sop: null,              // assembled content JSON (with _id on blocks)
     region: 'TBC',          // APAC | NAMER | TBC — drives the terminology in the output
     segment: '',            // SMB | COMM | ENT | STR — prefixes the file name
+    account: 'GC',          // GC | OWNER | SPECIALTY — Procore point-of-view dictionary
     collapsed: { step: false, check: false, issue: false },
     rendered: false,
     confirmed: null,        // { by, at } — Gate 3. Nothing renders until this is set.
@@ -1669,7 +1678,9 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     c._detail = state.detail;
     c._region = state.region || 'TBC';
     if (state.segment) c._segment = state.segment;
-    return localiseContent(c, c._region);   // regional wording is applied last, to finished prose
+    if (state.account) c._accountType = state.account;
+    // wording is applied last, to finished prose
+    return localiseContent(c, c._region, state.account);
   }
   $('btnShowJson').onclick = () => {
     const ta = $('sopJson');
@@ -2104,6 +2115,46 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     TBC: [],           // region not chosen — leave the wording untouched
   };
   const REGION_LABEL = { APAC: 'APAC — Asia Pacific', NAMER: 'NAMER — North America', TBC: 'TBC — not set' };
+
+  // Procore's "Point-of-View Dictionaries" rename tools by ACCOUNT TYPE, not by region.
+  // Source: v2.support.procore.com FAQ "What tool names and terms are different in Procore for
+  // general contractors, owners and specialty contractors". General contractor is Procore's base
+  // wording, so it has no swaps. Procore states these dictionaries are US English only.
+  //
+  // Only terms that are specific enough to be safe are enabled. Rows from the FAQ that are single
+  // common words are listed in SKIPPED below and deliberately NOT applied: swapping every "name",
+  // "owner", "due date" or "revenue" in an SOP would corrupt ordinary prose ("process owner",
+  // "the owner of the checklist item"), and several of those rows only apply inside Procore's
+  // Takeoff and Estimating tool rather than everywhere.
+  const DICTIONARY = {
+    GC: [],
+    OWNER: [
+      ['prime contract change order', 'funding change order'],
+      ['prime contracts', 'funding'],
+      ['prime contract', 'funding'],
+      ['subcontractor schedule of values', 'contractor schedule of values'],
+      ['subcontractors', 'contractors'],
+      ['subcontractor', 'contractor'],
+      ['subcontracts', 'contracts'],
+      ['subcontract', 'contract'],
+    ],
+    SPECIALTY: [
+      ['prime contract change order', 'client contract change order'],
+      ['prime contracts', 'client contracts'],
+      ['prime contract', 'client contract'],
+      ['invoicing', 'progress billings'],
+      ['owner/client', 'GC/client'],
+    ],
+  };
+  // From the FAQ but intentionally not applied — too generic, or tool-specific:
+  // Name/Opportunity Name, Owner/Funding, Due Date/LOI Expiration Date, Estimator/Developer Agent,
+  // Total Sales/Feasibility Cost, Revenue/Funding, Bid Board/Portfolio Planning.
+  const ACCOUNT_LABEL = {
+    GC: 'General contractor — Procore’s standard wording',
+    OWNER: 'Owner',
+    SPECIALTY: 'Specialty contractor',
+  };
+  const dictCount = (a) => (DICTIONARY[a] || []).length;
   const termCount = (r) => (TERMS[r] || []).length;
 
   /** Match the replacement to how the original was capitalised, so "Head contract" becomes
@@ -2115,9 +2166,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   }
 
   /** Swap terms in one string, leaving any inline HTML tags and [bracketed] placeholders alone. */
-  function localiseText(str, region) {
-    const pairs = TERMS[region] || [];
-    if (!str || !pairs.length) return str;
+  function localiseText(str, pairs) {
+    if (!str || !pairs || !pairs.length) return str;
     // split on tags so we never rewrite inside <code>, <strong> etc. markup itself
     return String(str).split(/(<[^>]*>)/).map(part => {
       if (part.startsWith('<')) return part;
@@ -2132,9 +2182,12 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   /** Apply the region's wording across the document's prose. Identifiers, names, dates, URLs and
    *  Procore's own permission labels are deliberately left alone. */
-  function localiseContent(c, region) {
-    if (!TERMS[region] || !TERMS[region].length) return c;
-    const t = (s) => localiseText(s, region);
+  function localiseContent(c, region, account) {
+    // Region first (APAC wording -> the region's wording), then the account-type dictionary
+    // (Procore's base tool names -> the names that account actually sees).
+    const pairs = (TERMS[region] || []).concat(DICTIONARY[account] || []);
+    if (!pairs.length) return c;
+    const t = (s) => localiseText(s, pairs);
     ['subtitle', 'purpose', 'procedureIntro', 'closeoutIntro', 'appliesTo', 'processName'].forEach(k => { c[k] = t(c[k]); });
     (c.phases || []).forEach(p => { p.name = t(p.name); p.desc = t(p.desc); });
     (c.steps || []).forEach(s => {
@@ -2389,6 +2442,27 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         ' will be swapped in the document (for example, head contract becomes prime contract).';
     }
   }
+  // Procore renames tools by account type — its "Point-of-View Dictionaries".
+  function accountHint() {
+    const el = $('accountHint'); if (!el) return;
+    const a = state.account, n = dictCount(a);
+    if (a === 'GC') {
+      el.textContent = 'General contractor is Procore’s standard wording, so nothing is renamed. Choose Owner or Specialty contractor and Procore’s own tool names are swapped to match what that customer sees.';
+      return;
+    }
+    el.innerHTML = esc(ACCOUNT_LABEL[a]) + ' — ' + n + ' Procore tool name' + (n === 1 ? '' : 's') +
+      ' will be swapped (for example, prime contract becomes ' +
+      esc(a === 'OWNER' ? 'funding' : 'client contract') + '). ' +
+      '<strong>Procore states these dictionaries are US English only</strong>, so check the wording if this SOP is for an APAC customer.';
+  }
+  $('fAccount').onchange = () => {
+    state.account = $('fAccount').value;
+    accountHint();
+    unconfirm('The account type changed, so the tool names change — confirm the list again before generating.');
+    if (state.sop) renderReview();
+    syncLocks();
+  };
+
   $('fRegion').onchange = () => {
     state.region = $('fRegion').value;
     regionHint();
@@ -2417,6 +2491,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   $('fTplName').addEventListener('input', () => { $('fTplName').classList.remove('missing'); tplNameFeedback(); });
 
   regionHint();
+  accountHint();
   segmentHint();
   renderPermissions();
   syncLocks();        // start locked: nothing can be produced before Gate 3 is satisfied

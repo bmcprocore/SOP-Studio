@@ -251,6 +251,23 @@
   .dprev-cap{font-size:11.5px;color:var(--g600);line-height:1.5;}
   .dprev-cap b{color:var(--ink);}
 
+  /* Collapsible review groups — the list is long, and the sign-off sits under it. */
+  .rev-toggle{display:flex;align-items:center;gap:7px;background:none;border:0;padding:2px 4px;
+    font:inherit;font-size:10px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;
+    color:var(--g600);cursor:pointer;border-radius:var(--r-btn);}
+  .rev-toggle:hover{background:var(--g100);}
+  .rev-toggle .chev{display:inline-block;width:9px;height:9px;border-right:2px solid var(--g500);
+    border-bottom:2px solid var(--g500);transform:rotate(45deg);transition:transform var(--t-base) var(--ease);
+    flex:none;margin-bottom:2px;}
+  .rev-group.closed .rev-toggle .chev{transform:rotate(-45deg);}
+  .rev-group.closed .rev-rows{display:none;}
+  .rev-allrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;}
+
+  /* Sign-off stays reachable however long the list is. */
+  #confirmBox{position:sticky;bottom:0;z-index:4;background:var(--bg,#fff);padding-top:10px;
+    margin-top:6px;box-shadow:0 -10px 14px -10px rgba(20,23,29,.18);}
+  #p-review .review-split > div{background:#fff;}
+
   /* Override: including a section the permission rule dropped. Loud on purpose. */
   .ovr{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:rgba(211,47,47,.10);
     color:var(--danger);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
@@ -552,6 +569,18 @@
       <div id="genGate"></div>
       <div id="genSummary" class="profilebox" style="display:none;"></div>
 
+      <fieldset><legend>Customer segment</legend>
+        <label for="fSegment">Which kind of customer is this for?<span class="req" title="Required">*</span></label>
+        <select id="fSegment">
+          <option value="" selected>Choose…</option>
+          <option value="SMB">SMB — small and medium business</option>
+          <option value="COMM">Commercial</option>
+          <option value="ENT">Enterprise</option>
+          <option value="STR">Strategic</option>
+        </select>
+        <p class="hint" id="segmentHint"></p>
+      </fieldset>
+
       <fieldset><legend>Reuse</legend>
         <div class="blk">
           <input type="checkbox" id="fSaveTpl">
@@ -616,6 +645,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     summary: [],            // [{id,title,status,reason,included}]
     sop: null,              // assembled content JSON (with _id on blocks)
     region: 'TBC',          // APAC | NAMER | TBC — drives the terminology in the output
+    segment: '',            // SMB | COMM | ENT | STR — prefixes the file name
+    collapsed: { step: false, check: false, issue: false },
     rendered: false,
     confirmed: null,        // { by, at } — Gate 3. Nothing renders until this is set.
   };
@@ -1192,7 +1223,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       const c = state.sop;
       label.textContent = c
         ? '· ' + (c.processName || 'Untitled SOP') + ' · ' + ((c.customer || '').trim() || 'no client set') +
-          ' · ' + (state.region || 'TBC')
+          ' · ' + (state.region || 'TBC') + (state.segment ? ' · ' + state.segment : '')
         : '· no document started';
     }
     if (chip) {
@@ -1403,12 +1434,21 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         'Tick one below only if you have confirmed it applies.<ul style="margin:8px 0 0;padding-left:18px;">' +
         asks.map(a => '<li>' + esc(a.id) + ' · ' + esc(a.title) + '</li>').join('') + '</ul></div>'
       : '';
-    let html = '';
+    const anyOpen = REV_GROUPS.some(g => !state.collapsed[g.type]);
+    let html = '<div class="rev-allrow">' +
+      '<span class="note" style="margin:0;">Collapse the groups to reach the sign-off below.</span>' +
+      '<button class="rev-add" id="btnCollapseAll">' + (anyOpen ? 'Collapse all' : 'Expand all') + '</button></div>';
     REV_GROUPS.forEach(g => {
       const rows = state.summary.map((s, i) => ({ s, i })).filter(o => o.s.type === g.type);
-      html += '<div class="rev-group"><div class="rev-group-head"><span>' + esc(g.label) +
-        ' <span class="rev-count">' + rows.length + '</span></span>' +
+      const closed = !!state.collapsed[g.type];
+      const kept = rows.filter(o => o.s.included).length;
+      html += '<div class="rev-group' + (closed ? ' closed' : '') + '" data-g="' + g.type + '">' +
+        '<div class="rev-group-head">' +
+        '<button class="rev-toggle" data-toggle="' + g.type + '" aria-expanded="' + (!closed) + '">' +
+        '<span class="chev" aria-hidden="true"></span>' + esc(g.label) +
+        ' <span class="rev-count">' + kept + '/' + rows.length + '</span></button>' +
         '<button class="rev-add" data-add="' + g.type + '">+ ' + esc(g.add) + '</button></div>';
+      html += '<div class="rev-rows">';
       if (!rows.length) html += '<div class="note" style="margin:2px 0 6px;">None yet.</div>';
       rows.forEach((o) => {
         const s = o.s, i = o.i;
@@ -1430,10 +1470,21 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
           '<button class="ord del" data-del="' + i + '" title="Remove">×</button>' +
           '</div>';
       });
-      html += '</div>';
+      html += '</div></div>';
     });
     el.innerHTML = html;
     el.querySelectorAll('input[type=checkbox]').forEach(cb => cb.onchange = () => setIncluded(+cb.dataset.i, cb.checked));
+    el.querySelectorAll('[data-toggle]').forEach(b => b.onclick = () => {
+      const t = b.dataset.toggle;
+      state.collapsed[t] = !state.collapsed[t];
+      renderReview();
+    });
+    const all = $('btnCollapseAll');
+    if (all) all.onclick = () => {
+      const anyOpenNow = REV_GROUPS.some(g => !state.collapsed[g.type]);
+      REV_GROUPS.forEach(g => { state.collapsed[g.type] = anyOpenNow; });
+      renderReview();
+    };
     el.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addItem(b.dataset.add));
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
     wireDnd(el);
@@ -1615,6 +1666,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (state.logo) c.clientLogo = state.logo;
     c._detail = state.detail;
     c._region = state.region || 'TBC';
+    if (state.segment) c._segment = state.segment;
     return localiseContent(c, c._region);   // regional wording is applied last, to finished prose
   }
   $('btnShowJson').onclick = () => {
@@ -2191,6 +2243,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         ((prof.granular || []).length ? ' + ' + esc(prof.granular.join(', ')) : '') +
         ' · ' + esc(state.detail) + ' detail · ' + res.total + ' pages' +
         '<br><span style="color:var(--g500)">Confirmed by ' + esc(state.confirmed.by) + ' on ' + esc(state.confirmed.at) + '</span>';
+      segmentHint();
       const base = 'Rendered · ' + res.total + ' pages. Review every page before issuing — this is a draft until reviewed and approved.';
       setStatus('genStatus', base, 'ok');
       maybeSaveAsTemplate(c)
@@ -2200,9 +2253,11 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       setStatus('genStatus', 'Render error: ' + e.message, 'err');
     }
   }
+  const SEGMENTS = { SMB: 'SMB — small and medium business', COMM: 'Commercial', ENT: 'Enterprise', STR: 'Strategic' };
   function outName(c, ext) {
     const persona = ((state.profile && state.profile.personaLabel) || 'Persona').replace(/[^a-z0-9]+/gi, '-');
-    return ((c.customer || 'Client').replace(/[^a-z0-9]+/gi, '-')) + '_' +
+    const prefix = state.segment ? state.segment + '-' : '';   // SMB- COMM- ENT- STR-
+    return prefix + ((c.customer || 'Client').replace(/[^a-z0-9]+/gi, '-')) + '_' +
       ((state.selectedTool || 'Tool')) + '_' + persona + '_v' + (c.version || '1.0') + '.' + ext;
   }
   function triggerDownload(blob, name) {
@@ -2301,6 +2356,23 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (el) el.addEventListener('input', () => { el.classList.remove('missing'); syncLocks(); });
   });
 
+  // Customer segment — sets the file-name prefix so issued SOPs sort by customer type.
+  function segmentHint() {
+    const el = $('segmentHint'); if (!el) return;
+    const c = state.sop ? assembleFinal() : null;
+    if (!state.segment) {
+      el.textContent = 'Sets the file name prefix — SMB-, COMM-, ENT- or STR-. Without it the file name has no prefix.';
+      return;
+    }
+    el.innerHTML = esc(SEGMENTS[state.segment]) + ' — the file will be named <strong>' +
+      esc(c ? outName(c, 'pdf') : state.segment + '-…') + '</strong>';
+  }
+  $('fSegment').onchange = () => {
+    state.segment = $('fSegment').value;
+    segmentHint();
+    syncLocks();
+  };
+
   // Region — swaps the construction terminology in the finished document.
   function regionHint() {
     const r = state.region, n = termCount(r);
@@ -2343,6 +2415,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   $('fTplName').addEventListener('input', () => { $('fTplName').classList.remove('missing'); tplNameFeedback(); });
 
   regionHint();
+  segmentHint();
   renderPermissions();
   syncLocks();        // start locked: nothing can be produced before Gate 3 is satisfied
   loadLibrary();

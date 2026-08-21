@@ -19,6 +19,7 @@ circulation; no technical knowledge assumed.
 | 3.9 | 21 Aug 2026 | Permission upload, layout previews, overrides, gated delete |
 | 3.10 | 21 Aug 2026 | Collapsible review; customer-segment file naming |
 | 3.11 | 21 Aug 2026 | Procore tool names adapt to the customer's account type |
+| 3.11.1 | 21 Aug 2026 | Procore permission structure captured as reference (docs only) |
 
 ---
 
@@ -169,6 +170,22 @@ The most significant release, following a full interface and experience audit.
 - Two limitations, both surfaced in the tool: Procore states these dictionaries are US English
   only, and word substitution cannot fix grammar, so a renamed plural can read awkwardly.
   Read the preview before issuing.
+
+## 3.11.1 — Procore permission structure captured as reference
+
+Documentation only. **The Studio itself is unchanged and remains v3.11.**
+
+- Captured the real Procore permission structure from a live instance: the four levels, every
+  tool by category, and the exact granular permission wording for the ten tools that have it —
+  RFIs, Submittals, Specifications, Documents, Action Plans, Meetings, Defect List, Photos and
+  Drawings.
+- Held at `docs/procore-permission-reference.md`, with the source capture in `docs/reference/`.
+- **Reference only. Nothing in it is applied automatically.** It is now the first step when
+  authoring a new tool template, so the wording used in the library matches what the client
+  actually sees on their screen.
+- Two things it confirmed: the RFI library uses only one of the five granular RFI permissions
+  Procore offers, and the tool names in this instance are the Australian ones the templates are
+  already written in — Head Contracts, Variations, Defect List, Site Diary, Progress Claim.
 
 ---
 

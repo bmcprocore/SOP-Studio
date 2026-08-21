@@ -20,6 +20,9 @@ assembly and template maintenance — **never redesign the document**.
   deliverables to a public remote).
 - `docs/framework-standard-v0.2.md` — the team operating standard (4-gate pipeline). Read it
   before generating anything.
+- `docs/procore-permission-reference.md` — real Procore tool names, the four permission levels and
+  the exact granular permission wording, captured from a live instance. Reference only; never
+  applied automatically. Source PDF in `docs/reference/`.
 
 ## The 4-gate pipeline (always follow, in order)
 1. **Inputs** — permission manifest (screenshot/CSV/text), tool, detail level
@@ -69,6 +72,10 @@ flow-packed; standard = as template, one step per page; extended = expanded bull
 common-mistake callouts, one step per page.
 
 ## Adding a new tool template
+0. Read `docs/procore-permission-reference.md` first — it holds the real Procore tool names and the
+   exact granular permission wording, captured from a live instance. Use that wording verbatim in
+   `_perm` so the Studio and the client's own screen agree. It is reference only; nothing in it is
+   applied automatically, and it records what options are called, not what each level permits.
 1. Read the tool's User Permissions matrix + granular permissions FAQ on support.procore.com.
 2. Copy `templates/rfi/master-library-v0.2.json` as the skeleton; rewrite blocks for the tool's
    lifecycle; tag `_perm` per the matrix; write the four persona `access` objects and block maps.

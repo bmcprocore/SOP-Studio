@@ -75,6 +75,8 @@ A client permission template is mapped to the **closest persona, then adjusted**
 
 ## 7. Replicating to the next tool
 
+0. Read `docs/procore-permission-reference.md` — real tool names and exact granular wording,
+   captured from a live instance. Reference only; nothing in it is applied automatically.
 1. Pull the tool's User Permissions matrix + granular permissions FAQ (APAC support site).
 2. Copy `RFI_master_library` as the skeleton; rewrite steps for the tool's lifecycle, tagging `_perm` per the matrix.
 3. Define the persona map + "Ask" list; write each persona's `cannot_do`.

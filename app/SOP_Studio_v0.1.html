@@ -46,6 +46,8 @@
      Defined once here; same artwork as brand/sop-studio-mark.svg. */
   .hexmark{width:19px;height:19px;flex:none;background:var(--logomark) no-repeat center/contain;}
   .brand small{color:var(--g500);font-weight:500;}
+  .brand .vtag{font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--g600);
+    background:var(--sand-100);border:1px solid var(--g200);border-radius:var(--r-pill);padding:1px 8px;flex:none;}
   /* Buttons — secondary is the default; primary / ghost / quiet are the other documented variants.
      Press moves 1px down; nothing scales. */
   button{font:inherit;font-weight:600;font-size:13px;cursor:pointer;border-radius:var(--r-btn);padding:8px 14px;
@@ -350,7 +352,7 @@
   });
 </script>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.10</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
   </div>

@@ -20,6 +20,7 @@ circulation; no technical knowledge assumed.
 | 3.10 | 21 Aug 2026 | Collapsible review; customer-segment file naming |
 | 3.11 | 21 Aug 2026 | Procore tool names adapt to the customer's account type |
 | 3.11.1 | 21 Aug 2026 | Procore permission structure captured as reference (docs only) |
+| 3.12 | 21 Aug 2026 | **Accessibility overhaul** — keyboard reordering, screen-reader support, autosave |
 
 ---
 
@@ -186,6 +187,36 @@ Documentation only. **The Studio itself is unchanged and remains v3.11.**
 - Two things it confirmed: the RFI library uses only one of the five granular RFI permissions
   Procore offers, and the tool names in this instance are the Australian ones the templates are
   already written in — Head Contracts, Variations, Defect List, Site Diary, Progress Claim.
+
+## 3.12 — Accessibility overhaul
+
+Acting on a formal UI/UX review. Every item below was measured before and after.
+
+- **Sections can now be reordered by keyboard.** Previously drag-and-drop was the only way, which
+  meant keyboard-only users could not reorder at all. Every row in the detail list now has up and
+  down buttons, using the same control as the existing remove button. Dragging still works.
+- **Every control now has a name.** Eleven checkboxes on the Review screen announced as "checkbox"
+  with no indication of what they controlled.
+- **The tool now speaks.** Render results, errors and confirmations were previously silent to a
+  screen reader. All six status areas announce themselves.
+- **The sign-off is three keystrokes away.** It previously took 73 tab presses to reach the one
+  step nothing can proceed without. A skip link now goes straight there.
+- **Required fields are marked properly**, not just with a red asterisk, and every screen has a
+  proper page heading.
+- **Colour contrast fixed** on warnings, success messages, section counts and rail labels. The
+  status colours themselves are unchanged — text variants were added alongside them.
+- **Work is saved automatically** and offered back if you close the tab by accident. There is also
+  a warning before leaving with unsaved changes.
+- Clicking anywhere on a section's title now toggles it, and the small row buttons have a proper
+  click area.
+- The delete password is now called a confirmation phrase, and says plainly that it prevents
+  accidents rather than controlling access.
+- The page language follows the region, so a North American document is not read aloud in an
+  Australian voice by a screen reader.
+
+**Deliberately not changed:** the primary button's white-on-orange contrast measures 3.25:1 against
+a 4.5:1 requirement, but that pairing comes from Procore's own design system. It has been referred
+to the brand and design team rather than altered locally.
 
 ---
 

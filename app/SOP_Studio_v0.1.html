@@ -20,6 +20,10 @@
     --sand:#FBF8F4; --sand-100:#F5F1ED; --sand-200:#ECE0D6;
     --g50:#F7F8FA; --g100:#EEF0F3; --g200:#E1E4E8; --g300:#C7CCD3; --g400:#9AA1AB; --g500:#6B7380; --g600:#4A525E;
     --info:#2E6FE6; --ok:#1F8A5B; --warn:#E5A100; --danger:#D32F2F;
+    /* M1 — text-only variants that reach 4.5:1 on white. The status colours above are unchanged
+       and still used for dots, pills and rules; these are for words. */
+    --ok-text:#197A50;      /* 5.33 */
+    --warn-text:#946600;    /* 5.05 */
     --mono:'DM Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     /* Procore is largely square — radius lives on buttons, inputs/cards and pills only */
     --r-container:0; --r-btn:4px; --r-card:8px; --r-pill:999px;
@@ -82,7 +86,7 @@
   /* ---- gate rail (signature) ---- */
   nav.rail{background:var(--ink);display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:4px;}
   .rail-group{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;}
-  .rail-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--g500);
+  .rail-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--g400);
     text-align:center;line-height:1.35;margin:0 0 6px;padding:0 10px;}
   .rail .gate{width:128px;padding:12px 6px 11px;border:none;background:transparent;color:var(--g400);
     display:flex;flex-direction:column;align-items:center;gap:7px;border-radius:var(--r-btn);cursor:pointer;
@@ -106,7 +110,7 @@
   .work{background:#fff;border-right:1px solid var(--g200);overflow-y:auto;min-height:0;padding:18px 20px 60px;}
   .panel{display:none;} .panel.active{display:block;}
   /* Headings are medium (500), never bold — Procore scales with size, not weight */
-  .panel h2{font-size:18px;font-weight:500;margin:0 0 2px;letter-spacing:-.02em;}
+  .panel h1{font-size:18px;font-weight:500;margin:0 0 2px;letter-spacing:-.02em;}
   .panel .sub{font-size:12px;color:var(--g500);margin:0 0 14px;line-height:1.5;}
   fieldset{border:1px solid var(--g200);border-radius:var(--r-card);padding:12px 14px 14px;margin:0 0 14px;}
   legend{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;color:var(--g600);padding:0 6px;}
@@ -132,9 +136,9 @@
   .seg button.on{background:var(--ink);color:#fff;}
   .seg-note{font-size:11px;color:var(--g500);margin-top:6px;line-height:1.45;min-height:30px;}
   .note{font-size:11px;color:var(--g500);line-height:1.5;margin-top:8px;}
-  .note.warn{color:var(--warn);}
+  .note.warn{color:var(--warn-text);}
   .status{font-size:12px;margin-top:10px;line-height:1.5;color:var(--g600);}
-  .status.err{color:var(--danger);} .status.ok{color:var(--ok);}
+  .status.err{color:var(--danger);} .status.ok{color:var(--ok-text);}
   .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--g300);border-top-color:var(--orange);
     border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:6px;}
   @keyframes sp{to{transform:rotate(360deg)}}
@@ -162,7 +166,7 @@
   .rev-group{margin-bottom:14px;}
   .rev-group-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 6px;}
   .rev-group-head>span{font-size:10px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--g600);}
-  .rev-count{color:var(--g400);font-family:var(--mono);}
+  .rev-count{color:var(--g500);font-family:var(--mono);}
   .rev-add{border:1px solid var(--g300);background:#fff;border-radius:var(--r-btn);padding:3px 8px;font-size:11px;font-weight:600;color:var(--g600);}
   .rev-add:hover{border-color:var(--orange);color:var(--orange-press);background:var(--orange-tint);}
   .blk2{display:grid;grid-template-columns:14px 18px 1fr auto;gap:8px;align-items:start;padding:7px 4px;
@@ -173,7 +177,7 @@
   .blk2 .r{font-size:10.5px;color:var(--g500);line-height:1.35;}
   .blk2.ask{background:rgba(229,161,0,.08);border-radius:var(--r-btn);}
   .blk2.excluded{opacity:.5;}
-  .grip{cursor:grab;color:var(--g400);font-size:12px;line-height:1.4;user-select:none;letter-spacing:-2px;padding-top:1px;}
+  .grip{cursor:grab;color:var(--g500);font-size:12px;line-height:1.4;user-select:none;letter-spacing:-2px;padding-top:1px;}
   .grip:active{cursor:grabbing;}
   .blk2.dragging{opacity:.4;}
   .blk2.drop-before{box-shadow:inset 0 3px 0 -1px var(--orange);}
@@ -214,16 +218,18 @@
   .ogroup-h{display:flex;align-items:center;justify-content:space-between;gap:8px;
     padding:9px 6px 5px;font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;
     font-weight:700;color:var(--g600);}
-  .ogroup-h .n{font-family:var(--mono);color:var(--g400);font-weight:500;}
+  .ogroup-h .n{font-family:var(--mono);color:var(--g500);font-weight:500;}
 
   .oitem{display:grid;grid-template-columns:14px 16px 1fr;gap:8px;align-items:start;
     padding:6px 6px;border-top:2px solid transparent;border-bottom:2px solid transparent;
     background:#fff;border-left:2px solid transparent;margin-bottom:2px;cursor:default;}
   .oitem:hover{background:var(--g50);}
-  .oitem .ogrip{cursor:grab;color:var(--g400);font-size:11px;line-height:1.5;user-select:none;letter-spacing:-2px;}
+  .oitem .ogrip{cursor:grab;color:var(--g500);font-size:11px;line-height:1.5;user-select:none;letter-spacing:-2px;}
   .oitem .ogrip:active{cursor:grabbing;}
   .oitem input{margin-top:2px;accent-color:var(--orange);}
-  .oitem .otitle{font-size:11.5px;line-height:1.35;color:var(--ink);min-width:0;overflow-wrap:anywhere;}
+  .blk2 label.t{cursor:pointer;display:block;margin:0;font-size:12px;color:var(--ink);font-weight:600;}
+  .oitem input[type=checkbox],.blk2 input[type=checkbox]{width:15px;height:15px;}
+  .oitem .otitle{cursor:pointer;margin:0;font-weight:400;font-size:11.5px;line-height:1.35;color:var(--ink);min-width:0;overflow-wrap:anywhere;}
   .oitem .oid{font-family:var(--mono);font-size:10px;color:var(--g500);}
   .oitem.on{border-left-color:var(--orange);}
   .oitem.out{opacity:.55;}
@@ -252,6 +258,28 @@
   .dimg{background:var(--g100);border:1px dashed var(--g300);flex:1;min-height:20px;}
   .dprev-cap{font-size:11.5px;color:var(--g600);line-height:1.5;}
   .dprev-cap b{color:var(--ink);}
+
+  /* B1 — move controls. Same component as the existing remove button, so no new visual language.
+     M2 — every row button gets a 24px hit area without growing the glyph. */
+  .rowbtns{display:flex;gap:3px;align-items:flex-start;flex:none;}
+  .ord{min-width:24px;min-height:24px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:9px;line-height:1;}
+  .ord.del{font-size:13px;}
+  .oitem .rowbtns{opacity:.35;transition:opacity var(--t-base) var(--ease);}
+  .oitem:hover .rowbtns,.oitem:focus-within .rowbtns{opacity:1;}
+  .confirmbar .cbh{font-size:15.5px;font-weight:600;letter-spacing:0;margin:0 0 6px;}
+
+  /* M3 — restore banner. Sits above the workflow, never over it. */
+  .restorebar{flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:10px 20px;background:var(--sand-200);border-bottom:1px solid var(--g300);font-size:13px;}
+  .restorebar .txt{color:var(--g700);}
+  .restorebar .acts{display:flex;gap:8px;flex:none;}
+  .savedchip{font-family:var(--mono);font-size:10.5px;color:var(--g500);white-space:nowrap;}
+
+  /* H3 — reach the sign-off without tabbing the whole list. */
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:9px 14px;
+    font-size:13px;font-weight:600;border-radius:var(--r-btn);z-index:20;}
+  .skip:focus{position:static;display:inline-block;margin:0 0 12px;}
 
   /* Collapsible review groups — the list is long, and the sign-off sits under it. */
   .rev-toggle{display:flex;align-items:center;gap:7px;background:none;border:0;padding:2px 4px;
@@ -351,14 +379,22 @@
     document.querySelectorAll('.panel').forEach(function (pn) { pn.classList.toggle('active', pn.id === 'p-' + p); });
   });
 </script>
+<div class="restorebar" id="restoreBar" style="display:none;">
+  <span class="txt">Unfinished work from <b id="restoreWhen"></b> was found on this computer.</span>
+  <span class="acts">
+    <button id="btnRestore" class="primary">Restore it</button>
+    <button id="btnDiscardDraft" class="quiet">Discard</button>
+  </span>
+</div>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.11</span>
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.12</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
+    <span class="savedchip" id="savedChip"></span>
   </div>
   <div class="actions">
     <button id="btnRender" disabled>Render preview</button>
-    <button id="btnDownload" class="primary" disabled>Download PDF</button>
+    <button id="btnDownload" disabled>Download PDF</button>
   </div>
 </header>
 <main>
@@ -381,7 +417,7 @@
   <section class="work">
 
     <div class="panel active" id="p-templates">
-      <h2>Templates</h2>
+      <h1>Templates</h1>
       <p class="sub">Shared across your whole team — templates saved here are visible to everyone using this app. Manage them here, then use one in the Create step to start an SOP.</p>
       <div id="tplList"></div>
       <div class="status" id="libStatus">Loading library…</div>
@@ -391,10 +427,10 @@
         <button id="btnEditTpl" class="quiet">View / edit selected template JSON</button>
         <button id="btnDeleteTpl" class="quiet" style="color:var(--danger);">Delete selected template</button>
         <div id="delRow" style="display:none;margin-top:10px;">
-          <div class="ovrnote">Deleting <b id="delName"></b> removes it from the library for good. Enter the delete password to continue.</div>
-          <label for="fDelPw">Delete password<span class="req" title="Required">*</span></label>
+          <div class="ovrnote">Deleting <b id="delName"></b> removes it from the library for good. Type the shared confirmation phrase to continue. <strong>This prevents accidents, not access</strong> — it is not a security control.</div>
+          <label for="fDelPw">Confirmation phrase<span class="req" title="Required">*</span></label>
           <div class="pwrow">
-            <input type="password" id="fDelPw" autocomplete="off" placeholder="Password">
+            <input type="text" id="fDelPw" autocomplete="off" placeholder="Confirmation phrase">
             <button id="btnDelConfirm" class="primary">Delete template</button>
             <button id="btnDelCancel" class="quiet">Cancel</button>
           </div>
@@ -408,7 +444,7 @@
     </div>
 
     <div class="panel" id="p-create">
-      <h2>Create an SOP</h2>
+      <h1>Create an SOP</h1>
       <p class="sub">Choose the region this SOP is for, then start it from one of your saved templates.</p>
       <fieldset><legend>Region</legend>
         <label for="fRegion">Where is this SOP for?<span class="req" title="Required">*</span></label>
@@ -452,7 +488,7 @@
     </div>
 
     <div class="panel" id="p-permissions">
-      <h2>Permissions</h2>
+      <h1>Permissions</h1>
       <p class="sub">Set the reader's Procore permissions. This is what scopes the SOP — every block is kept or dropped against the rule you set here, and the Review step shows you each decision.</p>
 
       <fieldset><legend>Permission template</legend>
@@ -490,7 +526,7 @@
     </div>
 
     <div class="panel" id="p-details">
-      <h2>Details</h2>
+      <h1>Details</h1>
       <p class="sub">Who the document is for and who signs it off. Anything left blank prints as a visible placeholder — required fields are marked.</p>
 
       <fieldset><legend>Client</legend>
@@ -548,8 +584,9 @@
     </div>
 
     <div class="panel" id="p-review">
-      <h2>Review</h2>
+      <h1>Review</h1>
       <p class="sub">Everything the permission rule kept or dropped, with the reason for each. Nothing can be generated until you confirm this list — that confirmation is recorded on the document.</p>
+      <a class="skip" href="#confirmBox">Skip to sign-off</a>
       <div id="profileBox"></div>
       <div class="review-split">
         <aside class="outline" aria-label="Section outline">
@@ -563,7 +600,7 @@
           <div id="askBox"></div>
           <div id="tallyBox"></div>
           <div id="blockList"><div class="note">Start from a template in the Create step first — every section appears here with the rule that decided it.</div></div>
-          <div id="confirmBox"></div>
+          <div id="confirmBox" tabindex="-1"></div>
         </div>
       </div>
       <fieldset style="margin-top:16px;"><legend>Advanced</legend>
@@ -574,7 +611,7 @@
 
 
     <div class="panel" id="p-generate">
-      <h2>Generate</h2>
+      <h1>Generate</h1>
       <p class="sub">Renders the SOP in the locked step-per-page design — identical to the standalone builder output.</p>
       <div id="genGate"></div>
       <div id="genSummary" class="profilebox" style="display:none;"></div>
@@ -833,7 +870,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   $('btnDelConfirm').onclick = async () => {
     const name = $('delName').textContent;
     if ($('fDelPw').value !== DELETE_PASSWORD) {
-      setStatus('delStatus', 'That password is not right — the template has not been deleted.', 'err');
+      setStatus('delStatus', 'That phrase does not match — the template has not been deleted.', 'err');
       $('fDelPw').select();
       return;
     }
@@ -1262,8 +1299,13 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     }
   }
 
+  /** H2 — status containers are live regions, so a screen reader hears the outcome instead of
+   *  it appearing silently. Errors interrupt; everything else waits for a pause. */
   function setStatus(id, msg, cls) {
     const el = $(id);
+    if (!el) return;
+    el.setAttribute('role', cls === 'err' ? 'alert' : 'status');
+    el.setAttribute('aria-live', cls === 'err' ? 'assertive' : 'polite');
     el.innerHTML = msg;
     el.className = 'status' + (cls ? ' ' + cls : '');
   }
@@ -1298,7 +1340,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     { type: 'issue', label: 'Common issues', add: 'Add issue' }
   ];
   function afterReviewChange() {
-    renderReview(); syncSopEditor();
+    renderReview(); syncSopEditor(); queueSave();
     if (state.rendered) doRender();   // keep the preview in lock-step
   }
 
@@ -1349,15 +1391,16 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         html += '<div class="' + cls + '" draggable="true" data-i="' + i + '"' +
           (dropped ? ' title="The permission rule dropped this. Tick it to include it anyway — it will be flagged as an override."' : '') + '>' +
           '<span class="ogrip" aria-hidden="true">⠿</span>' +
-          '<input type="checkbox" data-oi="' + i + '"' + (s.included ? ' checked' : '') +
+          '<input type="checkbox" id="cbo' + i + '" data-oi="' + i + '"' + (s.included ? ' checked' : '') +
           ' aria-label="Include ' + esc(s.id || '') + '">' +
-          '<span class="otitle"><span class="oid">' + esc(s.id || '') + '</span> ' + title + '</span>' +
+          '<label class="otitle" for="cbo' + i + '"><span class="oid">' + esc(s.id || '') + '</span> ' + title + '</label>' +
           '</div>';
       });
       html += '</div>';
     });
     el.innerHTML = html;
     el.querySelectorAll('input[data-oi]').forEach(cb => cb.onchange = () => setIncluded(+cb.dataset.oi, cb.checked));
+    el.querySelectorAll('[data-move]').forEach(b => b.onclick = () => moveItem(+b.dataset.move, +b.dataset.dir));
     wireOutlineDnd(el);
   }
 
@@ -1463,7 +1506,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       if (!rows.length) html += '<div class="note" style="margin:2px 0 6px;">None yet.</div>';
       rows.forEach((o) => {
         const s = o.s, i = o.i;
-        const title = (s.title && s.title.trim()) ? esc(s.title) : '<em style="color:var(--g400)">(empty — edit text in the preview)</em>';
+        const title = (s.title && s.title.trim()) ? esc(s.title) : '<em style="color:var(--g500)">(empty — edit text in the preview)</em>';
         const dropped = s.status === 'exclude';
         const cls = 'blk2' + (s.status === 'ask' ? ' askrow' : '') +
           (dropped && !s.override ? ' out' : '') + (s.override ? ' overridden' : '');
@@ -1471,14 +1514,16 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         // marks them as an override so it is never a silent change.
         html += '<div class="' + cls + '" draggable="true" data-i="' + i + '">' +
           '<span class="grip" title="Drag to reorder" aria-hidden="true">⠿</span>' +
-          '<input type="checkbox" data-i="' + i + '"' + (s.included ? ' checked' : '') +
+          '<input type="checkbox" id="cbd' + i + '" data-i="' + i + '"' + (s.included ? ' checked' : '') +
+            ' aria-label="Include ' + esc(s.id || '') + ' ' + esc((s.title || '').slice(0, 60)) + '"' +
             (dropped ? ' title="Dropped by the permission rule — tick to include it anyway"' : '') + '>' +
-          '<div class="blk2-main"><div class="t">' + esc(s.id || '') + ' · ' + title +
-            (s.override ? '<span class="ovr">Override</span>' : '') + '</div>' +
+          '<div class="blk2-main"><label class="t" for="cbd' + i + '">' + esc(s.id || '') + ' · ' + title +
+            (s.override ? '<span class="ovr">Override</span>' : '') + '</label>' +
           '<div class="rule">' + (s.reason || '') +
             (s.override ? ' <strong style="color:var(--danger)">Included anyway by a human decision.</strong>' : '') +
             '</div></div>' +
-          '<button class="ord del" data-del="' + i + '" title="Remove">×</button>' +
+          moveButtons(i, esc(s.id || '')) +
+          '<button class="ord del" data-del="' + i + '" aria-label="Remove ' + esc(s.id || '') + '" title="Remove">×</button></div>' +
           '</div>';
       });
       html += '</div></div>';
@@ -1496,6 +1541,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       REV_GROUPS.forEach(g => { state.collapsed[g.type] = anyOpenNow; });
       renderReview();
     };
+    el.querySelectorAll('[data-move]').forEach(b => b.onclick = () => moveItem(+b.dataset.move, +b.dataset.dir));
     el.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addItem(b.dataset.add));
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
     wireDnd(el);
@@ -1507,10 +1553,12 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   /** Gate 3 itself. Nothing downstream unlocks until someone puts their name to this list. */
   function renderConfirm() {
+    // any change that reaches the sign-off is worth persisting straight away
+    if (state.sop) queueSave();
     const box = $('confirmBox');
     if (!box) return;
     if (state.confirmed) {
-      box.innerHTML = '<div class="confirmbar done"><h4>Inclusions confirmed</h4>' +
+      box.innerHTML = '<div class="confirmbar done"><h2 class="cbh">Inclusions confirmed</h2>' +
         '<div class="okline">Confirmed by <b>' + esc(state.confirmed.by) + '</b> on ' + esc(state.confirmed.at) +
         '. Generate is now available. Changing the permissions or the list above will clear this.</div>' +
         '<button id="btnUnconfirm" class="quiet" style="margin-top:10px;">Reopen for changes</button></div>';
@@ -1518,7 +1566,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       return;
     }
     const nAsk = state.summary.filter(s => s.status === 'ask' && !s.touched).length;
-    box.innerHTML = '<div class="confirmbar"><h4>Confirm this list before generating</h4>' +
+    box.innerHTML = '<div class="confirmbar"><h2 class="cbh">Confirm this list before generating</h2>' +
       '<div style="font-size:12.5px;line-height:1.5;color:var(--g600)">You are confirming that the included items are correct for this reader’s permissions, ' +
       'and that anything dropped should not reach them. Your name is recorded against the document.</div>' +
       (nAsk ? '<div class="note warn" style="margin-top:8px;">' + nAsk + ' item' + (nAsk === 1 ? '' : 's') +
@@ -1528,6 +1576,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       '<button id="btnConfirm" class="primary">Confirm inclusions</button></div>' +
       '<div class="status" id="confirmStatus"></div></div>';
 
+    markRequired($('confirmBox'));
     $('btnConfirm').onclick = () => {
       const who = $('fConfirmBy').value.trim();
       if (!who) {
@@ -1583,6 +1632,34 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       });
     });
   }
+  /** B1 — keyboard path for reordering. Drag stays for pointer users; this gives everyone else
+   *  the same capability. Moves within the section's own group, exactly as dragging does. */
+  function moveItem(idx, dir) {
+    const row = state.summary[idx];
+    if (!row) return;
+    const sameType = state.summary.map((s, i) => ({ s, i })).filter(o => o.s.type === row.type);
+    const pos = sameType.findIndex(o => o.i === idx);
+    const target = sameType[pos + dir];
+    if (!target) return;
+    unconfirm('The section order changed — confirm the list again before generating.');
+    reorderSummary(idx, target.i, dir > 0);
+  }
+  /** True when this row is already first/last within its own group. */
+  function atEdge(idx, dir) {
+    const row = state.summary[idx];
+    const sameType = state.summary.map((s, i) => ({ s, i })).filter(o => o.s.type === row.type);
+    const pos = sameType.findIndex(o => o.i === idx);
+    return dir < 0 ? pos <= 0 : pos >= sameType.length - 1;
+  }
+  function moveButtons(i, id) {
+    const lbl = id ? ' ' + id : '';
+    return '<div class="rowbtns">' +
+      '<button class="ord" data-move="' + i + '" data-dir="-1" aria-label="Move' + lbl + ' up"' +
+        (atEdge(i, -1) ? ' disabled' : '') + '>&#9650;</button>' +
+      '<button class="ord" data-move="' + i + '" data-dir="1" aria-label="Move' + lbl + ' down"' +
+        (atEdge(i, 1) ? ' disabled' : '') + '>&#9660;</button>';
+  }
+
   function reorderSummary(fromIdx, toIdx, placeAfter) {
     const s = state.summary;
     const from = s[fromIdx], to = s[toIdx];
@@ -2070,11 +2147,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   wireDrop('permDrop', async (files) => {
     const f = files[0]; if (!f) return;
-    permFiles.length = 0; permFiles.push({ name: f.name, kind: 'perm' });
+    permFiles.length = 0;
+    permFiles.push({ name: f.name, kind: 'reading…' });
     renderFileList('permFileList', permFiles, permFiles);
     state.permSource = f.name;
-    const readable = /.(csv|txt|json|tsv|md)$/i.test(f.name);
+    const readable = /\.(csv|txt|json|tsv|md)$/i.test(f.name);
     if (!readable) {
+      permFiles[0].kind = 'attached as evidence only — level set by hand';
+      renderFileList('permFileList', permFiles, permFiles);
       setStatus('permFileStatus', 'Recorded <strong>' + esc(f.name) + '</strong> as the permission source. A screenshot cannot be read here — set the level and granular permissions below yourself.', '');
       unconfirm('The permission source changed — confirm the list again before generating.');
       return;
@@ -2086,6 +2166,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         setStatus('permFileStatus', 'Read <strong>' + esc(f.name) + '</strong> but could not identify a permission level in it. Set the level below yourself.', 'err');
         return;
       }
+      permFiles[0].kind = level ? 'read — level taken from this file' : 'read, but no level found in it';
+      renderFileList('permFileList', permFiles, permFiles);
       if (level) { state.profile.level = level; }
       if (gran.length) { state.profile.granular = gran.slice(); }
       renderPermissions();
@@ -2099,6 +2181,67 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       setStatus('permFileStatus', 'Could not read that file: ' + esc(e.message), 'err');
     }
   }, '.csv,.txt,.json,.tsv,.md,.png,.jpg,.jpeg,.xlsx');
+
+  // ============================================================ draft autosave (M3)
+  // Everything entered lives in memory, so a closed tab used to lose the lot. The in-progress
+  // document is now written to this browser alongside the template library, restored on request,
+  // and a leave warning fires while there is unsaved work.
+  const CLIENT_FIELDS = ['fCustomer','fDocId','fVersion','fOwner','fEffective','fAppliesTo',
+    'fPrepared','fPreparedD','fReviewed','fReviewedD','fApproved','fApprovedD',
+    'fSla','fNaming','fEscalation'];
+  const DRAFT_KEY = 'sop-draft';
+  let draftDirty = false, draftTimer = null;
+
+  function draftSnapshot() {
+    return {
+      at: new Date().toISOString(),
+      sop: state.sop, summary: state.summary, profile: state.profile,
+      detail: state.detail, region: state.region, account: state.account,
+      segment: state.segment, selectedTool: state.selectedTool,
+      confirmed: state.confirmed, logo: state.logo,
+      fields: CLIENT_FIELDS.reduce((o, id) => { const e = $(id); if (e) o[id] = e.value; return o; }, {}),
+    };
+  }
+  function saveDraft() {
+    if (!state.sop) return;
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draftSnapshot())); draftDirty = false;
+      const c = $('savedChip'); if (c) c.textContent = 'saved ' + new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+    } catch (e) { /* storage full or unavailable — the leave warning still protects the user */ }
+  }
+  function queueSave() {
+    draftDirty = true;
+    const c = $('savedChip'); if (c) c.textContent = 'unsaved…';
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(saveDraft, 800);
+  }
+  function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} draftDirty = false; }
+
+  function offerRestore() {
+    let d = null;
+    try { d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch (e) { return; }
+    if (!d || !d.sop) return;
+    $('restoreWhen').textContent = new Date(d.at).toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' });
+    $('restoreBar').style.display = 'flex';
+    $('btnRestore').onclick = () => {
+      state.sop = d.sop; state.summary = d.summary || []; state.profile = d.profile || state.profile;
+      state.detail = d.detail || 'standard'; state.region = d.region || 'TBC';
+      state.account = d.account || 'GC'; state.segment = d.segment || '';
+      state.selectedTool = d.selectedTool || null; state.confirmed = d.confirmed || null;
+      state.logo = d.logo || null;
+      Object.entries(d.fields || {}).forEach(([id, v]) => { const e = $(id); if (e) e.value = v; });
+      ['fRegion', 'fAccount', 'fSegment'].forEach(id => { const e = $(id); if (e) e.value = { fRegion: state.region, fAccount: state.account, fSegment: state.segment }[id]; });
+      $('restoreBar').style.display = 'none';
+      renderPermissions(); regionHint(); accountHint(); segmentHint();
+      renderReview(); syncLocks(); goGate('review');
+      setStatus('confirmStatus', 'Restored your unfinished work. Check it before generating.', 'ok');
+    };
+    $('btnDiscardDraft').onclick = () => { clearDraft(); $('restoreBar').style.display = 'none'; };
+  }
+
+  window.addEventListener('beforeunload', (e) => {
+    if (!draftDirty || !state.sop) return;
+    e.preventDefault(); e.returnValue = '';
+  });
 
   // ============================================================ regional terminology
   // Templates are authored in APAC terms. Choosing another region swaps the wording in the
@@ -2465,6 +2608,9 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   $('fRegion').onchange = () => {
     state.region = $('fRegion').value;
+    // L2 — screen readers use this for pronunciation; a NAMER document should not be read aloud
+    // in an Australian voice.
+    document.documentElement.lang = state.region === 'NAMER' ? 'en-US' : 'en-AU';
     regionHint();
     unconfirm('The region changed, so the wording changes — confirm the list again before generating.');
     if (state.sop) { renderReview(); }
@@ -2489,6 +2635,29 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       : 'This will be added to the library as a new template.';
   }
   $('fTplName').addEventListener('input', () => { $('fTplName').classList.remove('missing'); tplNameFeedback(); });
+
+  // H4 — every field showing a required marker is marked required for assistive technology too.
+  // Derived from the markers themselves so the two can never disagree. Re-run after any render
+  // that creates fields, because the sign-off field is built on the fly.
+  function markRequired(scope) {
+    (scope || document).querySelectorAll('.req').forEach(star => {
+      const label = star.closest('label');
+      if (!label) return;
+      const field = label.htmlFor ? document.getElementById(label.htmlFor) : label.querySelector('input,select,textarea');
+      if (field) field.setAttribute('aria-required', 'true');
+    });
+  }
+
+  // H2 — status containers are live regions from the start, so the first message is announced
+  // too. Screen readers can miss content injected into a region that was not already live.
+  ['genStatus', 'permStatus', 'permFileStatus', 'libStatus', 'delStatus', 'createStatus', 'confirmStatus']
+    .forEach(id => { const el = $(id); if (el) { el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); } });
+
+  markRequired();
+
+  CLIENT_FIELDS.forEach(id => { const e = $(id); if (e) e.addEventListener('input', queueSave); });
+  ['fRegion','fAccount','fSegment'].forEach(id => { const e = $(id); if (e) e.addEventListener('change', queueSave); });
+  offerRestore();
 
   regionHint();
   accountHint();

@@ -169,7 +169,7 @@
   .rev-count{color:var(--g500);font-family:var(--mono);}
   .rev-add{border:1px solid var(--g300);background:#fff;border-radius:var(--r-btn);padding:3px 8px;font-size:11px;font-weight:600;color:var(--g600);}
   .rev-add:hover{border-color:var(--orange);color:var(--orange-press);background:var(--orange-tint);}
-  .blk2{display:grid;grid-template-columns:14px 18px 1fr auto;gap:8px;align-items:start;padding:7px 4px;
+  .blk2{display:grid;grid-template-columns:8px 1fr;gap:10px;align-items:start;padding:7px 4px;
     border-bottom:1px solid var(--g100);border-top:2px solid transparent;border-block-end:1px solid var(--g100);}
   .blk2 input{margin-top:2px;accent-color:var(--orange);}
   .blk2-main{min-width:0;}
@@ -206,7 +206,7 @@
      explains each decision. Square geometry, sand surface, 1px rules — Procore in-app pattern. */
   #p-review .review-split{display:grid;grid-template-columns:1fr;gap:18px;align-items:start;}
   body.no-preview #p-review{max-width:1180px;}
-  body.no-preview #p-review .review-split{grid-template-columns:290px 1fr;}
+  body.no-preview #p-review .review-split{grid-template-columns:360px 1fr;}
 
   .outline{border:1px solid var(--g200);background:var(--sand);position:sticky;top:0;
     max-height:calc(100vh - 190px);display:flex;flex-direction:column;min-height:0;}
@@ -215,12 +215,17 @@
   .outline-head .sub{font-size:10.5px;color:var(--g500);line-height:1.4;margin-top:3px;}
   .outline-body{overflow-y:auto;padding:6px 0 10px;min-height:0;}
   .ogroup{padding:0 6px;}
-  .ogroup-h{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  .ogroup-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;
     padding:9px 6px 5px;font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;
     font-weight:700;color:var(--g600);}
   .ogroup-h .n{font-family:var(--mono);color:var(--g500);font-weight:500;}
 
-  .oitem{display:grid;grid-template-columns:14px 16px 1fr;gap:8px;align-items:start;
+  .ocontrols{display:flex;align-items:center;gap:3px;flex:none;}
+  .statedot{width:8px;height:8px;border-radius:999px;background:var(--g300);margin-top:5px;flex:none;}
+  .blk2.out .statedot{background:var(--g200);}
+  .blk2.overridden .statedot{background:var(--danger);}
+  .blk2:not(.out):not(.overridden) .statedot{background:var(--ok);}
+  .oitem{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start;
     padding:6px 6px;border-top:2px solid transparent;border-bottom:2px solid transparent;
     background:#fff;border-left:2px solid transparent;margin-bottom:2px;cursor:default;}
   .oitem:hover{background:var(--g50);}
@@ -265,7 +270,7 @@
   .ord{min-width:24px;min-height:24px;display:inline-flex;align-items:center;justify-content:center;
     font-size:9px;line-height:1;}
   .ord.del{font-size:13px;}
-  .oitem .rowbtns{opacity:.35;transition:opacity var(--t-base) var(--ease);}
+  .oitem .rowbtns{opacity:.75;transition:opacity var(--t-base) var(--ease);}
   .oitem:hover .rowbtns,.oitem:focus-within .rowbtns{opacity:1;}
   .confirmbar .cbh{font-size:15.5px;font-weight:600;letter-spacing:0;margin:0 0 6px;}
 
@@ -311,6 +316,16 @@
   /* Password gate for deleting a template */
   .pwrow{display:flex;gap:8px;align-items:flex-start;margin-top:8px;}
   .pwrow input{flex:1;}
+  /* Miller — the five settings chosen across three earlier screens, restated where they are
+     being signed off, so nothing has to be carried in the head. */
+  .setbar{display:flex;flex-wrap:wrap;gap:0 18px;align-items:baseline;border:1px solid var(--g200);
+    background:var(--sand);padding:9px 14px;margin:0 0 12px;font-size:11.5px;color:var(--g700);}
+  .setbar .s{display:inline-flex;gap:5px;align-items:baseline;}
+  .setbar .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--g500);}
+  .setbar .v{font-weight:600;color:var(--ink);}
+  .setbar .v.unset{font-weight:400;color:var(--g500);font-style:italic;}
+  .setbar a{color:var(--orange-press);font-size:10.5px;margin-left:auto;text-underline-offset:2px;}
+
   .tally{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 12px;font-size:12px;}
   .tally span{display:inline-flex;align-items:center;gap:6px;color:var(--g600);}
   .tally i{width:8px;height:8px;border-radius:999px;display:inline-block;}
@@ -387,7 +402,7 @@
   </span>
 </div>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.13</span>
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.14</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -587,6 +602,7 @@
       <h1>Review</h1>
       <p class="sub">Everything the permission rule kept or dropped, with the reason for each. Nothing can be generated until you confirm this list — that confirmation is recorded on the document.</p>
       <a class="skip" href="#confirmBox">Skip to sign-off</a>
+      <div id="settingsBox"></div>
       <div id="profileBox"></div>
       <div class="review-split">
         <aside class="outline" aria-label="Section outline">
@@ -1381,19 +1397,24 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       if (!rows.length) return;
       const on = rows.filter(o => o.s.included).length;
       html += '<div class="ogroup"><div class="ogroup-h"><span>' + esc(g.label) +
-        '</span><span class="n">' + on + '/' + rows.length + '</span></div>';
+        '</span><span class="n">' + on + '/' + rows.length + '</span>' +
+        '<button class="rev-add" data-add="' + g.type + '">+ Add</button></div>';
       rows.forEach(o => {
         const s = o.s, i = o.i;
         const dropped = s.status === 'exclude';
         const cls = 'oitem' + (s.included ? ' on' : '') + (dropped && !s.override ? ' out' : '') +
           (s.override ? ' overridden' : '') + (s.status === 'ask' ? ' askitem' : '');
         const title = (s.title && s.title.trim()) ? esc(s.title) : '(untitled section)';
+        // Fitts — tick and reposition sit together, not at opposite ends of the row.
         html += '<div class="' + cls + '" draggable="true" data-i="' + i + '"' +
           (dropped ? ' title="The permission rule dropped this. Tick it to include it anyway — it will be flagged as an override."' : '') + '>' +
+          '<span class="ocontrols">' +
           '<span class="ogrip" aria-hidden="true">⠿</span>' +
           '<input type="checkbox" id="cbo' + i + '" data-oi="' + i + '"' + (s.included ? ' checked' : '') +
           ' aria-label="Include ' + esc(s.id || '') + '">' +
+          moveButtons(i, esc(s.id || '')) + '</span>' +
           '<label class="otitle" for="cbo' + i + '"><span class="oid">' + esc(s.id || '') + '</span> ' + title + '</label>' +
+          '<button class="ord del" data-del="' + i + '" aria-label="Remove ' + esc(s.id || '') + '" title="Remove">×</button>' +
           '</div>';
       });
       html += '</div>';
@@ -1401,6 +1422,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     el.innerHTML = html;
     el.querySelectorAll('input[data-oi]').forEach(cb => cb.onchange = () => setIncluded(+cb.dataset.oi, cb.checked));
     el.querySelectorAll('[data-move]').forEach(b => b.onclick = () => moveItem(+b.dataset.move, +b.dataset.dir));
+    el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
+    el.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addItem(b.dataset.add));
     wireOutlineDnd(el);
   }
 
@@ -1444,6 +1467,27 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       });
     });
   }
+  /** Restates every choice made on the earlier screens, at the point of sign-off. */
+  function renderSettings() {
+    const box = $('settingsBox');
+    if (!box) return;
+    if (!state.sop) { box.innerHTML = ''; return; }
+    const p = state.profile || {};
+    const gran = (p.granular || []);
+    const cell = (k, v, unset) => '<span class="s"><span class="k">' + k + '</span>' +
+      '<span class="v' + (unset ? ' unset' : '') + '">' + esc(v) + '</span></span>';
+    box.innerHTML = '<div class="setbar">' +
+      cell('Region', REGION_LABEL[state.region] ? REGION_LABEL[state.region].split(' — ')[0] : state.region, state.region === 'TBC') +
+      cell('Paper', pageSizeFor(state.region).label) +
+      cell('Account', ACCOUNT_LABEL[state.account] ? ACCOUNT_LABEL[state.account].split(' — ')[0] : state.account) +
+      cell('Detail', state.detail) +
+      cell('Permissions', (PERM_LABEL[p.level] || p.level || 'not set') + (gran.length ? ' + ' + gran.join(', ') : ''), !p.level) +
+      cell('Segment', state.segment ? SEGMENTS[state.segment].split(' — ')[0] : 'not set', !state.segment) +
+      '<a href="#" data-goto="create">Change</a></div>';
+    const link = box.querySelector('[data-goto]');
+    if (link) link.onclick = (e) => { e.preventDefault(); goGate('create'); };
+  }
+
   function renderReview() {
     const p = state.profile || {};
     $('profileBox').innerHTML = '<div class="profilebox">' +
@@ -1468,6 +1512,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       : '');
     $('tallyBox').innerHTML = ''; $('askBox').innerHTML = '';
       renderOutline();
+      renderSettings();
       if (state.sop) { renderConfirm(); } else { $('confirmBox').innerHTML = ''; }
       syncLocks(); return;
     }
@@ -1501,7 +1546,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         '<button class="rev-toggle" data-toggle="' + g.type + '" aria-expanded="' + (!closed) + '">' +
         '<span class="chev" aria-hidden="true"></span>' + esc(g.label) +
         ' <span class="rev-count">' + kept + '/' + rows.length + '</span></button>' +
-        '<button class="rev-add" data-add="' + g.type + '">+ ' + esc(g.add) + '</button></div>';
+        '</div>';
       html += '<div class="rev-rows">';
       if (!rows.length) html += '<div class="note" style="margin:2px 0 6px;">None yet.</div>';
       rows.forEach((o) => {
@@ -1512,18 +1557,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
           (dropped && !s.override ? ' out' : '') + (s.override ? ' overridden' : '');
         // Rows the rule excluded stay visible, and can be ticked back in deliberately. Doing so
         // marks them as an override so it is never a silent change.
-        html += '<div class="' + cls + '" draggable="true" data-i="' + i + '">' +
-          '<span class="grip" title="Drag to reorder" aria-hidden="true">⠿</span>' +
-          '<input type="checkbox" id="cbd' + i + '" data-i="' + i + '"' + (s.included ? ' checked' : '') +
-            ' aria-label="Include ' + esc(s.id || '') + ' ' + esc((s.title || '').slice(0, 60)) + '"' +
-            (dropped ? ' title="Dropped by the permission rule — tick to include it anyway"' : '') + '>' +
-          '<div class="blk2-main"><label class="t" for="cbd' + i + '">' + esc(s.id || '') + ' · ' + title +
-            (s.override ? '<span class="ovr">Override</span>' : '') + '</label>' +
+        // Read-only: this column explains, the outline decides. One place to act, one to understand.
+        html += '<div class="' + cls + '" data-i="' + i + '">' +
+          '<span class="statedot" aria-hidden="true"></span>' +
+          '<div class="blk2-main"><div class="t">' + esc(s.id || '') + ' · ' + title +
+            (s.override ? '<span class="ovr">Override</span>' : '') + '</div>' +
           '<div class="rule">' + (s.reason || '') +
             (s.override ? ' <strong style="color:var(--danger)">Included anyway by a human decision.</strong>' : '') +
             '</div></div>' +
-          moveButtons(i, esc(s.id || '')) +
-          '<button class="ord del" data-del="' + i + '" aria-label="Remove ' + esc(s.id || '') + '" title="Remove">×</button></div>' +
           '</div>';
       });
       html += '</div></div>';
@@ -1546,6 +1587,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
     wireDnd(el);
     renderOutline();
+    renderSettings();
     renderConfirm();
     syncSopEditor();
     syncLocks();
@@ -1657,7 +1699,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       '<button class="ord" data-move="' + i + '" data-dir="-1" aria-label="Move' + lbl + ' up"' +
         (atEdge(i, -1) ? ' disabled' : '') + '>&#9650;</button>' +
       '<button class="ord" data-move="' + i + '" data-dir="1" aria-label="Move' + lbl + ' down"' +
-        (atEdge(i, 1) ? ' disabled' : '') + '>&#9660;</button>';
+        (atEdge(i, 1) ? ' disabled' : '') + '>&#9660;</button></div>';
   }
 
   function reorderSummary(fromIdx, toIdx, placeAfter) {

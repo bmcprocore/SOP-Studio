@@ -45,10 +45,11 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
   await p.click('#permSeg button[data-v="ReadOnly"]');await wait(450);
   await p.click('.rail .gate[data-p="review"]');await wait(500);
   const before=await p.evaluate(()=>({dropped:document.querySelectorAll('#blockList .blk2.out').length,
-    lockedBoxes:document.querySelectorAll('#blockList .blk2 input:disabled').length}));
+    outlineDropped:document.querySelectorAll('#outlinePanel .oitem.out').length,
+    detailIsReadOnly:document.querySelectorAll('#blockList input').length===0}));
   console.log('  before: '+JSON.stringify(before));
-  await p.evaluate(()=>{ // tick the first dropped row back on
-    const row=[...document.querySelectorAll('#blockList .blk2.out')][0];
+  await p.evaluate(()=>{ // tick the first dropped row back on, from the outline
+    const row=[...document.querySelectorAll('#outlinePanel .oitem.out')][0];
     row.querySelector('input[type=checkbox]').click();});
   await wait(600);
   console.log('  after : '+JSON.stringify(await p.evaluate(()=>({

@@ -13,13 +13,15 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
   await load();
 
   console.log('B1 keyboard reorder');
-  const before=await p.evaluate(()=>[...document.querySelectorAll('#blockList .blk2 label.t')].slice(0,3).map(t=>t.textContent.split(' · ')[0]));
-  await p.evaluate(()=>{const btns=[...document.querySelectorAll('#blockList [data-move][data-dir="1"]')].filter(b=>!b.disabled);btns[0].click();});
+  const ids=()=>p.evaluate(()=>[...document.querySelectorAll('#blockList .blk2 .t')].slice(0,3).map(t=>t.textContent.split(' · ')[0]));
+  const before=await ids();
+  await p.evaluate(()=>{const btns=[...document.querySelectorAll('#outlinePanel [data-move][data-dir="1"]')].filter(b=>!b.disabled);btns[0].click();});
   await wait(500);
-  const after=await p.evaluate(()=>[...document.querySelectorAll('#blockList .blk2 label.t')].slice(0,3).map(t=>t.textContent.split(' · ')[0]));
+  const after=await ids();
   console.log('   before '+before.join(' ')+'  ->  after '+after.join(' ')+(before.join()!==after.join()?'   moved':'   NO CHANGE'));
   console.log('   reachable by keyboard: '+await p.evaluate(()=>{
-    const b=document.querySelector('#blockList [data-move]');b.focus();return document.activeElement===b;}));
+    const b=[...document.querySelectorAll('#outlinePanel [data-move]')].find(x=>!x.disabled);
+    b.focus();return document.activeElement===b;}));
 
   console.log('\nH1/H4/H5/M2 structure');
   console.log('   '+JSON.stringify(await p.evaluate(()=>({
@@ -28,7 +30,7 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
     headingOrder:[...document.querySelectorAll('.panel.active h1,.panel.active h2,.panel.active h3')].map(h=>h.tagName),
     ariaRequired:document.querySelectorAll('[aria-required="true"]').length,
     reqMarkers:document.querySelectorAll('.req').length,
-    rowLabels:document.querySelectorAll('#blockList label.t').length,
+    rowLabels:document.querySelectorAll('#outlinePanel label.otitle').length,
     checkboxPx:(()=>{const c=document.querySelector('#outlinePanel input');const r=c.getBoundingClientRect();return Math.round(r.width)+'x'+Math.round(r.height);})(),
     ordMin:(()=>{const o=document.querySelector('.ord');const r=o.getBoundingClientRect();return Math.round(r.width)+'x'+Math.round(r.height);})(),
   }))));

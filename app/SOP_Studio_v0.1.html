@@ -153,6 +153,9 @@
   .tpl.on{border-color:var(--orange);background:var(--orange-tint);}
   .tpl .nm{font-weight:600;font-size:13px;}
   .tpl .meta{font-size:11px;color:var(--g500);font-family:var(--mono);}
+  .pubtag{display:inline-block;font-family:var(--mono);font-size:9px;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--g600);background:var(--sand-200);border-radius:var(--r-pill);
+    padding:1px 7px;margin-left:6px;vertical-align:1px;font-weight:500;}
 
   /* review list */
   .blk{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:8px 6px;border-bottom:1px solid var(--g100);align-items:start;}
@@ -402,7 +405,7 @@
   </span>
 </div>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.14</span>
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.15</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -777,6 +780,36 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   };
 
   // ============================================================ shared library (window.storage)
+  // ── Published library ───────────────────────────────────────────────────────────────────
+  // Null in the source file. `node scripts/publish-build.js` replaces this line with the real
+  // library when producing a shareable build, so whoever opens that file has the approved
+  // templates on first run with nothing to install. Do not edit by hand.
+  const PUBLISHED_LIBRARY = null; /* PUBLISHED_LIBRARY */
+
+  /** Install or refresh the published templates. A person's own saved templates are never
+   *  touched — only entries this build published are replaced, and only when the build is
+   *  newer than what is already stored. */
+  function installPublished() {
+    if (!PUBLISHED_LIBRARY || !PUBLISHED_LIBRARY.tools) return null;
+    if (!state.library) state.library = { tools: {}, updated: '' };
+    const have = state.library.publishedVersion || 0;
+    const incoming = PUBLISHED_LIBRARY.version || 0;
+    if (incoming <= have) return null;                 // already current
+    let added = 0, refreshed = 0, skipped = 0;
+    Object.keys(PUBLISHED_LIBRARY.tools).forEach(name => {
+      const mine = state.library.tools[name];
+      if (mine && !mine._published) { skipped++; return; }   // someone's own work wins
+      if (mine) refreshed++; else added++;
+      const t = JSON.parse(JSON.stringify(PUBLISHED_LIBRARY.tools[name]));
+      t._published = true;
+      t._libraryVersion = incoming;
+      state.library.tools[name] = t;
+    });
+    state.library.publishedVersion = incoming;
+    state.library.publishedAt = PUBLISHED_LIBRARY.publishedAt || '';
+    return { added, refreshed, skipped, version: incoming };
+  }
+
   const LIB_KEY = 'sop-templates';
 
   // Two places the library can live. window.storage is the team-shared store and only exists when
@@ -815,6 +848,19 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       st.textContent = 'No library yet — seed the RFI master template to get started.';
       st.className = 'status';
     }
+    const installed = installPublished();
+    if (installed) {
+      try { await storeSet(LIB_KEY, JSON.stringify(state.library)); } catch (e) {}
+      st.innerHTML = 'Template library <strong>v' + installed.version + '</strong> installed — ' +
+        installed.added + ' added' + (installed.refreshed ? ', ' + installed.refreshed + ' updated' : '') +
+        (installed.skipped ? ', ' + installed.skipped + ' of your own left untouched' : '') + '.';
+      st.className = 'status ok';
+    } else if (state.library && state.library.publishedVersion) {
+      st.innerHTML = 'Template library <strong>v' + state.library.publishedVersion + '</strong>' +
+        (state.library.publishedAt ? ' · published ' + esc(state.library.publishedAt) : '') +
+        ' · ' + Object.keys(state.library.tools).length + ' template(s).';
+      st.className = 'status ok';
+    }
     renderTplList();
     try { renderCreateTplList(); } catch (_) {}
   }
@@ -840,7 +886,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     el.innerHTML = names.map(n => {
       const t = tools[n];
       return '<div class="tpl' + (state.selectedTool === n ? ' on' : '') + '" data-t="' + n + '" role="button" tabindex="0">' +
-        '<div><div class="nm">' + n + '</div><div class="meta">v' + (t.version || '?') + ' · ' + (t.steps || []).length + ' steps</div></div>' +
+        '<div><div class="nm">' + n + (t._published ? ' <span class="pubtag">published</span>' : '') + '</div>' +
+        '<div class="meta">v' + (t.version || '?') + ' · ' + (t.steps || []).length + ' steps</div></div>' +
         '<div class="meta">' + (state.selectedTool === n ? 'SELECTED' : 'select') + '</div></div>';
     }).join('');
     el.querySelectorAll('.tpl').forEach(t => {

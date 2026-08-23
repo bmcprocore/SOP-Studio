@@ -43,6 +43,37 @@ metrics come from the same source rather than being bolted on separately.
 
 ---
 
+## 1b. Sharing templates without hosting anything (built, v3.15)
+
+Hosting is not required to share templates, and the cheapest route is already implemented.
+
+    node scripts/publish-build.js
+
+This bundles every master library under `templates/` into a copy of the Studio and writes it to
+`dist/`. Share that one file. Whoever opens it has the approved templates on first run — no
+seeding, no importing, no instructions.
+
+- Published templates are badged in the library list, so they are distinguishable from a person's
+  own saved ones.
+- **Templates someone saved themselves are never overwritten.** Opening a newer build refreshes
+  only the entries that came from a published build.
+- The library carries a version. Opening an older build does nothing; opening a newer one installs
+  it and says what changed.
+- `--version N` sets the library version explicitly; `--only RFIs` publishes a single tool.
+
+**What this buys:** the librarian role from `build-spec-v0.1.md`, without a server. One person
+maintains the approved library and everyone else receives it. For content that tells a customer
+what they are permitted to do, one author is safer than shared write access.
+
+**What it does not solve:** updating requires redistributing the file, and only one person can
+author. When you need several authors, an approval step, or templates that update without anyone
+downloading anything, that is the hosted version below.
+
+**One thing that does not work, so nobody wastes time on it:** a shared folder — SharePoint, Teams,
+OneDrive, a network drive — cannot host a live library for a page opened from disk. Browsers block
+a local page from reading a companion file, and a page can never write to a network location. A
+shared folder can distribute the published build; it cannot be the library.
+
 ## 2. Architecture — the smallest thing that works
 
 `build-spec-v0.1.md` describes the full production build. For a first hosted version, less is

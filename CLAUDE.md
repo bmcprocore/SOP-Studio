@@ -27,6 +27,8 @@ assembly and template maintenance — **never redesign the document**.
   deliverables to a public remote).
 - `docs/framework-standard-v0.2.md` — the team operating standard (4-gate pipeline). Read it
   before generating anything.
+- `docs/hosted-deployment-note.md` — reference note on hosting this with passwordless sign-in, an
+  event log and usage metrics. Extends `build-spec-v0.1.md`. Nothing in it is built.
 - `docs/procore-permission-reference.md` — real Procore tool names, the four permission levels and
   the exact granular permission wording, captured from a live instance. Reference only; never
   applied automatically. Source PDF in `docs/reference/`.

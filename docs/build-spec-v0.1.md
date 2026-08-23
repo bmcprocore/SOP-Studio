@@ -42,6 +42,12 @@ Implemented as both a generation instruction and renderer flags (`_detail`), exa
 - **v2:** overarching client process workflow map — swimlane model referencing block `_id`s across tool templates; per-user filtered "where you sit" page auto-derived from their permission template.
 - **v2.x:** direct Procore API integration to read permission templates from the client's Directory instead of file upload (requires client authorisation; scope with the Procore API team).
 
+## 7b. Later addition — sign-in and usage tracking
+`hosted-deployment-note.md` extends this spec with passwordless email sign-in (an alternative to the
+SSO assumed in section 5, pending an IT decision), a per-event log, and the usage metrics that log
+makes possible. It also notes that most of the event log is already computed by the prototype and
+simply discarded.
+
 ## 8. Open items
 - [ ] Letter vs A4 output (current locked design is US Letter).
 - [ ] Client logo co-branding placement approval against brand.procore.com guidelines.

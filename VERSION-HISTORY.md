@@ -26,6 +26,7 @@ circulation; no technical knowledge assumed.
 | 3.14 | 21 Aug 2026 | Review simplified — one place to decide, one to understand |
 | 3.15 | 24 Aug 2026 | Shareable builds — templates travel with the file |
 | 3.16 | 24 Aug 2026 | **Document quality** — access panel, intros and close-out guidance fixed |
+| 3.16.1 | 26 Aug 2026 | Page-fitting defect found and documented; packing attempt reverted |
 
 ---
 

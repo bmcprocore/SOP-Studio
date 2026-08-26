@@ -405,7 +405,7 @@
   </span>
 </div>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.16</span>
+  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.17</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -441,7 +441,7 @@
       <div class="status" id="libStatus">Loading library…</div>
       <fieldset>
         <legend>Manage</legend>
-        <button id="btnSeed">Seed / reset RFI master template</button>
+        <button id="btnSeed">Install the RFI template</button>
         <button id="btnEditTpl" class="quiet">View / edit selected template JSON</button>
         <button id="btnDeleteTpl" class="quiet" style="color:var(--danger);">Delete selected template</button>
         <div id="delRow" style="display:none;margin-top:10px;">
@@ -1279,7 +1279,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       st.className = 'status ok';
     } catch (e) {
       state.library = { tools: {}, updated: '' };
-      st.textContent = 'No library yet — seed the RFI master template to get started.';
+      st.textContent = 'No templates yet. Use “Install the RFI template” below to get started.';
       st.className = 'status';
     }
     const installed = installPublished();
@@ -1340,7 +1340,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (!state.library) state.library = { tools: {}, updated: '' };
     state.library.tools['RFIs'] = RFI_SEED;
     state.selectedTool = 'RFIs';
-    await saveLibrary('RFI master template seeded to the shared library.');
+    await saveLibrary('RFI template installed.');
     syncTplEditor();
   };
   // Deleting a template is permanent, so it sits behind a shared password. This is a speed bump
@@ -1704,7 +1704,9 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     extended: {
       pages: page('<div class="dttl"></div>' + pills + lines([90, 75]) + '<div class="dcall"></div>' + '<div class="dimg"></div>') +
              page('<div class="dttl"></div>' + pills + lines([90, 60]) + '<div class="dcall"></div>' + '<div class="dimg"></div>'),
-      cap: '<b>Extended</b> — everything in Standard plus common-mistake callouts and a screenshot slot on each step. Most pages.',
+      cap: '<b>Extended</b> — asks for expanded bullets, common-mistake callouts and screenshot slots ' +
+        '<em>when an SOP is written from a transcript</em>. It does not add anything to a template that is ' +
+        'already written, so for the library templates it produces the same document as Standard.',
     },
   };
   function renderDetailPreview() {
@@ -2091,8 +2093,35 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       $('btnUnconfirm').onclick = () => { unconfirm(); renderReview(); };
       return;
     }
+    const nIncluded = state.summary.filter(s => s.included).length;
+    const nSteps = state.summary.filter(s => s.included && s.type === 'step').length;
+    // A template with no content at all reaches here with an empty summary, so check the
+    // document itself as well as the section list.
+    const bodyCount = state.sop
+      ? ((state.sop.steps || []).length + (state.sop.checklist || []).length + (state.sop.issues || []).length)
+      : 0;
+    if (state.sop && bodyCount === 0) {
+      box.innerHTML = '<div class="confirmbar"><h2 class="cbh">This template is empty</h2>' +
+        '<div class="locknote">It contains no steps, checklist items or issues, so there is nothing to ' +
+        'produce. Pick a different template, or add content to this one in the Templates step.</div></div>';
+      return;
+    }
+    if (state.summary.length && nIncluded === 0) {
+      // Every section dropped. The document would contain no procedure at all, and a customer
+      // receiving it would learn nothing. Do not let it be signed off.
+      box.innerHTML = '<div class="confirmbar"><h2 class="cbh">Nothing would be included</h2>' +
+        '<div class="locknote">Every section has been dropped, so this SOP would contain no procedure. ' +
+        'That is usually the permission level — <strong>' + esc(PERM_LABEL[(state.profile || {}).level] || 'the level chosen') +
+        '</strong> allows none of this content. Raise the permission level, or tick sections back in, then confirm.</div>' +
+        '<button class="quiet" id="btnFixPerms" style="margin-top:10px;">Change the permission level</button></div>';
+      const fix = $('btnFixPerms');
+      if (fix) fix.onclick = () => goGate('permissions');
+      return;
+    }
     const nAsk = state.summary.filter(s => s.status === 'ask' && !s.touched).length;
     box.innerHTML = '<div class="confirmbar"><h2 class="cbh">Confirm this list before generating</h2>' +
+      (state.summary.length && nSteps === 0
+        ? '<div class="note warn" style="margin:0 0 8px;">No procedure steps are included — the reader would get the close-out material only. Confirm only if that is deliberate.</div>' : '') +
       '<div style="font-size:12.5px;line-height:1.5;color:var(--g600)">You are confirming that the included items are correct for this reader’s permissions, ' +
       'and that anything dropped should not reach them. Your name is recorded against the document.</div>' +
       (nAsk ? '<div class="note warn" style="margin-top:8px;">' + nAsk + ' item' + (nAsk === 1 ? '' : 's') +

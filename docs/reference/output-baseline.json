@@ -1,0 +1,45 @@
+{
+  "pageCount": 9,
+  "headings": [
+    "Purpose, scope and your access",
+    "Your access in this tool",
+    "Process at a glance",
+    "Step-by-step in Procore",
+    "Validate, troubleshoot & approve",
+    "Close-out checklist",
+    "Common issues & resolution",
+    "Procore reference guides",
+    "Approvals"
+  ],
+  "stepTitles": [
+    "Prepare the query before opening Procore",
+    "Create the RFI (Draft)",
+    "Select the RFI Manager and submit",
+    "Respond to an RFI you are assigned",
+    "Track RFIs relevant to you"
+  ],
+  "furniture": {
+    "headersPerDoc": 9,
+    "footersPerDoc": 9,
+    "pageNumbers": [
+      "01 / 09",
+      "02 / 09",
+      "03 / 09",
+      "04 / 09",
+      "05 / 09",
+      "06 / 09",
+      "07 / 09",
+      "08 / 09",
+      "09 / 09"
+    ]
+  },
+  "brand": {
+    "accent": "rgb(255, 82, 0)",
+    "ink": "rgb(26, 32, 44)",
+    "displayFont": "Inter Tight",
+    "wordmarkPresent": true,
+    "pageWidth": 816,
+    "pageHeight": 1056
+  },
+  "overflowingPages": 0
+}

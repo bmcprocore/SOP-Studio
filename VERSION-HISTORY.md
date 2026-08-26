@@ -27,6 +27,7 @@ circulation; no technical knowledge assumed.
 | 3.15 | 24 Aug 2026 | Shareable builds — templates travel with the file |
 | 3.16 | 24 Aug 2026 | **Document quality** — access panel, intros and close-out guidance fixed |
 | 3.16.1 | 26 Aug 2026 | Page-fitting defect found and documented; packing attempt reverted |
+| 3.17 | 26 Aug 2026 | **Service check** — the document is now guarded; empty SOPs blocked |
 
 ---
 

@@ -1,0 +1,618 @@
+{
+  "tool": "Budget",
+  "id": "project-budget",
+  "level": "project",
+  "levelsOffered": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "actions": [
+    {
+      "action": "Add a Budget Line Item",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Modify Original Budget Amount"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Modify Original Budget Amount"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Add Budgeted Production Quantities to a Project's Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add the Columns for the 'Budget Changes' Feature to a Budget View",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "None"
+      ],
+      "minLevel": null
+    },
+    {
+      "action": "Add a Goods & Services Tax (GST) to a Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Add a Partial Budget Line Item",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Apply Advanced Forecasting Curves",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Apply the View, Snapshot, Group, and Filter Options on a Budget View",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Approve Budget Changes",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Configure Settings: Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Budget Modification (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Budget Changes",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Budget Snapshot",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create a Custom Budget Report",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Custom Financial Line Items Report to Compare Budget Snapshots",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "None"
+      ],
+      "minLevel": null
+    },
+    {
+      "action": "Delete a Budget Line Item",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Delete Budget Line Items"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Delete Budget Line Items"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Delete Budget Changes",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit Budget Changes",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create, Edit, and Delete Budget Changes"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Export a Budget to an Integrated ERP System",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export Budget Changes",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Import a Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Import Line Items From CSV"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Import Line Items From CSV"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Import Installed Production Quantities for the Labor Productivity Cost Budget View",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Lock a Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Lock Budget"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Lock Budget"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Read a Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Direct Cost Details"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Direct Cost Details"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Retrieve a Budget from ERP Integrations Before Acceptance",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Users must also have 'Admin' level permissions to the project's Commitments tool. User permissions for editing change orders are NOT managed by the project's Change Orders tool. Instead, the Change Orders tool is designed for users with 'Admin' level permissions on the Client Contracts, Prime Contracts, or Funding tool AND the project's Commitments tool. It allows authorized users to view and access change orders from one place."
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Users must also have 'Admin' level permissions to the project's Commitments tool. User permissions for editing change orders are NOT managed by the project's Change Orders tool. Instead, the Change Orders tool is designed for users with 'Admin' level permissions on the Client Contracts, Prime Contracts, or Funding tool AND the project's Commitments tool. It allows authorized users to view and access change orders from one place."
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Set up a Budget in a New Procore Project",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Send a Budget to ERP Integrations for Accounting Acceptance",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Users must also have 'Admin' level permissions to the project's Commitments tool. User permissions for editing change orders are NOT managed by the project's Change Orders tool. Instead, the Change Orders tool is designed for users with 'Admin' level permissions on the Client Contracts, Prime Contracts, or Funding tool AND the project's Commitments tool. It allows authorized users to view and access change orders from one place."
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Users must also have 'Admin' level permissions to the project's Commitments tool. User permissions for editing change orders are NOT managed by the project's Change Orders tool. Instead, the Change Orders tool is designed for users with 'Admin' level permissions on the Client Contracts, Prime Contracts, or Funding tool AND the project's Commitments tool. It allows authorized users to view and access change orders from one place."
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Set Up a Budget View for Custom Reporting",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "None"
+      ],
+      "minLevel": null
+    },
+    {
+      "action": "Set Up a New Budget View",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "None"
+      ],
+      "minLevel": null
+    },
+    {
+      "action": "Set Up a New Forecasting View",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "None"
+      ],
+      "minLevel": null
+    },
+    {
+      "action": "Unlock a Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Unlock a Budget with Budget Modifications",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Use the 'Forecast to Complete' Feature",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "View Budget Changes",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Budget Change Detail for a Budget Line Item",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Budget Reports",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View and Filter the Change History of the Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Void Budget Changes",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "View Project Budget Insights",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Project Budget Insights"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Project Budget Insights"
+          ]
+        }
+      },
+      "requiresGranular": true
+    }
+  ],
+  "warnings": [],
+  "source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-budget-permissions",
+  "harvested": "2026-08-26"
+}

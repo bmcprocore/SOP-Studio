@@ -1,0 +1,1002 @@
+{
+  "tool": "Submittals",
+  "id": "project-submittals",
+  "level": "project",
+  "levelsOffered": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "actions": [
+    {
+      "action": "Add a Related Item to a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Add a Related Item to a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add a Submitter and Approvers to the Submittal Workflow",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Add an Existing Submittal to a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Apply a Submittal Workflow Template to a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Apply Submittal Workflow Template"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Apply Submittal Workflow Template"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Bulk Edit Submittals in a Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Bulk Review Submittals in a Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Change the Ball in Court on a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Close a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Configure Advanced Settings: Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Custom Submittal Log Statuses",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Custom Submittal Responses",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Bluebeam Studio Session",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Custom Submittals Report (Any)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Custom Submittals Report (Personal)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a New Submittal in a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal Package"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal Package"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Submittal Revision for Any Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Submittal Revision for Submittals You Created",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Customize the Column Display in the Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Delete a Custom Submittal Report",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Delete a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Delete a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Designate the 'Default Submittal Manager' for the Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Distribute a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Distribute the Submittals in a Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Download a Submittal's Attachments",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Edit a Custom Submittal Report (Any)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Custom Submittal Report (Personal)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Submittal (Any Creator or Status)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Submittal You Created ('Open' and 'Draft')",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit a Submittal Response",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable Submittals Schedule Calculations",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable the Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export a Custom Submittals Report",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Export a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Export a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Export the Submittals Log",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Finalize a Bluebeam Studio Session",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Forward a Submittal by Email",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Forward a Submittal for Review",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Generate a PDF of a Submittal in a List",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Generate a QR Code for a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Manage Personal Submittal Markup Stamps",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Manage Submittal Workflow Templates",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Mark a Submittal as Private",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Perform Bulk Actions on a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Redistribute a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Remove a Submitter or Approver from the Submittal Workflow (Any Creator or Status)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Remove a Submitter or Approver from the Submittal Workflow for Submittals you Created ('Draft' and 'Open')",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create Submittal"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Resend the Submittals in a Package for Review",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Resize the Column Width in the Submittals Log",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Respond to a Forwarded Submittal as a Reviewer",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Respond to a Submittal as an Approver",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Respond to an Action Required Email for a Submittal Package as an Approver",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Retrieve a Submittal from the Recycle Bin",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Review Submittal PDF Attachments",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Scan a Submittal QR Code",
+      "platforms": [
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Search and Filter for Submittals",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Send a Completed Submittals Import Template to Procore",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Send the Submittals in a Package for Review",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Set Up Submittal Schedule Calculations",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Share a Custom Submittal Report (Any)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Share a Custom Submittal Report (Personal)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Switch Between Submittals Views",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Upload and Submit a Submittal",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Use Bulk Actions &gt; Apply Workflow in the Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Use Bulk Actions &gt; Delete in the Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Use Bulk Actions &gt; Edit in the Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Use Bulk Actions &gt; Retrieve in the Submittals Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View Project Submittal Insights",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Project Submittal Insights"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Project Submittal Insights"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Submittal (Not Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View a Submittal (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Submittal for Users within the Same Company (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Submittals Associated to Users within the Same Company"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Submittals Associated to Users within the Same Company"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Submittal Package",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Submittal Attachments",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View the Submittal Approvers Response Time Report",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    }
+  ],
+  "warnings": [],
+  "source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-submittals-permissions",
+  "harvested": "2026-08-26"
+}

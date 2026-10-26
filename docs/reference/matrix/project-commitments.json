@@ -1,0 +1,1231 @@
+{
+  "tool": "Commitments",
+  "id": "project-commitments",
+  "level": "project",
+  "levelsOffered": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "actions": [
+    {
+      "action": "Add a Line Item to a Commitment's Schedule of Values",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add a New Payment to the Payments Issued Tab of a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add a Related Item to a Purchase Order or Subcontract (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add a Related Item to a Commitment Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add Financial Markup to Commitment Change Orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add Invoice Contacts to a Purchase Order or Subcontract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add Invoice Contacts to a Purchase Order or Subcontract (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Allow Collaborators to Submit Field-Initiated Change Orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Approve and Sign a Subcontract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "None"
+      ],
+      "minLevel": null
+    },
+    {
+      "action": "Change the Privacy Settings for a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": true,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": true,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Complete a Commitment Contract with DocuSign®",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Complete a Commitment Change Order with DocuSign®",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Configure Settings: Commitments",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Configure the Default Privacy Settings for New Commitments",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Configure the Number of Commitment Change Order Tiers",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Change Order Request for a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create a Commitment Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Commitment Potential Change Order from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Purchase Order (Legacy)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create Purchase Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create Purchase Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Purchase Order and See or Enter SOV (Legacy)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Subcontract (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Subcontractor Invoice for the Release of Retainage Before or After the Current Billing Period Legacy",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Subcontractor Invoice for the Release of Retainage During the Current Billing Period (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create an Invoice on Behalf of an Invoice Contact (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create an Invoice on Behalf of an Invoice Contact",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Delete a Purchase Order or Subcontract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Delete a Commitment Synced with an Integrated ERP System",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Delete a Subcontractor Invoice in any Status",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Delete a Subcontractor Invoice in a 'Draft' or 'Revise and Resubmit' Status",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Edit a Commitment",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Commitment Schedule of Values (SOV)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Purchase Order (Legacy)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Purchase Order (Legacy)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Subcontract (Legacy)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Update Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Update Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Subcontract (Legacy)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Commitment Synced with an Integrated ERP System",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": true,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": true,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit the Advanced Settings Tab on a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Email a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Edit a Commitment Schedule of Values",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [],
+      "minLevel": null
+    },
+    {
+      "action": "Enable Financial Markup on a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable or Disable the Subcontractor SOV Tab on a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable or Disable the Subcontractor SOV Tab on the Commitments Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable the Payments Issued Tab on a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable Retainage on a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": true,
+          "permissions": [
+            "Create Purchase Order Contract",
+            "Update Purchase Order Contract",
+            "Create Work Order Contract",
+            "Update Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": true,
+          "permissions": [
+            "Create Purchase Order Contract",
+            "Update Purchase Order Contract",
+            "Create Work Order Contract",
+            "Update Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit Commitment Change Order that I did not create",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit a potential change order that I did not create",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit the payments tab on the commitment page",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable Sliding Scale Retention Rules on a Commitment's Invoices",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit subcontractor schedule of values",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable the Payments Issued Tab on a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export a Commitment Change Order to an Integrated ERP System",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export a Commitment to an Integrated ERP System",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export a Commitment to a DOCX File",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export a Commitment to a PDF",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Export a Commitments List",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Export a Payment Schedule",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export data (PDF/CSV)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Import Commitment SOV Line Items from a CSV File",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Update Purchase Order Contract",
+            "Update Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Request to Reset a Commitment Synced with an Integrated ERP System",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Review a Subcontractor SOV for a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Review Invoices as a Subcontractor",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Review Subcontractor Invoices as an Admin",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Retrieve a Commitment from ERP",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Search for and Apply Filters to Commitments",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Send a Commitment Change Order to ERP Integrations for Accounting Acceptance",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Send a Commitment to ERP Integrations for Accounting Acceptance",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Send to ERP",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Send for e-signature",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Set or Release Retainage on a Subcontractor Invoice",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Submit a Field-Initiated Change Order as a Collaborator",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Submit a New Invoice as an Invoice Contact",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Update a Subcontractor Schedule of Values as an Invoice Contact from the Invoicing Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Update privacy settings on a commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Update project level settings",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View all private commitments",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View attachments",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View Change History",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View change history on change orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View a Purchase Order (Not Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Purchase Order (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Purchase Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Purchase Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Purchase Order (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Subcontract (Not Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View a Subcontract (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Subcontract (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View Inclusions/Exclusions for Subcontracts (Not Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Inclusions/Exclusions for Subcontracts (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Work Order Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Private Work Order Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "View Inclusions/Exclusions for Subcontracts (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View the Change History of a Commitment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View the payments tab on the commitment page",
+      "platforms": [],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    }
+  ],
+  "warnings": [
+    "row 39 \"Edit a Commitment Schedule of Values\" allows no level"
+  ],
+  "source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-commitments-permissions",
+  "harvested": "2026-08-26"
+}

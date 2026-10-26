@@ -67,18 +67,18 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
     const ta=document.getElementById('sopJson');
     return {rendered:document.getElementById('frame').contentDocument.querySelectorAll('#viewer .page').length};})));
 
-  console.log('\n--- 4. delete a template, password gated ---');
+  console.log('\n--- 4. delete a template, gated by retyping its name ---');
   await p.click('.rail .gate[data-p="templates"]');await wait(400);
   await p.evaluate(()=>document.getElementById('btnDeleteTpl').click());await wait(300);
   console.log('  prompt shown: '+await p.evaluate(()=>getComputedStyle(document.getElementById('delRow')).display!=='none'));
-  await p.evaluate(()=>{document.getElementById('fDelPw').value='wrongpassword';});
+  await p.evaluate(()=>{document.getElementById('fDelPw').value='not the template name';});
   await p.evaluate(()=>document.getElementById('btnDelConfirm').click());await wait(400);
-  console.log('  wrong pw -> '+JSON.stringify(await p.evaluate(()=>({
+  console.log('  wrong name -> '+JSON.stringify(await p.evaluate(()=>({
     templates:document.querySelectorAll('#tplList .tpl').length,
     msg:document.getElementById('delStatus').textContent.trim()}))));
-  await p.evaluate(()=>{document.getElementById('fDelPw').value='imnotpaidenough';});
+  await p.evaluate(()=>{document.getElementById('fDelPw').value=document.getElementById('delName').textContent;});
   await p.evaluate(()=>document.getElementById('btnDelConfirm').click());await wait(600);
-  console.log('  right pw -> '+JSON.stringify(await p.evaluate(()=>({
+  console.log('  right name -> '+JSON.stringify(await p.evaluate(()=>({
     templates:document.querySelectorAll('#tplList .tpl').length,
     lib:document.getElementById('libStatus').textContent.trim().slice(0,70)}))));
 

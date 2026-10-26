@@ -60,6 +60,11 @@ seeding, no importing, no instructions.
 - The library carries a version. Opening an older build does nothing; opening a newer one installs
   it and says what changed.
 - `--version N` sets the library version explicitly; `--only RFIs` publishes a single tool.
+- `--sites` (added 2 Oct 2026) writes a second flavour of the current library for
+  sites.procoretech.com, whose scanner rejects html2canvas as a monitoring client. It strips both
+  PDF libraries and "Download PDF" becomes "Print / Save as PDF" via the browser's print dialog —
+  same locked design and file name, but the checklist boxes and sign-off lines are no longer
+  fillable fields. Run the normal build first; `--sites` reuses its library version.
 
 **What this buys:** the librarian role from `build-spec-v0.1.md`, without a server. One person
 maintains the approved library and everyone else receives it. For content that tells a customer

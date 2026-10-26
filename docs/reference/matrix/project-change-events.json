@@ -1,0 +1,389 @@
+{
+  "tool": "Change Events",
+  "id": "project-change-events",
+  "level": "project",
+  "levelsOffered": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "actions": [
+    {
+      "action": "Add a Change Event Line Item to an Unapproved Commitment",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Add a Change Event Line Item to an Unapproved Prime Potential Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Add a Change Event Line Item to an Unapproved Commitment Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Add a Related Item to a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Configure Advanced Settings: Change Events",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Commitment Change Order from a Change Event Web",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Change Events",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create a Change Event (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create a Change Event from an RFI",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Commitment Potential Change Order from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Prime Contract Change Order from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Prime Potential Change Order from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Purchase Order from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Subcontract from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Budget Changes from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create RFQs from a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Budget Modification from a Change Event (Legacy)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Delete a Change Event You Created",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Delete Any Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit a Change Event You Created",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Edit Any Change Event",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Link a Schedule of Values Line Item to a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Record Changes to Production Quantities in a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Respond to an RFQ on Behalf of a Collaborator",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Retrieve a Deleted Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Review RFQ Responses",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Review RFQ Responses and Change Status",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Search for and Apply Filters to the Change Events Tool",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Submit a Quote as a Collaborator",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "View a Change Event",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View and Filter RFQs",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "Void a Change Event",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    }
+  ],
+  "warnings": [],
+  "source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+  "harvested": "2026-08-26"
+}

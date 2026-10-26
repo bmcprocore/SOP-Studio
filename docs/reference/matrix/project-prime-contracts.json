@@ -1,0 +1,415 @@
+{
+  "tool": "Prime Contracts",
+  "id": "project-prime-contracts",
+  "level": "project",
+  "levelsOffered": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "actions": [
+    {
+      "action": "Add Financial Markup to Prime Contract Change Orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Add a Related Item to a Prime Contract Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Approve a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Configure Advanced Settings: Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Change Order Request",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Payment Received for a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Owner Invoices",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Create Prime Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Create Prime Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Potential Change Order for a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Prime Contract Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Schedule of Values (SOV) from the Budget",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Delete a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Delete Prime Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Delete Prime Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Commitment Change Order Linked to a Potential Change Order for a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit a Prime Contract (Not Private)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Update Prime Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Update Prime Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Prime Contract (Private)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Update Prime Contract"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Update Prime Contract"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit the Advanced Settings on a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Email Owner Invoices",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Email a Potential Change Order for a Prime Contract",
+      "platforms": [],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Email Prime Contract",
+      "platforms": [],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Enable Financial Markup on a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export Owner Invoices",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Export a Prime Contract (PDF)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Export a Prime Contract (DOCX)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Filter Prime Contract Change Orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Import a Prime Contract CSV",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Remove a Change Order from a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Delete a Prime Contract Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Search for and Add Filters to Prime Contracts",
+      "platforms": [],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Set Up a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "View Prime Contract (Not Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Prime Contract (Private)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View the Change History of a Prime Contract",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    }
+  ],
+  "warnings": [],
+  "source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+  "harvested": "2026-08-26"
+}

@@ -1,0 +1,175 @@
+{
+  "tool": "Change Orders",
+  "id": "project-change-orders",
+  "level": "project",
+  "levelsOffered": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "actions": [
+    {
+      "action": "Add a Related Item to a Commitment Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Add a Related Item to a Prime Contract Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Approve or Reject Commitment Change Orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Configure Advanced Settings: Change Orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a PDF of a Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Edit a Change Order (Commitment Change Order (CCO))",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Change Order (Client Contract, Prime Contract or Funding)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "Email Forward a Change Order",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Review and Respond to Commitment Change Orders",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Change Orders (All, Not Private)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Change Orders (Private)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View Change Orders (Private)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "View Change Orders (Private, Commitment Change Order (CCO))",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    },
+    {
+      "action": "View Change Orders (Private, Client Contract, Prime Contract or Funding)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin",
+      "requiresGranular": true
+    }
+  ],
+  "warnings": [],
+  "source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-orders-permissions",
+  "harvested": "2026-08-26"
+}

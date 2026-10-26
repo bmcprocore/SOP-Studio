@@ -1,0 +1,1127 @@
+{
+  "_library": "Procore RFIs — master content library (SEED)",
+  "_version": "0.1-seed",
+  "_status": "SEED — NOT AN SOP. Candidate actions transcribed from Procore's User Permissions Matrix on 2026-08-26. Permission tags are Procore's; every step body is empty and every persona statement is blank because nothing here has been authored. A human must select, order and write these steps against a client process before this becomes a library. Never issue a seed.",
+  "_seededFrom": {
+    "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+    "harvested": "2026-08-26",
+    "actions": 52,
+    "kept": 52
+  },
+  "_how_to_use": "Delete the actions that are not part of this client's process, merge the ones that are really a single step, order them into the real workflow, write each body, then fill the persona access objects and cannot_do statements. Renumber _id only once, then keep them stable. Remove `_candidate` from a step once it has been authored.",
+  "_personas": {
+    "P1_read-only": {
+      "label": "Read Only · RFIs",
+      "permission": "Read Only (RFIs)",
+      "cannot_do": "",
+      "access": {
+        "tool": "RFIs",
+        "level": "Read Only",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can view RFIs. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Act as RFI Manager",
+            "meaning": ""
+          },
+          {
+            "name": "Mark Official Responses",
+            "meaning": ""
+          },
+          {
+            "name": "View External Items",
+            "meaning": ""
+          },
+          {
+            "name": "View Private RFIs Associated with Users within Same Company",
+            "meaning": ""
+          },
+          {
+            "name": "View Project RFI Insights",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S04",
+        "S05",
+        "S06",
+        "S10",
+        "S15",
+        "S19",
+        "S24",
+        "S25",
+        "S26",
+        "S29",
+        "S30",
+        "S31",
+        "S33",
+        "S34",
+        "S37",
+        "S39",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S44",
+        "S45",
+        "S46",
+        "S47",
+        "S48",
+        "S49",
+        "S50",
+        "S51"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P2_standard": {
+      "label": "Standard · RFIs",
+      "permission": "Standard (RFIs)",
+      "cannot_do": "",
+      "access": {
+        "tool": "RFIs",
+        "level": "Standard",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can create and work on your own items in RFIs. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Act as RFI Manager",
+            "meaning": ""
+          },
+          {
+            "name": "Mark Official Responses",
+            "meaning": ""
+          },
+          {
+            "name": "View External Items",
+            "meaning": ""
+          },
+          {
+            "name": "View Private RFIs Associated with Users within Same Company",
+            "meaning": ""
+          },
+          {
+            "name": "View Project RFI Insights",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S02",
+        "S04",
+        "S05",
+        "S06",
+        "S08",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S19",
+        "S20",
+        "S21",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S36",
+        "S37",
+        "S39",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S44",
+        "S45",
+        "S46",
+        "S47",
+        "S48",
+        "S49",
+        "S50",
+        "S51"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P3_admin": {
+      "label": "Admin · RFIs",
+      "permission": "Admin (RFIs)",
+      "cannot_do": "",
+      "access": {
+        "tool": "RFIs",
+        "level": "Admin",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can fully control, including configuring, RFIs. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35",
+        "S36",
+        "S37",
+        "S38",
+        "S39",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S44",
+        "S45",
+        "S46",
+        "S47",
+        "S48",
+        "S49",
+        "S50",
+        "S51",
+        "S52"
+      ],
+      "checklist": [],
+      "issues": []
+    }
+  },
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "RFIs management",
+  "subtitle": "",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "",
+  "phases": [
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    }
+  ],
+  "procedureIntro": "",
+  "referenceTool": "Procore · RFIs",
+  "steps": [
+    {
+      "_id": "S01",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add a Related Item to an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S02",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add Assignees to an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S03",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Bulk Edit RFIs",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S04",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Change the Status of an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S05",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": [
+          "Act as RFI Manager",
+          "Mark Official Responses"
+        ],
+        "granularAnyOf": true
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Choose an 'Official Response' for an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S06",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Close an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S07",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Configure Settings: RFIs",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S08",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create a Change Event from an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S09",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Potential Change Order from an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S10",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create an Instruction from an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S11",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create a Draft RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S12",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S13",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create and View a Custom RFI Report",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S14",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create RFIs on a Drawing",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S15",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Customize the Column Display in the RFIs Tool",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S16",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete a Response to an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S17",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S18",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Designate the Default RFI Manager for a Project's RFIs",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S19",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "iOS"
+      ],
+      "title": "Download RFI Attachments",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S20",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Draft an RFI with Assist",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S21",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit a Custom RFI Report You Created",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S22",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit Any Custom RFI Report",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S23",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit a Draft RFI You Created",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S24",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit Any RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S25",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S26",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export the RFIs List to CSV or PDF",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S27",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Forward an RFI by Email",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S28",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Forward an RFI for Review",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S29",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Link Existing RFIs on a Drawing",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S30",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View External Items"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Link Internal and External RFIs on a Downstream Project",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S31",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Reopen an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S32",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Respond to an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S33",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Respond to an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S34",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Resize the Column Width in the RFIs Log",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S35",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Retrieve an RFI from the Recycle Bin",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S36",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Revise an RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S37",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Search and Filter RFIs",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S38",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Share a Custom RFI Report",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S39",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Act as RFI Manager"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Shift the Ball in Court on a RFI",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S40",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Summarize RFIs with Assist",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S41",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View External Items"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View External RFIs on a Downstream Project",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S42",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View Project RFI Insights"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View Project RFI Insights",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S43",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View RFIs (Not Draft, Not Private)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S44",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View RFIs (Private, Not Draft)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S45",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View RFIs (Private, Draft)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S46",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View Private RFIs Associated with Users within Same Company"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View RFIs for Users Within Your Company (Private, Not Draft)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S47",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View Private RFIs Associated with Users within Same Company"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View RFIs for Users Within Your Company (Including Private and Draft)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S48",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View RFI Response (Any)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S49",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View RFI Responses (Official)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S50",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View RFI Responses (Unofficial, Show Official Responses Disabled)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S51",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View RFI Responses (Unofficial, Show Official Responses Enabled)",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    },
+    {
+      "_id": "S52",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View the Distribution History of a Custom RFI Report",
+      "role": "",
+      "system": "Procore · RFIs",
+      "body": ""
+    }
+  ],
+  "closeoutIntro": "",
+  "owner": "",
+  "checklist": [],
+  "issues": [],
+  "references": [
+    {
+      "tool": "RFIs — user permissions matrix",
+      "url": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions"
+    }
+  ]
+}

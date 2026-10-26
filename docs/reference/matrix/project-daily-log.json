@@ -1,0 +1,1416 @@
+{
+  "tool": "Daily Log",
+  "id": "project-daily-log",
+  "level": "project",
+  "levelsOffered": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "actions": [
+    {
+      "action": "Add a Photo to a Daily Log Entry so that it Populates in the Photos Tool",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Add a Related Item to a Daily Log Entry",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Approve Any Daily Log Entry Created by Collaborators",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Approve Copied Daily Log Entries Created by Collaborators",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Configure Advanced Settings: Daily Log",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Copy a Daily Log",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Copy Log"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Copy Log"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Daily Log Entry from the Calendar View",
+      "platforms": [],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create and Manage Daily Log Segments",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create a New Location for an Entry",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create a Project-Only Equipment",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Accident Log Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Accident Log Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Phone Call Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Phone Call Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Daily Construction Report Log Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Daily Construction Report Log Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Daily Log Entries as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Delay Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Delay Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Delivery Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Delivery Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Dumpster Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Dumpster Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Equipment Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Equipment Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Inspection Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Inspection Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Manpower Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Manpower Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Note Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Note Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Observed Weather Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Plan Revision Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Plan Revision Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Productivity Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Productivity Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Quantity Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Quantity Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Safety Violation Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Safety Violation Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Scheduled Work Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Scheduled Work Entries as a Collaborator (Pending)",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Timecard Entries for Any User",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Create Timecard Entries for Yourself",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Visitor Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Pending Visitor Entries as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Create Waste Entries",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Create Pending Waste Entries as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Delete Any Daily Log Item",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Bulk Delete Daily Log Entries",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "granularBy": {
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Standard Users Can Edit and Delete Own Entries"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Delete a Daily Log Item You Created",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "granularBy": {
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Standard Users Can Edit and Delete Own Entries"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Delete a Daily Log Item You Created as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Delete Related Items from Daily Log Entries",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit Any Daily Log Item",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Edit a Daily Log Item You Created",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "granularBy": {
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Standard Users Can Edit and Delete Own Entries"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Edit a Daily Log Item You Created as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Email a Daily Log",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Enter Logs for a Previous Day",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "Enter Logs for a Previous Day as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Export a Daily Log as PDF",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Mark a Daily Log as Complete",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Reject Any Daily Log Entry Created by Collaborators",
+      "platforms": [
+        "Web",
+        "iOS"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Reopen a Daily Log",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Admin"
+      ],
+      "minLevel": "Admin"
+    },
+    {
+      "action": "Resubmit a Daily Log Entry as a Collaborator",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Search and Filter Daily Logs",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "Search and Filter Daily Log Entries You Created as a Collaborator",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "Upload Photos to the Daily Log from the Photos Tool",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "Upload Photos to the Daily Log from your Device",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "View and Attach Files to a Daily Log",
+      "platforms": [
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "View Approved Daily Logs",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Daily Logs You Created as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "View Daily Logs Created by Users at your Company as a Collaborator",
+      "platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only",
+            "View Entries Associated to Users Within the Same Company"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "Collaborator Entry Only",
+            "View Entries Associated to Users Within the Same Company"
+          ]
+        }
+      },
+      "requiresGranular": true
+    },
+    {
+      "action": "View 'Pending' Daily Log Entries",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard",
+      "requiresGranular": true
+    },
+    {
+      "action": "View Change History Log",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Standard"
+    },
+    {
+      "action": "View Daily Log Notes Report (Single Tool Report)",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "requiresGranular": true
+    },
+    {
+      "action": "View Daily Logs in the Calendar View Android",
+      "platforms": [
+        "Web",
+        "iOS"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard"
+      ],
+      "minLevel": "Read Only"
+    },
+    {
+      "action": "View Project Daily Log Insights",
+      "platforms": [
+        "Web"
+      ],
+      "allowedAt": [
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "minLevel": "Read Only",
+      "granularBy": {
+        "Read Only": {
+          "anyOf": false,
+          "permissions": [
+            "View Project Daily Log Insights"
+          ]
+        },
+        "Standard": {
+          "anyOf": false,
+          "permissions": [
+            "View Project Daily Log Insights"
+          ]
+        }
+      },
+      "requiresGranular": true
+    }
+  ],
+  "warnings": [],
+  "source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+  "harvested": "2026-08-26"
+}

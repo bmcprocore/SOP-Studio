@@ -10,6 +10,14 @@ assembly and template maintenance — **never redesign the document**.
   Blocks carry `_id` and `_perm` (`min` level + optional `granular`). `_personas` maps each
   standard persona to its block IDs and its `access` object. This is the single source of truth
   for content.
+- `templates/_registry.json` — **the template gallery index.** Every Procore tool (80 as at
+  27 Aug 2026): what each account type calls it (`names` — GC / OWNER / SPECIALTY), its APAC
+  name, project vs company level, the permission levels it offers, and the **exact granular
+  permission wording** that must appear once that tool's template is chosen. Each granular entry
+  carries a `source`, because every permission claim must be attributable. `library` points at the
+  tool's master content library once one has been authored. **JSON is the source of truth; the app
+  reads it, never the other way round.** Rebuild/refresh with `node scripts/seed-registry.js`
+  (merges — it never clobbers harvested data); validate with `node scripts/check-registry.js`.
 - `design/SOP_Builder_step_per_page_v2.html` — the LOCKED document design + renderer
   (Section 1 uses the "Your access in this tool" panel, not a roles table). Never edit the
   `SOP_DESIGN` CSS/wordmark or component markup without an explicit human instruction to
@@ -18,11 +26,19 @@ assembly and template maintenance — **never redesign the document**.
   follows the document's region. `_region: "APAC"` prints A4 (794x1123px, `@page size:A4`);
   everything else stays US Letter (816x1056px), which is how the base design is authored. The A4
   case is an *override* appended after the base CSS — the base design is unchanged. It is applied
-  in three places that must stay in step: `pageSizeCss()` in `app/SOP_Studio_v0.1.html`, the same
-  function in `scripts/render.js` (which also sets the PDF format), and a commented block in the
-  skill skeleton. Pagination is measured at the chosen size, so page counts differ between papers.
+  in two places that must stay in step: `pageSizeCss()` in `app/SOP_Studio_v0.1.html` and the same
+  function in `scripts/render.js` (which also sets the PDF format). Pagination is measured at the
+  chosen size, so page counts differ between papers. (It was three until 27 Aug 2026, when the
+  skill's hand-written skeleton — a second copy of the design that had already fallen behind —
+  was removed. The skill now assembles content only.)
 - `app/SOP_Studio_v0.1.html` — the Claude-artifact app version (reference implementation).
 - `scripts/render.js` — headless render: content JSON → final standalone SOP HTML (and PDF).
+- `scripts/split-by-role.js` — master library + persona → permission-scoped content JSON.
+  `--persona` is mandatory: it sets the permission scope and fills the `access` object.
+  `--role` is an optional narrowing *inside* that scope and prints what it removed.
+- `.claude/skills/procore-sop-builder/` — the front door for "write me a Procore SOP". It routes
+  to the pipeline and assembles **content only**; it never writes HTML. `references/` holds the
+  content contract and the transcript research guide.
 - `examples/` — worked persona JSON examples. `output/` — generated SOPs (never commit client
   deliverables to a public remote).
 - `docs/framework-standard-v0.2.md` — the team operating standard (4-gate pipeline). Read it

@@ -1,0 +1,1648 @@
+{
+  "_library": "Procore Daily Log — master content library (SEED)",
+  "_version": "0.1-seed",
+  "_status": "SEED — NOT AN SOP. Candidate actions transcribed from Procore's User Permissions Matrix on 2026-08-26. Permission tags are Procore's; every step body is empty and every persona statement is blank because nothing here has been authored. A human must select, order and write these steps against a client process before this becomes a library. Never issue a seed.",
+  "_seededFrom": {
+    "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+    "harvested": "2026-08-26",
+    "actions": 77,
+    "kept": 77
+  },
+  "_how_to_use": "Delete the actions that are not part of this client's process, merge the ones that are really a single step, order them into the real workflow, write each body, then fill the persona access objects and cannot_do statements. Renumber _id only once, then keep them stable. Remove `_candidate` from a step once it has been authored.",
+  "_personas": {
+    "P1_read-only": {
+      "label": "Read Only · Daily Log",
+      "permission": "Read Only (Daily Log)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Daily Log",
+        "level": "Read Only",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can view Daily Log. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Collaborator Entry Only",
+            "meaning": ""
+          },
+          {
+            "name": "Copy Log",
+            "meaning": ""
+          },
+          {
+            "name": "Standard Users Can Edit and Delete Own Entries",
+            "meaning": ""
+          },
+          {
+            "name": "View Entries Associated to Users Within the Same Company",
+            "meaning": ""
+          },
+          {
+            "name": "View Project Daily Log Insights",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S06",
+        "S12",
+        "S14",
+        "S16",
+        "S17",
+        "S19",
+        "S21",
+        "S23",
+        "S25",
+        "S27",
+        "S29",
+        "S31",
+        "S34",
+        "S36",
+        "S38",
+        "S40",
+        "S42",
+        "S46",
+        "S48",
+        "S52",
+        "S56",
+        "S59",
+        "S60",
+        "S64",
+        "S65",
+        "S66",
+        "S70",
+        "S71",
+        "S72",
+        "S75",
+        "S76",
+        "S77"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P2_standard": {
+      "label": "Standard · Daily Log",
+      "permission": "Standard (Daily Log)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Daily Log",
+        "level": "Standard",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can create and work on your own items in Daily Log. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Collaborator Entry Only",
+            "meaning": ""
+          },
+          {
+            "name": "Copy Log",
+            "meaning": ""
+          },
+          {
+            "name": "Standard Users Can Edit and Delete Own Entries",
+            "meaning": ""
+          },
+          {
+            "name": "View Entries Associated to Users Within the Same Company",
+            "meaning": ""
+          },
+          {
+            "name": "View Project Daily Log Insights",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S04",
+        "S06",
+        "S07",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S33",
+        "S34",
+        "S35",
+        "S36",
+        "S37",
+        "S38",
+        "S39",
+        "S40",
+        "S41",
+        "S42",
+        "S44",
+        "S45",
+        "S46",
+        "S47",
+        "S48",
+        "S50",
+        "S51",
+        "S52",
+        "S55",
+        "S56",
+        "S57",
+        "S58",
+        "S59",
+        "S60",
+        "S64",
+        "S65",
+        "S66",
+        "S67",
+        "S68",
+        "S69",
+        "S70",
+        "S71",
+        "S72",
+        "S73",
+        "S74",
+        "S75",
+        "S76",
+        "S77"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P3_admin": {
+      "label": "Admin · Daily Log",
+      "permission": "Admin (Daily Log)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Daily Log",
+        "level": "Admin",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can fully control, including configuring, Daily Log. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35",
+        "S36",
+        "S37",
+        "S38",
+        "S39",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S44",
+        "S45",
+        "S46",
+        "S47",
+        "S48",
+        "S49",
+        "S50",
+        "S51",
+        "S52",
+        "S53",
+        "S54",
+        "S55",
+        "S56",
+        "S57",
+        "S58",
+        "S59",
+        "S60",
+        "S61",
+        "S62",
+        "S63",
+        "S64",
+        "S65",
+        "S66",
+        "S67",
+        "S68",
+        "S69",
+        "S70",
+        "S71",
+        "S72",
+        "S73",
+        "S74",
+        "S75",
+        "S76",
+        "S77"
+      ],
+      "checklist": [],
+      "issues": []
+    }
+  },
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "Daily Log management",
+  "subtitle": "",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "",
+  "phases": [
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    }
+  ],
+  "procedureIntro": "",
+  "referenceTool": "Procore · Daily Log",
+  "steps": [
+    {
+      "_id": "S01",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add a Photo to a Daily Log Entry so that it Populates in the Photos Tool",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S02",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add a Related Item to a Daily Log Entry",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S03",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Approve Any Daily Log Entry Created by Collaborators",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S04",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Approve Copied Daily Log Entries Created by Collaborators",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S05",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Configure Advanced Settings: Daily Log",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S06",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Copy Log"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Copy a Daily Log",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S07",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [],
+      "title": "Create a Daily Log Entry from the Calendar View",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S08",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create and Manage Daily Log Segments",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S09",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create a New Location for an Entry",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S10",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Project-Only Equipment",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S11",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Accident Log Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S12",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Accident Log Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S13",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Phone Call Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S14",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Phone Call Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S15",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Daily Construction Report Log Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S16",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Daily Construction Report Log Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S17",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Daily Log Entries as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S18",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Delay Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S19",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Delay Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S20",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Delivery Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S21",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Delivery Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S22",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Dumpster Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S23",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Dumpster Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S24",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Equipment Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S25",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Equipment Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S26",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Inspection Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S27",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Inspection Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S28",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Manpower Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S29",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Manpower Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S30",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Note Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S31",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Note Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S32",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Observed Weather Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S33",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Plan Revision Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S34",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Plan Revision Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S35",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Productivity Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S36",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Productivity Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S37",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Quantity Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S38",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Quantity Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S39",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Safety Violation Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S40",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Safety Violation Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S41",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Scheduled Work Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S42",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Scheduled Work Entries as a Collaborator (Pending)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S43",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Timecard Entries for Any User",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S44",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Timecard Entries for Yourself",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S45",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Visitor Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S46",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Pending Visitor Entries as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S47",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Waste Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S48",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Pending Waste Entries as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S49",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Delete Any Daily Log Item",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S50",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Standard Users Can Edit and Delete Own Entries"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Bulk Delete Daily Log Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S51",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Standard Users Can Edit and Delete Own Entries"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Delete a Daily Log Item You Created",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S52",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Delete a Daily Log Item You Created as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S53",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete Related Items from Daily Log Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S54",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit Any Daily Log Item",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S55",
+      "_perm": {
+        "min": "Standard",
+        "granular": "Standard Users Can Edit and Delete Own Entries"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit a Daily Log Item You Created",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S56",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit a Daily Log Item You Created as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S57",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Email a Daily Log",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S58",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Enter Logs for a Previous Day",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S59",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Enter Logs for a Previous Day as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S60",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export a Daily Log as PDF",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S61",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Mark a Daily Log as Complete",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S62",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS"
+      ],
+      "title": "Reject Any Daily Log Entry Created by Collaborators",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S63",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Reopen a Daily Log",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S64",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Resubmit a Daily Log Entry as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S65",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Search and Filter Daily Logs",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S66",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Search and Filter Daily Log Entries You Created as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S67",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Upload Photos to the Daily Log from the Photos Tool",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S68",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Upload Photos to the Daily Log from your Device",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S69",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "iOS",
+        "Android"
+      ],
+      "title": "View and Attach Files to a Daily Log",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S70",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View Approved Daily Logs",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S71",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Collaborator Entry Only"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View Daily Logs You Created as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S72",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": [
+          "Collaborator Entry Only",
+          "View Entries Associated to Users Within the Same Company"
+        ]
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View Daily Logs Created by Users at your Company as a Collaborator",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S73",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View 'Pending' Daily Log Entries",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S74",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View Change History Log",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S75",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View Daily Log Notes Report (Single Tool Report)",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S76",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web",
+        "iOS"
+      ],
+      "title": "View Daily Logs in the Calendar View Android",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    },
+    {
+      "_id": "S77",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View Project Daily Log Insights"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View Project Daily Log Insights",
+      "role": "",
+      "system": "Procore · Daily Log",
+      "body": ""
+    }
+  ],
+  "closeoutIntro": "",
+  "owner": "",
+  "checklist": [],
+  "issues": [],
+  "references": [
+    {
+      "tool": "Daily Log — user permissions matrix",
+      "url": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions"
+    }
+  ]
+}

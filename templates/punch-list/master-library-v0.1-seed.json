@@ -1,0 +1,787 @@
+{
+  "_library": "Procore Punch List — master content library (SEED)",
+  "_version": "0.1-seed",
+  "_status": "SEED — NOT AN SOP. Candidate actions transcribed from Procore's User Permissions Matrix on 2026-08-26. Permission tags are Procore's; every step body is empty and every persona statement is blank because nothing here has been authored. A human must select, order and write these steps against a client process before this becomes a library. Never issue a seed.",
+  "_seededFrom": {
+    "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+    "harvested": "2026-08-26",
+    "actions": 36,
+    "kept": 36
+  },
+  "_how_to_use": "Delete the actions that are not part of this client's process, merge the ones that are really a single step, order them into the real workflow, write each body, then fill the persona access objects and cannot_do statements. Renumber _id only once, then keep them stable. Remove `_candidate` from a step once it has been authored.",
+  "_personas": {
+    "P1_read-only": {
+      "label": "Read Only · Punch List",
+      "permission": "Read Only (Punch List)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Punch List",
+        "level": "Read Only",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can view Punch List. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Respond to Punch Items Assigned to Users within the Same Company",
+            "meaning": ""
+          },
+          {
+            "name": "View Private Punch Items Assigned to Users Within Same Company",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S08",
+        "S16",
+        "S20",
+        "S21",
+        "S22",
+        "S28",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P2_standard": {
+      "label": "Standard · Punch List",
+      "permission": "Standard (Punch List)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Punch List",
+        "level": "Standard",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can create and work on your own items in Punch List. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Respond to Punch Items Assigned to Users within the Same Company",
+            "meaning": ""
+          },
+          {
+            "name": "View Private Punch Items Assigned to Users Within Same Company",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S08",
+        "S10",
+        "S16",
+        "S18",
+        "S20",
+        "S21",
+        "S22",
+        "S26",
+        "S27",
+        "S28",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P3_admin": {
+      "label": "Admin · Punch List",
+      "permission": "Admin (Punch List)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Punch List",
+        "level": "Admin",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can fully control, including configuring, Punch List. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35",
+        "S36"
+      ],
+      "checklist": [],
+      "issues": []
+    }
+  },
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "Punch List management",
+  "subtitle": "",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "",
+  "phases": [
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    }
+  ],
+  "procedureIntro": "",
+  "referenceTool": "Procore · Punch List",
+  "steps": [
+    {
+      "_id": "S01",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add Attachments to a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S02",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add Comments to Punch List Items",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S03",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "iOS",
+        "Android"
+      ],
+      "title": "Add a Photo to a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S04",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Assign a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S05",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Close Any Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S06",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Close a Punch List Item that is 'Draft', 'In Dispute'.",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S07",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Configure Advanced Settings: Punch List",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S08",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Customize the Column Display in the Punch List Tool",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S09",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Project Level Punch Item Template",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S10",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S11",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Punch Item Template Category at the Project Level",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S12",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Deactivate a Punch Item Template on a Project",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S13",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete a Punch Item Template Category at the Project Level",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S14",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete a Punch Item Template from a Project",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S15",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S16",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Download Attachments from a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S17",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit a Punch Item Template Category at the Project Level",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S18",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit a Punch List Item You Created",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S19",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit Any Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S20",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export Punch List Log as a PDF",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S21",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export the Punch List Log as a CSV",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S22",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export the Punch List Log as a PDF",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S23",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Import Punch List Items",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S24",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Notify Assignees of Punch List Items",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S25",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Perform Bulk Actions on Punch List Items",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S26",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Reassign a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S27",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Respond to a Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S28",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Respond to Punch Items Assigned to Users within the Same Company"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Respond to a Punch List Item for Users in your Same Company",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S29",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Retrieve Deleted Punch Item from Recycle Bin",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S30",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Search and Filter the Punch List",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S31",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View a Punch List Item (Not Private, and not in 'Draft', 'In Dispute', or 'Initiated' Status)",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S32",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View a Punch Item (Private, and not in 'Draft', 'In Dispute', or 'Initiated' Status)",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S33",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View a Punch Item (Private, Any Status)",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S34",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View Private Punch Items Assigned to Users Within Same Company"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View a Punch Item for Users in the Same Company (Private, and not in 'Draft', 'In Dispute', or 'Initiated' Status)",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S35",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "View Private Punch Items Assigned to Users Within Same Company"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View a Punch Item for Users in the Same Company (Private, Any Status)",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    },
+    {
+      "_id": "S36",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View Change History of a Single Punch List Item",
+      "role": "",
+      "system": "Procore · Punch List",
+      "body": ""
+    }
+  ],
+  "closeoutIntro": "",
+  "owner": "",
+  "checklist": [],
+  "issues": [],
+  "references": [
+    {
+      "tool": "Punch List — user permissions matrix",
+      "url": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions"
+    }
+  ]
+}

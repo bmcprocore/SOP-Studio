@@ -1,0 +1,251 @@
+{
+  "_library": "Procore Invoicing — master content library (SEED)",
+  "_version": "0.1-seed",
+  "_status": "SEED — NOT AN SOP. Candidate actions transcribed from Procore's User Permissions Matrix on 2026-08-26. Permission tags are Procore's; every step body is empty and every persona statement is blank because nothing here has been authored. A human must select, order and write these steps against a client process before this becomes a library. Never issue a seed.",
+  "_seededFrom": {
+    "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+    "harvested": "2026-08-26",
+    "actions": 8,
+    "kept": 8
+  },
+  "_how_to_use": "Delete the actions that are not part of this client's process, merge the ones that are really a single step, order them into the real workflow, write each body, then fill the persona access objects and cannot_do statements. Renumber _id only once, then keep them stable. Remove `_candidate` from a step once it has been authored.",
+  "_personas": {
+    "P1_read-only": {
+      "label": "Read Only · Invoicing",
+      "permission": "Read Only (Invoicing)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Invoicing",
+        "level": "Read Only",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can view Invoicing. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [],
+      "checklist": [],
+      "issues": []
+    },
+    "P2_standard": {
+      "label": "Standard · Invoicing",
+      "permission": "Standard (Invoicing)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Invoicing",
+        "level": "Standard",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can create and work on your own items in Invoicing. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [],
+      "checklist": [],
+      "issues": []
+    },
+    "P3_admin": {
+      "label": "Admin · Invoicing",
+      "permission": "Admin (Invoicing)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Invoicing",
+        "level": "Admin",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can fully control, including configuring, Invoicing. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "checklist": [],
+      "issues": []
+    }
+  },
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "Invoicing management",
+  "subtitle": "",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "",
+  "phases": [
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    }
+  ],
+  "procedureIntro": "",
+  "referenceTool": "Procore · Invoicing",
+  "steps": [
+    {
+      "_id": "S01",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Bulk Edit Subcontractor Invoice Status with the Invoicing Tool",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    },
+    {
+      "_id": "S02",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Bulk Send Subcontractor Invoices to DocuSign® with the Invoicing Tool",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    },
+    {
+      "_id": "S03",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Compile Subcontractor Invoice Backups with the Invoicing Tool",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    },
+    {
+      "_id": "S04",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Configure Settings: Invoicing",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    },
+    {
+      "_id": "S05",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create Automatic Billing Periods",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    },
+    {
+      "_id": "S06",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create Manual Billing Periods",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    },
+    {
+      "_id": "S07",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit Billing Periods",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    },
+    {
+      "_id": "S08",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Manage Billing Periods",
+      "role": "",
+      "system": "Procore · Invoicing",
+      "body": ""
+    }
+  ],
+  "closeoutIntro": "",
+  "owner": "",
+  "checklist": [],
+  "issues": [],
+  "references": [
+    {
+      "tool": "Invoicing — user permissions matrix",
+      "url": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions"
+    }
+  ]
+}

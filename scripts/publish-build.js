@@ -7,9 +7,16 @@
  *   node scripts/publish-build.js --version 4        # set the library version explicitly
  *   node scripts/publish-build.js --only RFIs        # bundle just one tool
  *   node scripts/publish-build.js --out dist/x.html
+ *   node scripts/publish-build.js --sites           # variant for sites.procoretech.com (see below)
  *
  * The library version is what tells an existing user their copy is out of date. It bumps
  * automatically from the last published build unless you set it.
+ *
+ * --sites produces a second flavour of the *current* published library for hosting on Procore
+ * Sites, whose scanner rejects html2canvas as a monitoring client. It strips the PDF_LIBS block
+ * (pdf-lib + html2canvas) and sets PDF_MODE to 'print', so "Download PDF" opens the browser's
+ * print dialog instead of building a fillable PDF. It reuses the last published library version
+ * and does not write the stamp — run the normal build first, then --sites.
  *
  * Templates a person saved themselves are never overwritten when they open a newer build —
  * only entries that came from a published build are replaced.
@@ -53,8 +60,30 @@ function collectTemplates(only) {
   return out;
 }
 
-function nextVersion() {
-  try { return (JSON.parse(fs.readFileSync(STAMP, 'utf8')).version || 0) + 1; } catch (e) { return 1; }
+function lastVersion() {
+  try { return JSON.parse(fs.readFileSync(STAMP, 'utf8')).version || 0; } catch (e) { return 0; }
+}
+function nextVersion() { return lastVersion() + 1; }
+
+/** Sites flavour: no PDF libraries, print-dialog export. */
+function applySitesVariant(html) {
+  const libs = /<!-- PDF_LIBS[\s\S]*?<!-- \/PDF_LIBS -->\r?\n?/;
+  const mode = /  const PDF_MODE = '[a-z]+'; \/\* PDF_MODE \*\//;
+  const fillable = /  \/\/ PDF_FILLABLE[\s\S]*?  \/\/ \/PDF_FILLABLE\r?\n/;
+  if (!libs.test(html) || !mode.test(html) || !fillable.test(html)) {
+    console.error('A PDF_LIBS / PDF_MODE / PDF_FILLABLE marker is missing from the app. Has it been edited by hand?');
+    process.exit(1);
+  }
+  html = html.replace(libs, '')
+    .replace(mode, "  const PDF_MODE = 'print'; /* PDF_MODE */")
+    .replace(fillable, '  function doDownloadPDF() {}   // fillable export is not in the Sites build\n');
+  // The Sites scanner keys on these names wherever they appear, so none may survive.
+  const leftover = html.match(/html2canvas|PDFLib|pdf-lib/i);
+  if (leftover) {
+    console.error('Sites variant still contains "' + leftover[0] + '" — refusing to write it.');
+    process.exit(1);
+  }
+  return html;
 }
 
 function main() {
@@ -64,7 +93,12 @@ function main() {
   const names = Object.keys(found);
   if (!names.length) { console.error('No master libraries found under templates/ — nothing to publish.'); process.exit(1); }
 
-  const version = parseInt(arg('--version', String(nextVersion())), 10);
+  const sites = process.argv.includes('--sites');
+  if (sites && !lastVersion() && !process.argv.includes('--version')) {
+    console.error('No published library yet. Run the normal build first, then --sites.');
+    process.exit(1);
+  }
+  const version = parseInt(arg('--version', String(sites ? lastVersion() : nextVersion())), 10);
   const publishedAt = new Date().toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
 
   const library = { version, publishedAt, tools: {} };
@@ -81,12 +115,13 @@ function main() {
     process.exit(1);
   }
   html = html.replace(marker, '  const PUBLISHED_LIBRARY = ' + json + '; /* PUBLISHED_LIBRARY */');
+  if (sites) html = applySitesVariant(html);
 
   const studioVersion = (html.match(/>v([0-9.]+)</) || [])[1] || 'x';
-  const out = arg('--out', path.join('dist', 'SOP_Studio_v' + studioVersion + '_library-v' + version + '.html'));
+  const out = arg('--out', path.join('dist', 'SOP_Studio_v' + studioVersion + '_library-v' + version + (sites ? '_sites' : '') + '.html'));
   fs.mkdirSync(path.dirname(path.resolve(ROOT, out)), { recursive: true });
   fs.writeFileSync(path.resolve(ROOT, out), html);
-  fs.writeFileSync(STAMP, JSON.stringify({ version, publishedAt, tools: names }, null, 2));
+  if (!sites) fs.writeFileSync(STAMP, JSON.stringify({ version, publishedAt, tools: names }, null, 2));
 
   const kb = (n) => Math.round(n / 1024) + ' KB';
   console.log('Published library v' + version + ' · ' + publishedAt);
@@ -96,6 +131,10 @@ function main() {
       (b.checklist || []).length + ' checklist · ' + (b.issues || []).length + ' issues   ' + found[n].file);
   });
   console.log('\nWrote ' + out + '  (' + kb(html.length) + ')');
+  if (sites) {
+    console.log('Sites variant: PDF libraries removed, "Download PDF" opens the browser print dialog (not fillable).');
+    return;
+  }
   console.log('Share that one file. Opening it installs the templates — no seeding, no import.');
   console.log('Anyone on an older build sees the new library the moment they open this one;');
   console.log('templates they saved themselves are left alone.');

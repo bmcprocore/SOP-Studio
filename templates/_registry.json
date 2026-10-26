@@ -1,0 +1,2512 @@
+{
+  "_registry": "Procore tool registry — the template gallery index",
+  "_version": "0.1",
+  "_status": "AI-DRAFT — tool list and granular wording harvested from Procore support documentation. Tool availability and granular options vary by company configuration. Verify against the client's own permission template before any client release.",
+  "_updated": "2026-08-26",
+  "_sources": {
+    "matrixIndex": "https://v2.support.procore.com/process-guides/permissions-matrix/",
+    "granularFaqPattern": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-<tool>-tool",
+    "apacNaming": "https://en-au.support.procore.com/references/user-permissions-matrix-web",
+    "liveInstanceCapture": "docs/procore-permission-reference.md"
+  },
+  "_howToUse": "Pick a tool -> its `granular` array is what the Studio offers once that template is chosen. `levelsOffered` is which of the four base levels that tool actually exposes. `library` points at the master content library, if one has been authored yet. Account-type naming comes from `names`; APAC naming from `nameAPAC`.",
+  "accountTypes": [
+    "GC",
+    "OWNER",
+    "SPECIALTY"
+  ],
+  "detailLevels": [
+    "simple",
+    "standard",
+    "extended"
+  ],
+  "permissionLevels": [
+    "None",
+    "Read Only",
+    "Standard",
+    "Admin"
+  ],
+  "tools": [
+    {
+      "id": "project-360-reporting-360-reports",
+      "tool": "360 Reporting - 360 Reports",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "360 Reporting - 360 Reports",
+        "OWNER": "360 Reporting - 360 Reports",
+        "SPECIALTY": "360 Reporting - 360 Reports"
+      },
+      "nameAPAC": "360 Reporting - 360 Reports",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-360-reporting-permissions-360-reports",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-360-reporting-360-reports-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-360-reporting-single-tool-reports",
+      "tool": "360 Reporting - Single Tool Reports",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "360 Reporting - Single Tool Reports",
+        "OWNER": "360 Reporting - Single Tool Reports",
+        "SPECIALTY": "360 Reporting - Single Tool Reports"
+      },
+      "nameAPAC": "360 Reporting - Single Tool Reports",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-360-reporting-permissions-single-tool-reports",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-360-reporting-single-tool-reports-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-action-plans",
+      "tool": "Action Plans",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Action Plans",
+        "OWNER": "Action Plans",
+        "SPECIALTY": "Action Plans"
+      },
+      "nameAPAC": "Action Plans",
+      "levelsOffered": [],
+      "granular": [
+        {
+          "name": "Sign as action plan approver",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Sign as completed action plan receiver",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Add record requests to published plans as assignee",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Create and edit action plan",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Delete action plan",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Edit due date in published plans",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Edit item notes as action plans assignee",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Edit item status as action plans assignee",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Edit notifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Create and edit project templates",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Add records",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Sign as action plan assignee for any user",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Sign as action plan approver for users within the same company",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Sign as action plan assignee for users within the same company",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Sign as completed action plan receiver for users within the same company",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Sign as action plan assignee",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Remove records",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-action-plans-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-action-plans-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-admin",
+      "tool": "Admin",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Admin",
+        "OWNER": "Admin",
+        "SPECIALTY": "Admin"
+      },
+      "nameAPAC": "Admin",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-admin-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-admin-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-announcements",
+      "tool": "Announcements",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Announcements",
+        "OWNER": "Announcements",
+        "SPECIALTY": "Announcements"
+      },
+      "nameAPAC": "Announcements",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/mobile-announcements-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-announcements-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-assets",
+      "tool": "Assets",
+      "level": "project",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Assets",
+        "OWNER": "Assets",
+        "SPECIALTY": "Assets"
+      },
+      "nameAPAC": "Assets",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-assets-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-assets-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-bidding",
+      "tool": "Bidding",
+      "level": "project",
+      "category": "Preconstruction",
+      "names": {
+        "GC": "Bidding",
+        "OWNER": "Bidding",
+        "SPECIALTY": "Bidding"
+      },
+      "nameAPAC": "Bidding",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-bidding-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-bidding-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-budget",
+      "tool": "Budget",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Budget",
+        "OWNER": "Budget",
+        "SPECIALTY": "Budget"
+      },
+      "nameAPAC": "Budget",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "Modify Original Budget Amount",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Create, Edit, and Delete Budget Changes",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Delete Budget Line Items",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Import Line Items From CSV",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Lock Budget",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "View Direct Cost Details",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Users must also have 'Admin' level permissions to the project's Commitments tool. User permissions for editing change orders are NOT managed by the project's Change Orders tool. Instead, the Change Orders tool is designed for users with 'Admin' level permissions on the Client Contracts, Prime Contracts, or Funding tool AND the project's Commitments tool. It allows authorized users to view and access change orders from one place.",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "View Project Budget Insights",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-budget-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-budget-tool"
+      },
+      "library": "templates/budget/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-change-events",
+      "tool": "Change Events",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Change Events",
+        "OWNER": "Change Events",
+        "SPECIALTY": "Change Events"
+      },
+      "nameAPAC": "Change Events",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-change-events-tool"
+      },
+      "library": "templates/change-events/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-change-orders",
+      "tool": "Change Orders",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Change Orders",
+        "OWNER": "Funding Change Orders",
+        "SPECIALTY": "Client Contract Change Orders"
+      },
+      "nameAPAC": "Variations",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-orders-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-change-orders-tool"
+      },
+      "library": "templates/change-orders/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-commitments",
+      "tool": "Commitments",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Commitments",
+        "OWNER": "Commitments",
+        "SPECIALTY": "Commitments"
+      },
+      "nameAPAC": "Commitments",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "Update Purchase Order Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Update Work Order Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Create Purchase Order Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Create Work Order Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "View Private Purchase Order Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "View Private Work Order Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-commitments-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-commitments-tool"
+      },
+      "library": "templates/commitments/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-connection-manager",
+      "tool": "Connection Manager",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Connection Manager",
+        "OWNER": "Connection Manager",
+        "SPECIALTY": "Connection Manager"
+      },
+      "nameAPAC": "Connection Manager",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-connection-manager-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-connection-manager-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-coordination-issues",
+      "tool": "Coordination Issues",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Coordination Issues",
+        "OWNER": "Coordination Issues",
+        "SPECIALTY": "Coordination Issues"
+      },
+      "nameAPAC": "Coordination Issues",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-coordination-issues-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-coordination-issues-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-correspondence",
+      "tool": "Correspondence",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Correspondence",
+        "OWNER": "Correspondence",
+        "SPECIALTY": "Correspondence"
+      },
+      "nameAPAC": "Correspondence",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-correspondence-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-correspondence-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-crews",
+      "tool": "Crews",
+      "level": "project",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Crews",
+        "OWNER": "Crews",
+        "SPECIALTY": "Crews"
+      },
+      "nameAPAC": "Crews",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-crews-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-crews-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-daily-log",
+      "tool": "Daily Log",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Daily Log",
+        "OWNER": "Daily Log",
+        "SPECIALTY": "Daily Log"
+      },
+      "nameAPAC": "Site Diary",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "Copy Log",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Collaborator Entry Only",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Standard Users Can Edit and Delete Own Entries",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "View Entries Associated to Users Within the Same Company",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "View Project Daily Log Insights",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-daily-log-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-daily-log-tool"
+      },
+      "library": "templates/daily-log/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-data-extracts-2-0",
+      "tool": "Data Extracts 2.0",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Data Extracts 2.0",
+        "OWNER": "Data Extracts 2.0",
+        "SPECIALTY": "Data Extracts 2.0"
+      },
+      "nameAPAC": "Data Extracts 2.0",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-data-extracts-2.0-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-data-extracts-2-0-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-direct-costs",
+      "tool": "Direct Costs",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Direct Costs",
+        "OWNER": "Direct Costs",
+        "SPECIALTY": "Direct Costs"
+      },
+      "nameAPAC": "Direct Costs",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-direct-costs-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-direct-costs-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-directory",
+      "tool": "Directory",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Directory",
+        "OWNER": "Directory",
+        "SPECIALTY": "Directory"
+      },
+      "nameAPAC": "Directory",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-directory-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-directory-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-documents",
+      "tool": "Documents",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Documents",
+        "OWNER": "Documents",
+        "SPECIALTY": "Documents"
+      },
+      "nameAPAC": "Documents",
+      "levelsOffered": [],
+      "granular": [
+        {
+          "name": "Access private folders and files",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Rename folders and files",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Move and copy files and folders",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Set permissions",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Delete folders and files",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "See recycle bin",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Edit, create and delete public markup layers",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-documents-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-documents-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-drawings",
+      "tool": "Drawings",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Drawings",
+        "OWNER": "Drawings",
+        "SPECIALTY": "Drawings"
+      },
+      "nameAPAC": "Drawings",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "Upload drawings",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21",
+          "aliases": [
+            {
+              "text": "Upload Drawings",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        },
+        {
+          "name": "Upload and review drawings",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21",
+          "aliases": [
+            {
+              "text": "Upload and Review Drawings",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-drawings-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-drawings-tool"
+      },
+      "library": "templates/drawings/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-emails",
+      "tool": "Emails",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Emails",
+        "OWNER": "Emails",
+        "SPECIALTY": "Emails"
+      },
+      "nameAPAC": "Emails",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-emails-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-emails-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-equipment",
+      "tool": "Equipment",
+      "level": "project",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Equipment",
+        "OWNER": "Equipment",
+        "SPECIALTY": "Equipment"
+      },
+      "nameAPAC": "Equipment",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-equipment-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-equipment-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-estimating",
+      "tool": "Estimating",
+      "level": "project",
+      "category": "Preconstruction",
+      "names": {
+        "GC": "Estimating",
+        "OWNER": "Estimating",
+        "SPECIALTY": "Estimating"
+      },
+      "nameAPAC": "Estimating",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-estimating-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-estimating-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-forms",
+      "tool": "Forms",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Forms",
+        "OWNER": "Forms",
+        "SPECIALTY": "Forms"
+      },
+      "nameAPAC": "Forms",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-forms-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-forms-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-home",
+      "tool": "Home",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Home",
+        "OWNER": "Home",
+        "SPECIALTY": "Home"
+      },
+      "nameAPAC": "Home",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-home-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-home-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-incidents",
+      "tool": "Incidents",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Incidents",
+        "OWNER": "Incidents",
+        "SPECIALTY": "Incidents"
+      },
+      "nameAPAC": "Incidents",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-incidents-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-incidents-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-inspections",
+      "tool": "Inspections",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Inspections",
+        "OWNER": "Inspections",
+        "SPECIALTY": "Inspections"
+      },
+      "nameAPAC": "Inspections",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-inspections-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-inspections-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-instructions",
+      "tool": "Instructions",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Instructions",
+        "OWNER": "Instructions",
+        "SPECIALTY": "Instructions"
+      },
+      "nameAPAC": "Instructions",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-instructions-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-instructions-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-invoicing",
+      "tool": "Invoicing",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Invoicing",
+        "OWNER": "Invoicing",
+        "SPECIALTY": "Progress Billings"
+      },
+      "nameAPAC": "Progress Claims",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-invoicing-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-invoicing-tool"
+      },
+      "library": "templates/invoicing/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-locations",
+      "tool": "Locations",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Locations",
+        "OWNER": "Locations",
+        "SPECIALTY": "Locations"
+      },
+      "nameAPAC": "Locations",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/mobile-locations-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-locations-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-materials",
+      "tool": "Materials",
+      "level": "project",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Materials",
+        "OWNER": "Materials",
+        "SPECIALTY": "Materials"
+      },
+      "nameAPAC": "Materials",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-materials-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-materials-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-meetings",
+      "tool": "Meetings",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Meetings",
+        "OWNER": "Meetings",
+        "SPECIALTY": "Meetings"
+      },
+      "nameAPAC": "Meetings",
+      "levelsOffered": [],
+      "granular": [
+        {
+          "name": "Add comment to meeting",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Delete own comment on a meeting",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Create meeting",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Distribute meeting",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Update meeting",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Manage meeting items",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Manage meeting categories",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Manage related items for meetings",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Email meeting",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-meetings-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-meetings-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-models",
+      "tool": "Models",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Models",
+        "OWNER": "Models",
+        "SPECIALTY": "Models"
+      },
+      "nameAPAC": "Models",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-models-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-models-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-my-time",
+      "tool": "My Time",
+      "level": "project",
+      "category": "Resource Management",
+      "names": {
+        "GC": "My Time",
+        "OWNER": "My Time",
+        "SPECIALTY": "My Time"
+      },
+      "nameAPAC": "My Time",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/mobile-my-time-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-my-time-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-observations",
+      "tool": "Observations",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Observations",
+        "OWNER": "Observations",
+        "SPECIALTY": "Observations"
+      },
+      "nameAPAC": "Observations",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-observations-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-observations-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-photos",
+      "tool": "Photos",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Photos",
+        "OWNER": "Photos",
+        "SPECIALTY": "Photos"
+      },
+      "nameAPAC": "Photos",
+      "levelsOffered": [],
+      "granular": [
+        {
+          "name": "Delete a photo album",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Change the order of photo albums",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "View private photos",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Create a photo album",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-photos-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-photos-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-prime-contracts",
+      "tool": "Prime Contracts",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Prime Contracts",
+        "OWNER": "Funding",
+        "SPECIALTY": "Client Contracts"
+      },
+      "nameAPAC": "Head Contracts",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "Create Prime Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Delete Prime Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        },
+        {
+          "name": "Update Prime Contract",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "permissions-matrix-2026-08-26"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-prime-contracts-tool"
+      },
+      "library": "templates/prime-contracts/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": ""
+    },
+    {
+      "id": "project-procore-mobile-app-general",
+      "tool": "Procore Mobile App (General)",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Procore Mobile App (General)",
+        "OWNER": "Procore Mobile App (General)",
+        "SPECIALTY": "Procore Mobile App (General)"
+      },
+      "nameAPAC": "Procore Mobile App (General)",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/general-mobile",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-procore-mobile-app-general-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-project-dashboard",
+      "tool": "Project Dashboard",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Project Dashboard",
+        "OWNER": "Project Dashboard",
+        "SPECIALTY": "Project Dashboard"
+      },
+      "nameAPAC": "Project Dashboard",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/mobile-project-dashboard-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-project-dashboard-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-project-overview",
+      "tool": "Project Overview",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Project Overview",
+        "OWNER": "Project Overview",
+        "SPECIALTY": "Project Overview"
+      },
+      "nameAPAC": "Project Overview",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-overview-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-project-overview-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-punch-list",
+      "tool": "Punch List",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Punch List",
+        "OWNER": "Punch List",
+        "SPECIALTY": "Punch List"
+      },
+      "nameAPAC": "Defect List",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "View private defect items assigned to users within same company",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21",
+          "aliases": [
+            {
+              "text": "View Private Punch Items Assigned to Users Within Same Company",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        },
+        {
+          "name": "Respond to defect items assigned to users within same company",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21",
+          "aliases": [
+            {
+              "text": "Respond to Punch Items Assigned to Users within the Same Company",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        },
+        {
+          "name": "View project defect list insights",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Manage project saved views",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-punch-list-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-punch-list-tool"
+      },
+      "library": "templates/punch-list/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": "Captured under its APAC name, Defect List. Granular wording uses 'defect' rather than 'punch' in that instance."
+    },
+    {
+      "id": "project-rates",
+      "tool": "Rates",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Rates",
+        "OWNER": "Rates",
+        "SPECIALTY": "Rates"
+      },
+      "nameAPAC": "Rates",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rates-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-rates-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-rfis",
+      "tool": "RFIs",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "RFIs",
+        "OWNER": "RFIs",
+        "SPECIALTY": "RFIs"
+      },
+      "nameAPAC": "RFIs",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "Act as RFI Manager",
+          "appliesTo": [
+            "Read Only",
+            "Standard"
+          ],
+          "meaning": "Grants a user the privilege to be selected as the RFI Manager for individual RFIs or to be selected as a project's default RFI Manager.",
+          "source": "support-faq-2026-08-27"
+        },
+        {
+          "name": "Mark Official Responses",
+          "appliesTo": [
+            "Read Only",
+            "Standard"
+          ],
+          "meaning": "Grants a user the privilege to mark (or unmark) official responses on an RFI if they are the RFI's creator or if they are an Assignee or a Distribution List member on the RFI.",
+          "source": "support-faq-2026-08-27"
+        },
+        {
+          "name": "View Private RFIs Associated to Users within Same Company",
+          "appliesTo": [
+            "Read Only",
+            "Standard"
+          ],
+          "meaning": "Grants a user the privilege to view any RFI marked 'Private' if another user in their company (including them) is the RFI's creator or is designated as the RFI Manager, an Assignee, or a Distribution List member.",
+          "source": "support-faq-2026-08-27",
+          "aliases": [
+            {
+              "text": "View Private RFIs Associated with Users within Same Company",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        },
+        {
+          "name": "View External Items",
+          "appliesTo": [
+            "Read Only",
+            "Standard"
+          ],
+          "meaning": "Grants a user with 'Read Only' or 'Standard' permissions the privilege to view any External RFI.",
+          "source": "support-faq-2026-08-27"
+        },
+        {
+          "name": "View project RFI insights",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21",
+          "aliases": [
+            {
+              "text": "View Project RFI Insights",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        }
+      ],
+      "granularStatus": "faq-verified",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-rfis-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-rfis-tool"
+      },
+      "library": "templates/rfi/master-library-v0.3.json",
+      "libraryStatus": "ai-draft",
+      "notes": "The support FAQ documents 4 granular permissions; the 21 Aug 2026 live-instance capture showed 5. 'View project RFI insights' appears only in the instance. The RFI library currently uses only 'Act as RFI Manager'."
+    },
+    {
+      "id": "project-schedule",
+      "tool": "Schedule",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Schedule",
+        "OWNER": "Schedule",
+        "SPECIALTY": "Schedule"
+      },
+      "nameAPAC": "Schedule",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-schedule-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-schedule-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-scheduling",
+      "tool": "Scheduling",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Scheduling",
+        "OWNER": "Scheduling",
+        "SPECIALTY": "Scheduling"
+      },
+      "nameAPAC": "Scheduling",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-scheduling-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-scheduling-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-specifications",
+      "tool": "Specifications",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Specifications",
+        "OWNER": "Specifications",
+        "SPECIALTY": "Specifications"
+      },
+      "nameAPAC": "Specifications",
+      "levelsOffered": [],
+      "granular": [
+        {
+          "name": "View specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Upload specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Show all uploads",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Delete pending uploads",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Review specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Publish specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Update specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Email specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Relate items",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Export specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Download specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "View download register",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "View change history",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "View all revisions",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Delete specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "View deleted specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Manually create divisions",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Manually create specifications",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Create specification sets",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Configure Specifications tool",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "Edit, create and delete public markup layers",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        }
+      ],
+      "granularStatus": "capture-only",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-specifications-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-specifications-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-submittals",
+      "tool": "Submittals",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Submittals",
+        "OWNER": "Submittals",
+        "SPECIALTY": "Submittals"
+      },
+      "nameAPAC": "Submittals",
+      "levelsOffered": [
+        "None",
+        "Read Only",
+        "Standard",
+        "Admin"
+      ],
+      "granular": [
+        {
+          "name": "Apply Submittal Workflow Template",
+          "appliesTo": [
+            "Standard"
+          ],
+          "meaning": "Grants a user with 'Standard' level permissions on the Submittals tool the privilege to apply a submittal workflow template to an individual submittal. A 'Read Only' user also needs the 'Create Submittal' granular permission. Does not apply to bulk actions.",
+          "source": "support-faq-2026-08-27"
+        },
+        {
+          "name": "Create Submittal",
+          "appliesTo": [
+            "Read Only",
+            "Standard"
+          ],
+          "meaning": "Grants a user the privilege to create submittal items.",
+          "source": "support-faq-2026-08-27"
+        },
+        {
+          "name": "Create Submittal Package",
+          "appliesTo": [
+            "Read Only",
+            "Standard"
+          ],
+          "meaning": "Grants a user the privilege to create submittal packages.",
+          "source": "support-faq-2026-08-27"
+        },
+        {
+          "name": "View Private Submittals Associated to Users within Same Company",
+          "appliesTo": [
+            "Read Only",
+            "Standard"
+          ],
+          "meaning": "Grants a user the privilege to view a submittal marked 'Private' if another user in their company is the submittal's creator or is designated as the Submittal Manager, a Submitter, an Approver, or a Distribution List member.",
+          "source": "support-faq-2026-08-27",
+          "aliases": [
+            {
+              "text": "View Private Submittals Associated to Users within the Same Company",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        },
+        {
+          "name": "View connected submittals",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21"
+        },
+        {
+          "name": "View project submittal insights",
+          "appliesTo": [],
+          "meaning": "",
+          "source": "live-instance-capture-2026-08-21",
+          "aliases": [
+            {
+              "text": "View Project Submittal Insights",
+              "source": "permissions-matrix-2026-08-26"
+            }
+          ]
+        }
+      ],
+      "granularStatus": "faq-verified",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-submittals-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-submittals-tool"
+      },
+      "library": "templates/submittals/master-library-v0.1-seed.json",
+      "libraryStatus": "seed",
+      "notes": "The support FAQ documents 4; the live-instance capture showed 6. 'View connected submittals' and 'View project submittal insights' appear only in the instance."
+    },
+    {
+      "id": "project-tasks",
+      "tool": "Tasks",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Tasks",
+        "OWNER": "Tasks",
+        "SPECIALTY": "Tasks"
+      },
+      "nameAPAC": "Tasks",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-tasks-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-tasks-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-timesheets",
+      "tool": "Timesheets",
+      "level": "project",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Timesheets",
+        "OWNER": "Timesheets",
+        "SPECIALTY": "Timesheets"
+      },
+      "nameAPAC": "Timesheets",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-timesheets-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-timesheets-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-t-m-tickets",
+      "tool": "T&M Tickets",
+      "level": "project",
+      "category": "Financial Management",
+      "names": {
+        "GC": "T&M Tickets",
+        "OWNER": "T&M Tickets",
+        "SPECIALTY": "T&M Tickets"
+      },
+      "nameAPAC": "T&M Tickets",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-tmtickets-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-t-m-tickets-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-transmittals",
+      "tool": "Transmittals",
+      "level": "project",
+      "category": "Project Management",
+      "names": {
+        "GC": "Transmittals",
+        "OWNER": "Transmittals",
+        "SPECIALTY": "Transmittals"
+      },
+      "nameAPAC": "Transmittals",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-transmittals-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-transmittals-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "project-webhooks",
+      "tool": "Webhooks",
+      "level": "project",
+      "category": "Core",
+      "names": {
+        "GC": "Webhooks",
+        "OWNER": "Webhooks",
+        "SPECIALTY": "Webhooks"
+      },
+      "nameAPAC": "Webhooks",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/webhooks-project-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-projects-webhooks-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-360-reporting-360-reports",
+      "tool": "360 Reporting - 360 Reports",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "360 Reporting - 360 Reports",
+        "OWNER": "360 Reporting - 360 Reports",
+        "SPECIALTY": "360 Reporting - 360 Reports"
+      },
+      "nameAPAC": "360 Reporting - 360 Reports",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-permissions-360-reporting-360-reports",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-360-reporting-360-reports-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-360-reporting-single-tool-reports",
+      "tool": "360 Reporting - Single Tool Reports",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "360 Reporting - Single Tool Reports",
+        "OWNER": "360 Reporting - Single Tool Reports",
+        "SPECIALTY": "360 Reporting - Single Tool Reports"
+      },
+      "nameAPAC": "360 Reporting - Single Tool Reports",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-permissions-360-reporting-single-tool-reports",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-360-reporting-single-tool-reports-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-admin",
+      "tool": "Admin",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Admin",
+        "OWNER": "Admin",
+        "SPECIALTY": "Admin"
+      },
+      "nameAPAC": "Admin",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-admin-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-admin-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-assets",
+      "tool": "Assets",
+      "level": "company",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Assets",
+        "OWNER": "Assets",
+        "SPECIALTY": "Assets"
+      },
+      "nameAPAC": "Assets",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-assets-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-assets-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-bid-board-portfolio-planning",
+      "tool": "Bid Board / Portfolio Planning",
+      "level": "company",
+      "category": "Preconstruction",
+      "names": {
+        "GC": "Bid Board / Portfolio Planning",
+        "OWNER": "Bid Board / Portfolio Planning",
+        "SPECIALTY": "Bid Board / Portfolio Planning"
+      },
+      "nameAPAC": "Bid Board / Portfolio Planning",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-bid-board-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-bid-board-portfolio-planning-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-conversations",
+      "tool": "Conversations",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Conversations",
+        "OWNER": "Conversations",
+        "SPECIALTY": "Conversations"
+      },
+      "nameAPAC": "Conversations",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-conversations-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-conversations-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-cost-catalog",
+      "tool": "Cost Catalog",
+      "level": "company",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Cost Catalog",
+        "OWNER": "Cost Catalog",
+        "SPECIALTY": "Cost Catalog"
+      },
+      "nameAPAC": "Cost Catalog",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-cost-catalog-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-cost-catalog-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-directory",
+      "tool": "Directory",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Directory",
+        "OWNER": "Directory",
+        "SPECIALTY": "Directory"
+      },
+      "nameAPAC": "Directory",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-directory-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-directory-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-documents",
+      "tool": "Documents",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Documents",
+        "OWNER": "Documents",
+        "SPECIALTY": "Documents"
+      },
+      "nameAPAC": "Documents",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-documents-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-documents-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-equipment",
+      "tool": "Equipment",
+      "level": "company",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Equipment",
+        "OWNER": "Equipment",
+        "SPECIALTY": "Equipment"
+      },
+      "nameAPAC": "Equipment",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-equipment-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-equipment-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-erp-integrations",
+      "tool": "ERP Integrations",
+      "level": "company",
+      "category": "Financial Management",
+      "names": {
+        "GC": "ERP Integrations",
+        "OWNER": "ERP Integrations",
+        "SPECIALTY": "ERP Integrations"
+      },
+      "nameAPAC": "ERP Integrations",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-erp-integrations-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-erp-integrations-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-free-procore-accounts",
+      "tool": "Free Procore Accounts",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Free Procore Accounts",
+        "OWNER": "Free Procore Accounts",
+        "SPECIALTY": "Free Procore Accounts"
+      },
+      "nameAPAC": "Free Procore Accounts",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/free-procore-accounts-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-free-procore-accounts-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-insights",
+      "tool": "Insights",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Insights",
+        "OWNER": "Insights",
+        "SPECIALTY": "Insights"
+      },
+      "nameAPAC": "Insights",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/insights",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-insights-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-inspections",
+      "tool": "Inspections",
+      "level": "company",
+      "category": "Project Management",
+      "names": {
+        "GC": "Inspections",
+        "OWNER": "Inspections",
+        "SPECIALTY": "Inspections"
+      },
+      "nameAPAC": "Inspections",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-inspections-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-inspections-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-permissions",
+      "tool": "Permissions",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Permissions",
+        "OWNER": "Permissions",
+        "SPECIALTY": "Permissions"
+      },
+      "nameAPAC": "Permissions",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-permissions-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-permissions-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-planroom",
+      "tool": "Planroom",
+      "level": "company",
+      "category": "Preconstruction",
+      "names": {
+        "GC": "Planroom",
+        "OWNER": "Planroom",
+        "SPECIALTY": "Planroom"
+      },
+      "nameAPAC": "Planroom",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-planroom-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-planroom-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-portfolio",
+      "tool": "Portfolio",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Portfolio",
+        "OWNER": "Portfolio",
+        "SPECIALTY": "Portfolio"
+      },
+      "nameAPAC": "Portfolio",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-portfolio-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-portfolio-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-prequalification-portal",
+      "tool": "Prequalification Portal",
+      "level": "company",
+      "category": "Preconstruction",
+      "names": {
+        "GC": "Prequalification Portal",
+        "OWNER": "Prequalification Portal",
+        "SPECIALTY": "Prequalification Portal"
+      },
+      "nameAPAC": "Prequalification Portal",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-prequalification-portal-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-prequalification-portal-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-prequalifications",
+      "tool": "Prequalifications",
+      "level": "company",
+      "category": "Preconstruction",
+      "names": {
+        "GC": "Prequalifications",
+        "OWNER": "Prequalifications",
+        "SPECIALTY": "Prequalifications"
+      },
+      "nameAPAC": "Prequalifications",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-prequalifications-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-prequalifications-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-programs",
+      "tool": "Programs",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Programs",
+        "OWNER": "Programs",
+        "SPECIALTY": "Programs"
+      },
+      "nameAPAC": "Programs",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-programs-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-programs-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-rates",
+      "tool": "Rates",
+      "level": "company",
+      "category": "Financial Management",
+      "names": {
+        "GC": "Rates",
+        "OWNER": "Rates",
+        "SPECIALTY": "Rates"
+      },
+      "nameAPAC": "Rates",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-rates-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-rates-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-resource-planning",
+      "tool": "Resource Planning",
+      "level": "company",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Resource Planning",
+        "OWNER": "Resource Planning",
+        "SPECIALTY": "Resource Planning"
+      },
+      "nameAPAC": "Resource Planning",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-resource-planning-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-resource-planning-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-schedule",
+      "tool": "Schedule",
+      "level": "company",
+      "category": "Project Management",
+      "names": {
+        "GC": "Schedule",
+        "OWNER": "Schedule",
+        "SPECIALTY": "Schedule"
+      },
+      "nameAPAC": "Schedule",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-schedule-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-schedule-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-timecard",
+      "tool": "Timecard",
+      "level": "company",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Timecard",
+        "OWNER": "Timecard",
+        "SPECIALTY": "Timecard"
+      },
+      "nameAPAC": "Timecard",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-timecard-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-timecard-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-timesheets",
+      "tool": "Timesheets",
+      "level": "company",
+      "category": "Resource Management",
+      "names": {
+        "GC": "Timesheets",
+        "OWNER": "Timesheets",
+        "SPECIALTY": "Timesheets"
+      },
+      "nameAPAC": "Timesheets",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-timesheets-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-timesheets-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-webhooks",
+      "tool": "Webhooks",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Webhooks",
+        "OWNER": "Webhooks",
+        "SPECIALTY": "Webhooks"
+      },
+      "nameAPAC": "Webhooks",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/webhooks-company",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-webhooks-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    },
+    {
+      "id": "company-workflows",
+      "tool": "Workflows",
+      "level": "company",
+      "category": "Core",
+      "names": {
+        "GC": "Workflows",
+        "OWNER": "Workflows",
+        "SPECIALTY": "Workflows"
+      },
+      "nameAPAC": "Workflows",
+      "levelsOffered": [],
+      "granular": [],
+      "granularStatus": "not-harvested",
+      "sources": {
+        "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/company-level-workflows-permissions",
+        "granularFaq": "https://support.procore.com/faq/what-granular-permissions-are-available-for-the-companys-workflows-tool"
+      },
+      "library": null,
+      "libraryStatus": "none",
+      "notes": ""
+    }
+  ]
+}

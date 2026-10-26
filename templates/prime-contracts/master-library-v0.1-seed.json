@@ -1,0 +1,684 @@
+{
+  "_library": "Procore Prime Contracts — master content library (SEED)",
+  "_version": "0.1-seed",
+  "_status": "SEED — NOT AN SOP. Candidate actions transcribed from Procore's User Permissions Matrix on 2026-08-26. Permission tags are Procore's; every step body is empty and every persona statement is blank because nothing here has been authored. A human must select, order and write these steps against a client process before this becomes a library. Never issue a seed.",
+  "_seededFrom": {
+    "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+    "harvested": "2026-08-26",
+    "actions": 32,
+    "kept": 32
+  },
+  "_how_to_use": "Delete the actions that are not part of this client's process, merge the ones that are really a single step, order them into the real workflow, write each body, then fill the persona access objects and cannot_do statements. Renumber _id only once, then keep them stable. Remove `_candidate` from a step once it has been authored.",
+  "_personas": {
+    "P1_read-only": {
+      "label": "Read Only · Prime Contracts",
+      "permission": "Read Only (Prime Contracts)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Prime Contracts",
+        "level": "Read Only",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can view Prime Contracts. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Create Prime Contract",
+            "meaning": ""
+          },
+          {
+            "name": "Delete Prime Contract",
+            "meaning": ""
+          },
+          {
+            "name": "Update Prime Contract",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S08",
+        "S12",
+        "S14",
+        "S15",
+        "S22",
+        "S24",
+        "S28",
+        "S30",
+        "S31"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P2_standard": {
+      "label": "Standard · Prime Contracts",
+      "permission": "Standard (Prime Contracts)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Prime Contracts",
+        "level": "Standard",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can create and work on your own items in Prime Contracts. Rewrite this in the client's own terms before release.",
+        "granular": [
+          {
+            "name": "Create Prime Contract",
+            "meaning": ""
+          },
+          {
+            "name": "Delete Prime Contract",
+            "meaning": ""
+          },
+          {
+            "name": "Update Prime Contract",
+            "meaning": ""
+          }
+        ],
+        "notIncluded": []
+      },
+      "steps": [
+        "S08",
+        "S09",
+        "S12",
+        "S14",
+        "S15",
+        "S22",
+        "S24",
+        "S28",
+        "S30",
+        "S31"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P3_admin": {
+      "label": "Admin · Prime Contracts",
+      "permission": "Admin (Prime Contracts)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Prime Contracts",
+        "level": "Admin",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can fully control, including configuring, Prime Contracts. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32"
+      ],
+      "checklist": [],
+      "issues": []
+    }
+  },
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "Prime Contracts management",
+  "subtitle": "",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "",
+  "phases": [
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    }
+  ],
+  "procedureIntro": "",
+  "referenceTool": "Procore · Prime Contracts",
+  "steps": [
+    {
+      "_id": "S01",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add Financial Markup to Prime Contract Change Orders",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S02",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add a Related Item to a Prime Contract Change Order",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S03",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Approve a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S04",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Configure Advanced Settings: Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S05",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create Change Order Request",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S06",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create Payment Received for a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S07",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create Owner Invoices",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S08",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Create Prime Contract"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S09",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Potential Change Order for a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S10",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Prime Contract Change Order",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S11",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create Schedule of Values (SOV) from the Budget",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S12",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Delete Prime Contract"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S13",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit a Commitment Change Order Linked to a Potential Change Order for a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S14",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Update Prime Contract"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit a Prime Contract (Not Private)",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S15",
+      "_perm": {
+        "min": "ReadOnly",
+        "granular": "Update Prime Contract"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit a Prime Contract (Private)",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S16",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Edit the Advanced Settings on a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S17",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Email Owner Invoices",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S18",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [],
+      "title": "Email a Potential Change Order for a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S19",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [],
+      "title": "Email Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S20",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Enable Financial Markup on a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S21",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export Owner Invoices",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S22",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export a Prime Contract (PDF)",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S23",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Export a Prime Contract (DOCX)",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S24",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Filter Prime Contract Change Orders",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S25",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Import a Prime Contract CSV",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S26",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Remove a Change Order from a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S27",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete a Prime Contract Change Order",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S28",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [],
+      "title": "Search for and Add Filters to Prime Contracts",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S29",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Set Up a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S30",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View Prime Contract (Not Private)",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S31",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View Prime Contract (Private)",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    },
+    {
+      "_id": "S32",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View the Change History of a Prime Contract",
+      "role": "",
+      "system": "Procore · Prime Contracts",
+      "body": ""
+    }
+  ],
+  "closeoutIntro": "",
+  "owner": "",
+  "checklist": [],
+  "issues": [],
+  "references": [
+    {
+      "tool": "Prime Contracts — user permissions matrix",
+      "url": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-prime-contracts-permissions"
+    }
+  ]
+}

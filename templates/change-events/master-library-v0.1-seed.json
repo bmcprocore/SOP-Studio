@@ -1,0 +1,672 @@
+{
+  "_library": "Procore Change Events — master content library (SEED)",
+  "_version": "0.1-seed",
+  "_status": "SEED — NOT AN SOP. Candidate actions transcribed from Procore's User Permissions Matrix on 2026-08-26. Permission tags are Procore's; every step body is empty and every persona statement is blank because nothing here has been authored. A human must select, order and write these steps against a client process before this becomes a library. Never issue a seed.",
+  "_seededFrom": {
+    "matrix": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+    "harvested": "2026-08-26",
+    "actions": 32,
+    "kept": 32
+  },
+  "_how_to_use": "Delete the actions that are not part of this client's process, merge the ones that are really a single step, order them into the real workflow, write each body, then fill the persona access objects and cannot_do statements. Renumber _id only once, then keep them stable. Remove `_candidate` from a step once it has been authored.",
+  "_personas": {
+    "P1_read-only": {
+      "label": "Read Only · Change Events",
+      "permission": "Read Only (Change Events)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Change Events",
+        "level": "Read Only",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can view Change Events. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S26",
+        "S28",
+        "S30",
+        "S31"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P2_standard": {
+      "label": "Standard · Change Events",
+      "permission": "Standard (Change Events)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Change Events",
+        "level": "Standard",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can create and work on your own items in Change Events. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S17",
+        "S18",
+        "S20",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32"
+      ],
+      "checklist": [],
+      "issues": []
+    },
+    "P3_admin": {
+      "label": "Admin · Change Events",
+      "permission": "Admin (Change Events)",
+      "cannot_do": "",
+      "access": {
+        "tool": "Change Events",
+        "level": "Admin",
+        "levelMeaning": "",
+        "_levelMeaningHint": "You can fully control, including configuring, Change Events. Rewrite this in the client's own terms before release.",
+        "granular": [],
+        "notIncluded": []
+      },
+      "steps": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32"
+      ],
+      "checklist": [],
+      "issues": []
+    }
+  },
+  "docId": "",
+  "version": "1.0",
+  "status": "draft",
+  "customer": "",
+  "processName": "Change Events management",
+  "subtitle": "",
+  "processOwner": "",
+  "effectiveFrom": "",
+  "appliesTo": "",
+  "approvals": {
+    "preparedBy": {
+      "name": "",
+      "date": ""
+    },
+    "reviewedBy": {
+      "name": "",
+      "date": ""
+    },
+    "approvedBy": {
+      "name": "",
+      "date": ""
+    },
+    "scheduledReview": {
+      "name": "",
+      "date": ""
+    }
+  },
+  "purpose": "",
+  "phases": [
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    },
+    {
+      "name": "",
+      "desc": ""
+    }
+  ],
+  "procedureIntro": "",
+  "referenceTool": "Procore · Change Events",
+  "steps": [
+    {
+      "_id": "S01",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Add a Change Event Line Item to an Unapproved Commitment",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S02",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add a Change Event Line Item to an Unapproved Prime Potential Change Order",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S03",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add a Change Event Line Item to an Unapproved Commitment Change Order",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S04",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Add a Related Item to a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S05",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Configure Advanced Settings: Change Events",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S06",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Commitment Change Order from a Change Event Web",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S07",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Create Change Events",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S08",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Change Event (Legacy)",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S09",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Change Event from an RFI",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S10",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Commitment Potential Change Order from a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S11",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Prime Contract Change Order from a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S12",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Prime Potential Change Order from a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S13",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Purchase Order from a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S14",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Subcontract from a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S15",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create Budget Changes from a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S16",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create RFQs from a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S17",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Create a Budget Modification from a Change Event (Legacy)",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S18",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete a Change Event You Created",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S19",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Delete Any Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S20",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit a Change Event You Created",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S21",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Edit Any Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S22",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Link a Schedule of Values Line Item to a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S23",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Record Changes to Production Quantities in a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S24",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Respond to an RFQ on Behalf of a Collaborator",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S25",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Retrieve a Deleted Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S26",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Review RFQ Responses",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S27",
+      "_perm": {
+        "min": "Admin"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Review RFQ Responses and Change Status",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S28",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "Search for and Apply Filters to the Change Events Tool",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S29",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Submit a Quote as a Collaborator",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S30",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web",
+        "iOS",
+        "Android"
+      ],
+      "title": "View a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S31",
+      "_perm": {
+        "min": "ReadOnly"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "View and Filter RFQs",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    },
+    {
+      "_id": "S32",
+      "_perm": {
+        "min": "Standard"
+      },
+      "_candidate": true,
+      "_source": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions",
+      "_platforms": [
+        "Web"
+      ],
+      "title": "Void a Change Event",
+      "role": "",
+      "system": "Procore · Change Events",
+      "body": ""
+    }
+  ],
+  "closeoutIntro": "",
+  "owner": "",
+  "checklist": [],
+  "issues": [],
+  "references": [
+    {
+      "tool": "Change Events — user permissions matrix",
+      "url": "https://v2.support.procore.com/process-guides/permissions-matrix/project-level-change-events-permissions"
+    }
+  ]
+}

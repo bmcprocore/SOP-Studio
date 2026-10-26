@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/dist/SOP_Studio_v3.20_library-v5.html" }
+  ]
+}

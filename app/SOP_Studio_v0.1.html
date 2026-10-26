@@ -709,9 +709,14 @@
           </div>
         </div>
         <div id="saveTplRow" style="display:none;margin-top:10px;">
+          <div class="note" style="margin-bottom:8px;">Templates are named <strong>Template name - Tool - Customer segment - Region - Number</strong>. The number is added for you and counts up for each new template with the same first four parts.</div>
           <label for="fTplName">Template name<span class="req" title="Required">*</span></label>
-          <input type="text" id="fTplName">
-          <p class="hint" id="tplNameHint">A template with the same name is replaced.</p>
+          <input type="text" id="fTplName" placeholder="e.g. Month-end reconciliation">
+          <label for="fTplTool" style="margin-top:8px;">Tool<span class="req" title="Required">*</span></label>
+          <input type="text" id="fTplTool" placeholder="e.g. Budget">
+          <div class="note" style="margin-top:8px;">Customer segment and Region come from the Customer segment box above and the Create step.</div>
+          <p class="hint" id="tplNameHint"></p>
+          <button id="btnSaveTplNow" class="primary" style="margin-top:6px;">Save template now</button>
         </div>
       </fieldset>
 
@@ -3135,14 +3140,56 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   /** Called after a successful render when the tickbox is on. Returns a message for the status line. */
   async function maybeSaveAsTemplate(generated) {
     if (!$('fSaveTpl') || !$('fSaveTpl').checked) return '';
-    const c = fullContentForTemplate();
-    const name = ($('fTplName').value || '').trim() || defaultTemplateName(generated);
-    if (!name) { $('fTplName').classList.add('missing'); return ' Template not saved — it needs a name.'; }
+    return saveNamedTemplate();
+  }
+
+  // ---- template naming: Template name - Tool - Customer segment - Region - 001 ----
+  const cleanPart = (v) => String(v || '').replace(/\s+-\s+/g, ' ').replace(/\s+/g, ' ').trim();
+  function tplParts() {
+    const seg = state.segment ? (SEGMENTS[state.segment] || state.segment).split(' — ')[0] : '';
+    const region = state.region && state.region !== 'TBC' ? state.region : '';
+    return {
+      name: cleanPart($('fTplName').value), tool: cleanPart($('fTplTool').value), segment: cleanPart(seg), region: region,
+    };
+  }
+  /** The names of the parts still missing, in the order they are asked for. */
+  function tplMissing(p) {
+    const m = [];
+    if (!p.name) m.push('Template name');
+    if (!p.tool) m.push('Tool');
+    if (!p.segment) m.push('Customer segment');
+    if (!p.region) m.push('Region');
+    return m;
+  }
+  const tplPrefix = (p) => [p.name, p.tool, p.segment, p.region].join(' - ');
+  /** Next free number for this prefix: 001, 002, ... counted from what is already in the library. */
+  function nextTplNumber(prefix) {
+    const tools = (state.library && state.library.tools) || {};
+    let max = 0;
+    Object.keys(tools).forEach(k => {
+      if (k.indexOf(prefix + ' - ') !== 0) return;
+      const m = /^\d+$/.exec(k.slice(prefix.length + 3));
+      if (m) max = Math.max(max, parseInt(m[0], 10));
+    });
+    return String(max + 1).padStart(3, '0');
+  }
+  function tplFullName(p) { const pre = tplPrefix(p); return pre + ' - ' + nextTplNumber(pre); }
+  async function saveNamedTemplate() {
+    const p = tplParts();
+    const miss = tplMissing(p);
+    if (miss.length) {
+      ['fTplName', 'fTplTool'].forEach(id => { if (!$(id).value.trim()) $(id).classList.add('missing'); });
+      tplNameFeedback();
+      return ' Template not saved — still needed: ' + miss.join(', ') + '.';
+    }
+    if (!state.sop) return ' Template not saved — there is no content yet.';
     if (!state.library) state.library = { tools: {}, updated: '' };
-    const replaced = Object.prototype.hasOwnProperty.call(state.library.tools, name);
-    state.library.tools[name] = contentToTemplate(c, name);
-    await saveLibrary((replaced ? 'Template “' + name + '” replaced.' : 'Template “' + name + '” added.'));
-    return ' ' + (replaced ? 'Replaced' : 'Saved') + ' the template “' + name + '”.';
+    const name = tplFullName(p);
+    state.library.tools[name] = contentToTemplate(fullContentForTemplate(), name);
+    await saveLibrary('Template “' + name + '” added.');
+    $('fSaveTpl').checked = false;                 // one save per tick, so a re-render never adds a duplicate
+    $('saveTplRow').style.display = 'none';
+    return ' Saved the template “' + name + '”.';
   }
 
   function doRender() {
@@ -3417,19 +3464,27 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   $('fSaveTpl').onchange = () => {
     const on = $('fSaveTpl').checked;
     $('saveTplRow').style.display = on ? 'block' : 'none';
-    if (on && !$('fTplName').value.trim() && state.sop) $('fTplName').value = defaultTemplateName(state.sop);
+    if (on && !$('fTplName').value.trim() && state.sop) $('fTplName').value = cleanPart(state.sop.processName || '');
+    if (on && !$('fTplTool').value.trim()) $('fTplTool').value = cleanPart(state.selectedTool || (state.sop && state.sop.referenceTool) || '');
     if (on) tplNameFeedback();
   };
   function tplNameFeedback() {
-    const name = ($('fTplName').value || '').trim();
-    const tools = (state.library && state.library.tools) || {};
     const hint = $('tplNameHint');
-    if (!name) { hint.textContent = 'Give the template a name so it can be found in the library.'; return; }
-    hint.textContent = Object.prototype.hasOwnProperty.call(tools, name)
-      ? 'A template called “' + name + '” already exists — generating will replace it.'
-      : 'This will be added to the library as a new template.';
+    if (!hint) return;
+    const p = tplParts(), miss = tplMissing(p);
+    hint.textContent = miss.length
+      ? 'Still needed before it can be saved: ' + miss.join(', ') + '.'
+      : 'It will be saved as “' + tplFullName(p) + '”.';
   }
-  $('fTplName').addEventListener('input', () => { $('fTplName').classList.remove('missing'); tplNameFeedback(); });
+  ['fTplName', 'fTplTool'].forEach(id => $(id).addEventListener('input', () => { $(id).classList.remove('missing'); tplNameFeedback(); }));
+  ['fSegment', 'fRegion'].forEach(id => $(id).addEventListener('change', tplNameFeedback));
+  $('btnSaveTplNow').onclick = async () => {
+    setStatus('genStatus', 'Saving…');
+    try {
+      const msg = await saveNamedTemplate();
+      setStatus('genStatus', msg.trim(), /^ Saved/.test(msg) ? 'ok' : 'err');
+    } catch (e) { setStatus('genStatus', 'The template could not be saved: ' + e.message, 'err'); }
+  };
 
   // H4 — every field showing a required marker is marked required for assistive technology too.
   // Derived from the markers themselves so the two can never disagree. Re-run after any render

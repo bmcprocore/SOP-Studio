@@ -1914,6 +1914,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   /** The left-hand outline: tick to include, drag to reorder. Titles and the tick only —
    *  the reasoning lives in the detail column beside it. */
+  // Image upload sits on every step row, so a screenshot can be attached as soon as the step exists.
+  // The picture follows the step into the preview, the HTML export and the A4 PDF.
+  function imageButton(s) {
+    const st = findStep(s.id);
+    const n = st ? ((Array.isArray(st.images) && st.images.length) || (st.image ? 1 : 0)) : 0;
+    return '<button class="ord" data-img="' + esc(s.id || '') + '" title="Upload an image for this step (appears after the step in the PDF)" ' +
+      'aria-label="Add image to ' + esc(s.id || '') + '">🖼' + (n ? ' ' + n : '') + '</button>';
+  }
   function renderOutline() {
     const el = $('outlinePanel');
     if (!el) return;
@@ -1944,7 +1952,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
           ' aria-label="Include ' + esc(s.id || '') + '">' +
           moveButtons(i, esc(s.id || '')) + '</span>' +
           '<label class="otitle" for="cbo' + i + '"><span class="oid">' + esc(s.id || '') + '</span> ' + title + '</label>' +
-          '<button class="ord del" data-del="' + i + '" aria-label="Remove ' + esc(s.id || '') + '" title="Remove">×</button>' +
+          '<span class="rowbtns">' + (s.type === 'step' ? imageButton(s) : '') +
+          '<button class="ord del" data-del="' + i + '" aria-label="Remove ' + esc(s.id || '') + '" title="Remove">×</button></span>' +
           '</div>';
       });
       html += '</div>';
@@ -1954,6 +1963,11 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     el.querySelectorAll('[data-move]').forEach(b => b.onclick = () => moveItem(+b.dataset.move, +b.dataset.dir));
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(+b.dataset.del));
     el.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addItem(b.dataset.add));
+    el.querySelectorAll('[data-img]').forEach(b => b.onclick = (e) => {
+      e.preventDefault(); e.stopPropagation();
+      const st = findStep(b.dataset.img);
+      if (st) pickImage(st);
+    });
     wireOutlineDnd(el);
   }
 
@@ -2650,7 +2664,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   }
 
   // ---- per-step guidance images: upload, remove, drag-to-resize (preview only) ----
-  function afterImageChange() { syncSopEditor(); if (state.rendered) doRender(); }
+  function afterImageChange() { syncSopEditor(); renderOutline(); if (state.rendered) doRender(); }
   function findStep(id) { return state.sop && (state.sop.steps || []).find(x => x._id === id); }
   // append one uploaded image (downscaled) to a step's images array
   function pickImage(step) {
@@ -2891,19 +2905,18 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   }
 
   // ============================================================ page size by region (design v3)
-  // The locked design is authored at US Letter. APAC prints on A4, so the page tokens are
-  // overridden rather than the base design being rewritten — one source, two sizes.
+  // The locked design is authored at US Letter, but every export is A4 only (21 Oct 2026, on
+  // Brendan McGurk's instruction): the page tokens are overridden rather than the base design
+  // being rewritten, and the region no longer changes the paper.
   // A4 = 210x297mm, which at the design's 96dpi is 794 x 1123px.
   const PAGE_SIZES = {
     A4:     { w: 794, h: 1123, css: 'A4 portrait',     print: '210mm', printH: '297mm', label: 'A4' },
-    LETTER: { w: 816, h: 1056, css: 'letter portrait', print: '8.5in', printH: '11in',  label: 'US Letter' },
   };
-  const pageSizeFor = (region) => (region === 'APAC' ? PAGE_SIZES.A4 : PAGE_SIZES.LETTER);
+  const pageSizeFor = () => PAGE_SIZES.A4;
 
-  /** Returns the override stylesheet for a region, or '' when the base design already fits. */
+  /** Returns the A4 override stylesheet. The region argument is kept for the callers but unused. */
   function pageSizeCss(region) {
     const ps = pageSizeFor(region);
-    if (ps === PAGE_SIZES.LETTER) return '';
     return ':root{--page-w:' + ps.w + 'px;--page-h:' + ps.h + 'px;}' +
       '@page{size:' + ps.css + ';margin:0;}' +
       '@media print{.page{width:' + ps.print + ';height:' + ps.printH + ';}}';
@@ -3169,7 +3182,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       const { PDFDocument } = window.PDFLib;
       const pdf = await PDFDocument.create();
       const form = pdf.getForm();
-      const PT_W = 612, PT_H = 792, SCALE = PT_W / 816;   // design page 816px wide → 0.75 pt/px
+      const PT_W = 595.28, PT_H = 841.89;   // A4 in points; scale is taken from each page's measured width below
       for (let i = 0; i < pages.length; i++) {
         setStatus('genStatus', '<span class="spin"></span>Building fillable PDF — page ' + (i + 1) + ' of ' + pages.length + '…');
         const pageEl = pages[i];
@@ -3178,6 +3191,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         const page = pdf.addPage([PT_W, PT_H]);
         page.drawImage(img, { x: 0, y: 0, width: PT_W, height: PT_H });
         const pr = pageEl.getBoundingClientRect();
+        const SCALE = PT_W / pr.width;
         Array.from(pageEl.querySelectorAll('[data-field]')).forEach((el, k) => {
           const r = el.getBoundingClientRect();
           const x = (r.left - pr.left) * SCALE;

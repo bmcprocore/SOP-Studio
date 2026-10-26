@@ -22,6 +22,7 @@ assembly and template maintenance — **never redesign the document**.
   (Section 1 uses the "Your access in this tool" panel, not a roles table). Never edit the
   `SOP_DESIGN` CSS/wordmark or component markup without an explicit human instruction to
   version the design.
+  **Update 27 Oct 2026 (Brendan McGurk's instruction): every export is A4 only.** US Letter is removed; the region no longer changes the paper, and the fillable PDF is built at A4 points (595.28x841.89) so pages are no longer stretched. The Letter notes below are historical. Each procedure step also has an image-upload button in the review outline.
   **Design v3** (versioned on Brendan McGurk's explicit instruction, 21 Aug 2026): page size now
   follows the document's region. `_region: "APAC"` prints A4 (794x1123px, `@page size:A4`);
   everything else stays US Letter (816x1056px), which is how the base design is authored. The A4

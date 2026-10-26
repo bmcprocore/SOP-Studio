@@ -536,6 +536,17 @@
         </fieldset>
       </div>
 
+      <div id="createAi" style="margin-top:14px;">
+        <fieldset><legend>Build from a transcript with AI</legend>
+          <div class="note" style="margin-bottom:8px;">Studio cannot read a transcript by itself. Copy the instructions, paste them into Claude or Gemini together with your transcript or notes, then paste the JSON it returns below. The same rules the SOP Content Builder Gem uses are checked before it loads.</div>
+          <button id="btnCopyAiPrompt" class="quiet">Copy AI instructions</button>
+          <label for="aiJson" style="margin-top:10px;">Paste the content JSON the AI returned</label>
+          <textarea id="aiJson" rows="8" spellcheck="false" placeholder="{ &quot;docId&quot;: &quot;&quot;, &quot;steps&quot;: [ ... ] }"></textarea>
+          <button id="btnLoadAiJson" class="primary" style="margin-top:6px;">Check and load</button>
+          <div class="status" id="aiStatus"></div>
+        </fieldset>
+      </div>
+
       <div id="createNew" style="display:none;margin-top:14px;">
         <fieldset><legend>Import a content JSON file</legend>
           <div class="drop" id="jsonDrop" tabindex="0">Drop a content JSON file here (.json), or click to choose</div>
@@ -1607,6 +1618,48 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     renderReview();
     goGate('permissions');   // permissions must be set before the review means anything
   }
+
+
+  // ---- Build from a transcript: the SOP Content Builder Gem's rules, as instructions to copy and a check on what comes back ----
+  const AI_PROMPT = "You are the Procore SOP Content Builder for the Procore Implementation / GPS APAC team.\n\nYOUR ONLY JOB\nTurn call transcripts, meeting notes, or user descriptions into ONE content JSON object that matches the schema at the end of this message. You write the WORDS of the SOP. You never design the document.\n\nHARD RULES - NEVER BREAK THESE\n1. Output ONLY a single JSON object in one code block. No HTML.\n2. Never invent facts. If you don't know a customer name, person's name, date, doc ID, SLA, or commitment, leave that field as an empty string \"\" (the Studio turns it into a visible placeholder). Wrong-but-confident is worse than blank.\n3. Person fields are always \"Name · Role\" (name first, then title), e.g. \"S. Okafor · Project Manager\".\n4. status must be one of: \"in-progress\", \"review\", \"approved\", \"draft\". A NEW SOP is never \"approved\". Use \"in-progress\" if still being built, \"review\" if drafted and sent for sign-off.\n5. Keep ONE consistent docId and version throughout.\n6. \"references\" must only list Procore tools actually used in this SOP's steps, with real support.procore.com URLs of the form https://support.procore.com/products/online/user-guide/project-level/<tool> (e.g. RFIs → rfi, Submittals → submittals, Drawings → drawings, Directory → directory). If unsure of a slug, leave url as \"\".\n7. Keep every step short enough to leave at least half of its page free: the Studio starts each step on a new page so a screenshot can be added underneath. Prefer 3-5 bullets per step and at most one short paragraph.\n\nWRITING STYLE\n- Plain, direct, Australian-English construction register.\n- Real Procore tool names: RFIs, Submittals, Inspections, Drawings, Directory, Workflows, Inbox, Reports, Closeout.\n- Prefer numbered steps, tables and checklists over long prose. No marketing fluff. No emoji.\n- You may use <strong>, <em>, and <code> inside body text fields - nothing else.\n\nSTRUCTURE OF EVERY SOP (fixed order, you fill the content)\n1. Cover - process name, customer, owner, version/status, document control.\n2. Overview - purpose, who it applies to, your access in the tool, 4 phases at a glance.\n3. Procedure - numbered step-by-step in Procore (each step: title, who, which tool, optional time, body, bullets, optional callout tip). Each step gets its own page.\n4. Close out - checklist, common issues & resolutions, Procore reference guides, approvals.\n\nHOW TO WORK\n- If given a transcript: read it fully, extract the process, roles, steps, issues and tools. Prioritise what the customer actually said over assumptions. If a newer transcript contradicts an older one, use the newer.\n- If information is missing for a required field, leave it \"\" - do not ask endless questions, but you may ask ONE short clarifying question if the whole process is unclear.\n- After the JSON code block, end with exactly this line: \"Copy the JSON above into SOP Studio, Create step, 'Build from a transcript with AI', then Check and load.\"\n\nSCHEMA\n# The content contract — every field, and what it becomes\n\nThis is the only thing you author: **one JSON file**. `scripts/render.js` turns it into the\nfinished document. You never write HTML.\n\nUnknown value → empty string `\"\"`. It renders as a visible orange placeholder, which is the\npoint: a gap the human can see and fill beats a plausible invention.\n\n---\n\n## The document has four parts\n\n| Part | What the reader sees | Fields that fill it |\n|---|---|---|\n| **Cover** | Title, customer, ownership, approvals | `processName` `subtitle` `customer` `docId` `version` `status` `processOwner` `effectiveFrom` `approvals` |\n| **Section 1 · Overview** | Why this exists, and **what you are allowed to do** | `purpose` `appliesTo` `access` `phases` |\n| **Section 2 · Procedure** | The steps, one per page | `procedureIntro` `referenceTool` `steps` |\n| **Section 3 · Close out** | Sign-off checklist, troubleshooting, approvals | `closeoutIntro` `owner` `checklist` `issues` `references` |\n\n---\n\n## Cover\n\n| Field | Type | Notes |\n|---|---|---|\n| `docId` | string | e.g. `SOP-RFI-001`. Appears in every page header. |\n| `version` | string | `\"1.0\"`. Appears in every footer. |\n| `status` | string | `draft` \\| `in-progress` \\| `review` \\| `approved`. **New SOPs are always `draft`.** |\n| `customer` | string | The client's name. |\n| `processName` | string | The big cover title, e.g. `\"RFI management\"`. |\n| `subtitle` | string | **Name the persona explicitly** — \"User guide for Site Engineers (Standard permission) raising RFIs in Procore, authored for [Client].\" |\n| `processOwner` | string | `\"Name · Role\"`. |\n| `effectiveFrom` | string | `\"DD Mmm YYYY\"`. |\n| `appliesTo` | string | Business unit / region / project type. Renders in Section 1. |\n| `approvals` | object | `preparedBy`, `reviewedBy`, `approvedBy`, `scheduledReview` — each `{name, date}`. Person fields are `\"Name · Role\"`. |\n\n## Section 1 · `access` — the most important object in the file\n\nThis fills the **\"Your access in this tool\"** panel. It is what makes the document an SOP rather\nthan a generic manual. If it is empty, the section prints bare placeholders and the document has\nfailed at its one job.\n\n```json\n\"access\": {\n  \"tool\": \"RFIs\",\n  \"level\": \"Standard + RFI Manager rights\",\n  \"levelMeaning\": \"You manage the full lifecycle of RFIs you create or are designated RFI Manager for — opening, numbering, distributing, chasing, marking the official response and closing.\",\n  \"granular\": [\n    { \"name\": \"Act as RFI Manager\",\n      \"meaning\": \"Open, number and distribute RFIs you create or manage; set assignees and due dates; close RFIs.\" }\n  ],\n  \"notIncluded\": [\n    \"Edit, reopen or delete other users' RFIs — RFIs Admin.\",\n    \"Configure tool settings or the permissions table — RFIs Admin.\"\n  ]\n}\n```\n\n- `level` — the reader's permission in the client's own words, so it matches their screen.\n- `levelMeaning` — written in **second person** (\"You can…\"), plain language, no jargon.\n- `granular` — only the granular permissions this reader actually holds. Use Procore's exact\n  wording; `docs/procore-permission-reference.md` has it captured from a live instance.\n- `notIncluded` — renders as the **\"Outside your access\"** callout. Each line names the boundary\n  *and who does it instead*, so the reader always knows where the work goes next.\n\nOn Route A this object is copied straight from the persona in the master library. On Route B you\nwrite it — and if you do not know the client's permission setup, **ask**.\n\n## Section 1 · the rest\n\n| Field | Type | Notes |\n|---|---|---|\n| `purpose` | string | Why the process exists and what good looks like. 3–5 lines. |\n| `phases` | array of **exactly 4** | `{name, desc}` — the four chips in \"Process at a glance\". One line each, naming the role that acts. |\n\n## Section 2 · Procedure\n\n| Field | Type | Notes |\n|---|---|---|\n| `procedureIntro` | string | Sets up the steps. On Route A the persona's \"cannot do\" statement is appended here automatically. |\n| `referenceTool` | string | e.g. `\"Procore · RFIs (web & mobile)\"`. |\n| `steps` | array | One step per page. |\n\nEach step:\n\n| Field | Notes |\n|---|---|\n| `_id` | `S01`, `S02`… **Keep these stable across versions** — they are the join key for the future client workflow map. |\n| `title` | One action. If it needs \"and\", it is probably two steps. |\n| `role` | Who performs it — `\"RFI Creator\"`, `\"RFI Manager\"`, `\"All users\"`. |\n| `system` | Where it happens — `\"Procore · RFIs\"`, `\"Site / drawings\"`. |\n| `time` | Realistic, e.g. `\"~5 min\"`, `\"ongoing\"`. Omitted at `simple` detail. |\n| `body` | 1–3 sentences, instruction-based, second person. |\n| `bullets` | Optional. Sub-actions or checks. Omitted at `simple`. |\n| `callout` | Optional `{label, body}`. Omitted at `simple`. |\n\n**Callout labels that carry meaning** — use these rather than inventing new ones:\n\n- `Handoff` — control passes to someone else here.\n- `Scope` — a limit on what this permission reaches.\n- `Cannot do` — a boundary the reader will otherwise walk into.\n- `Why it matters` — the commercial or contractual consequence.\n- `Note` / `Tip` — everything else.\n\n## Section 3 · Close out\n\n| Field | Notes |\n|---|---|\n| `closeoutIntro` | How to use the checklist, and where to go when something does not behave as described. |\n| `owner` | Who owns the close-out. `\"Name · Role\"`. |\n| `checklist` | `{_id (C01…), text, hint, owner}`. `owner` is the role that signs it off. |\n| `issues` | `{_id (E01…), code (RFI-01…), issue, resolution}`. **Only issues this reader can actually resolve.** Omitted entirely at `simple` detail. |\n| `references` | `{tool, url}` — support.procore.com links. |\n\n## Control fields (read by the tooling, not printed)\n\n| Field | Notes |\n|---|---|\n| `_detail` | `simple` \\| `standard` \\| `extended`. See below. |\n| `_region` | `\"APAC\"` prints A4. Anything else prints US Letter. **AU/NZ clients need `\"APAC\"`.** |\n| `_persona` | Which persona this was scoped to. Set by `split-by-role.js`. |\n| `_role` | Set only when a role narrowing was applied. |\n| `_perm` | On library blocks only — `{min, granular}`. The renderer ignores it. |\n\n## Detail levels\n\n| Level | Steps | Bullets & callouts | Issues table |\n|---|---|---|---|\n| `simple` | Short bodies, 1–2 sentences | None | None |\n| `standard` | One step per page | As authored | Yes |\n| `extended` | Expanded, with common-mistake callouts | Required | Yes |\n\n---\n\n## How to write it\n\n- **Second person, present tense.** \"Open the RFIs tool and select Create\" — not \"the user should\n  open…\". Written for the person doing the task at the time they are doing it.\n- **Australian / New Zealand construction English.** Programme, variation, head contract, defect,\n  site diary, progress claim. Use Procore's real tool names for the client's account type.\n- **One action per step.** Decisions and approvals are their own steps.\n- **Plain language.** Assume moderate Procore knowledge and no project-management theory.\n- **Density over prose.** This is a working document, not a white paper.\n- **Inline markup: `<code>`, `<strong>`, `<em>` only.** `<code>` for anything the reader clicks or\n  types — `<code>+ Create</code>`, `<code>Closed</code>`.\n- **Placeholders stay bracketed** — `[X business days]`, `[Customer escalation]` — until someone\n  supplies the real value.\n\n## Two fields the browser app supports and `scripts/render.js` does not\n\n`clientLogo` (a data-URL logo on the cover) and a per-step `image` object render in\n`app/SOP_Studio_v0.1.html` only. The locked design used by `scripts/render.js` ignores both. Do\nnot promise a client screenshots in a command-line render.\n";
+  const SUPPORT_URL = /^https:\/\/support\.procore\.com\/products\/online\/user-guide\/project-level\/[a-z0-9-]+\/?$/;
+  /** Applies the Gem's hard rules. Returns { sop, errors, notes } - errors block the load, notes are fixes or warnings. */
+  function checkAiContent(raw) {
+    const errors = [], notes = [];
+    const txt = String(raw || '').trim();
+    const a = txt.indexOf('{'), b = txt.lastIndexOf('}');
+    if (a < 0 || b < a) return { errors: ['No JSON object found. Paste the code block the AI returned.'], notes };
+    let sop;
+    try { sop = JSON.parse(txt.slice(a, b + 1)); } catch (e) { return { errors: ['That is not valid JSON: ' + e.message], notes }; }
+    if (!Array.isArray(sop.steps) || !sop.steps.length) errors.push('There are no steps. A procedure needs at least one.');
+    if (!['in-progress', 'review', 'approved', 'draft'].includes(sop.status)) {
+      notes.push('Status was "' + (sop.status || '') + '" - set to draft.'); sop.status = 'draft';
+    } else if (sop.status === 'approved') { notes.push('A new SOP is never approved - status set to draft.'); sop.status = 'draft'; }
+    const person = (label, v) => { if (v && !/\S\s·\s\S/.test(v)) notes.push(label + ' "' + v + '" should read "Name · Role".'); };
+    person('Process owner', sop.processOwner); person('Owner', sop.owner);
+    Object.entries(sop.approvals || {}).forEach(([k, v]) => v && person(k, v.name));
+    const used = new Set((sop.steps || []).map(s => String(s.system || '').trim().toLowerCase()).filter(Boolean));
+    if (sop.referenceTool) used.add(String(sop.referenceTool).trim().toLowerCase());
+    (sop.references || []).forEach(r => {
+      if (r.url && !SUPPORT_URL.test(r.url)) { notes.push('Reference "' + r.tool + '" has a link that is not a support.procore.com project-level guide - blanked.'); r.url = ''; }
+      if (used.size && !used.has(String(r.tool || '').trim().toLowerCase())) notes.push('Reference "' + r.tool + '" is not used in any step - check it belongs.');
+    });
+    const bad = /<(?!\/?(?:strong|em|code)\b)[a-z][^>]*>/i;
+    let n = 0; JSON.stringify(sop, (k, v) => { if (typeof v === 'string' && bad.test(v)) n++; return v; });
+    if (n) notes.push(n + ' text field(s) contain HTML other than strong, em and code.');
+    return { sop, errors, notes };
+  }
+  $('btnCopyAiPrompt').onclick = async () => {
+    try { await navigator.clipboard.writeText(AI_PROMPT); setStatus('aiStatus', 'Instructions copied. Paste them into Claude or Gemini, add your transcript, then paste the JSON back here.', 'ok'); }
+    catch (_) { const t = $('aiJson'); t.value = AI_PROMPT; t.select(); setStatus('aiStatus', 'Copy was blocked by the browser - the instructions are in the box below. Select all and copy, then clear the box before pasting the JSON.', 'err'); }
+  };
+  $('btnLoadAiJson').onclick = () => {
+    const r = checkAiContent($('aiJson').value);
+    if (r.errors.length) { setStatus('aiStatus', r.errors.map(esc).join('<br>'), 'err'); return; }
+    loadContent(r.sop, null, 'Loaded "' + (r.sop.processName || 'untitled SOP') + '" from pasted JSON.');
+    if (r.notes.length) goGate('create');   // stay here so the notes are read before moving on
+    setStatus('aiStatus', r.notes.length ? '<b>Loaded.</b> Check these, then open the Permissions step:<br>&bull; ' + r.notes.map(esc).join('<br>&bull; ') : 'Loaded - all Gem rules satisfied.', r.notes.length ? '' : 'ok');
+  };
 
   // ============================================================ permissions screen
   function renderPermissions() {
@@ -3117,6 +3170,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       applyPageSize(doc, c._region);          // set the paper before measuring, not after
       const res = build(c, doc);
       doc.getElementById('viewer').innerHTML = res.pagesHtml;
+      // Gem rule: every step leaves at least half its page free for a screenshot
+      let tight = 0;
+      doc.querySelectorAll('.page .step').forEach(st => {
+        if (st.querySelector('.step-figure')) return;
+        const pb = st.closest('.pg-body'); if (!pb) return;
+        const free = pb.getBoundingClientRect().bottom - st.getBoundingClientRect().bottom;
+        if (free < pb.getBoundingClientRect().height * 0.5) tight++;
+      });
       enableInlineEdit(doc);
       enableImageTools(doc);
       $('prevEmpty').style.display = 'none';
@@ -3131,7 +3192,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         ' · ' + esc(state.detail) + ' detail · ' + res.total + ' pages' +
         '<br><span style="color:var(--g500)">Confirmed by ' + esc(state.confirmed.by) + ' on ' + esc(state.confirmed.at) + '</span>';
       segmentHint();
-      const base = 'Rendered · ' + res.total + ' pages. Review every page before issuing — this is a draft until reviewed and approved.';
+      const base = 'Rendered · ' + res.total + ' pages. Review every page before issuing — this is a draft until reviewed and approved.' +
+        (tight ? ' ' + tight + ' step' + (tight === 1 ? '' : 's') + ' leave less than half a page free for a screenshot — shorten the text if you need the room.' : '');
       setStatus('genStatus', base, 'ok');
       maybeSaveAsTemplate(c)
         .then(extra => { if (extra) setStatus('genStatus', base + extra, 'ok'); })

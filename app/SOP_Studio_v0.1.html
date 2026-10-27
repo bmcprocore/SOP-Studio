@@ -506,8 +506,8 @@
     <span class="savedchip" id="savedChip"></span>
   </div>
   <nav class="modetabs" role="tablist" aria-label="Studio sections">
-    <button role="tab" id="tabLibrary" data-mode="library" aria-selected="true">Library</button>
-    <button role="tab" id="tabSop" data-mode="sop" aria-selected="false">SOP generation</button>
+    <button role="tab" id="tabSop" data-mode="sop" aria-selected="true">SOP generation</button>
+    <button role="tab" id="tabLibrary" data-mode="library" aria-selected="false">Library</button>
   </nav>
   <div class="actions">
     <button id="btnRender" disabled>Render preview</button>
@@ -531,7 +531,7 @@
 
   <section class="work">
 
-    <div class="panel active" id="p-templates">
+    <div class="panel" id="p-templates">
       <h1>Templates</h1>
       <p class="sub">Shared across your whole team — templates saved here are visible to everyone using this app. Manage them here, then use one in the Create step to start an SOP.</p>
       <div id="tplList"></div>
@@ -558,7 +558,7 @@
       </fieldset>
     </div>
 
-    <div class="panel" id="p-create">
+    <div class="panel active" id="p-create">
       <h1>Create an SOP</h1>
       <p class="sub">Choose the region this SOP is for, then start it from one of your saved templates.</p>
       <fieldset><legend>Region</legend>
@@ -1538,7 +1538,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   // ============================================================ gates nav
   const gates = document.querySelectorAll('.rail .gate');
   const STEPS = [['create', 'Create'], ['permissions', 'Permissions'], ['details', 'Details'], ['review', 'Review'], ['generate', 'Generate']];
-  let curGate = 'templates', lastStep = 'create';
+  let curGate = 'create', lastStep = 'create';
   function syncNav(p) {
     curGate = p;
     const lib = p === 'templates';
@@ -1596,7 +1596,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     const i = STEPS.findIndex(x => x[0] === curGate);
     if (i > 0) goGate(STEPS[i - 1][0]);
   };
-  syncNav('templates');
+  syncNav('create');   // the Studio opens on SOP generation, step 1
 
   // ============================================================ uploads
   function readAsDataURL(file) {

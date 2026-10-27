@@ -108,6 +108,12 @@
   button.primary:active{background:var(--orange-press);border-color:var(--orange-press);}
   button.ghost{background:transparent;border-color:var(--ink);color:var(--ink);}
   button.ghost:hover{background:var(--ink);color:#fff;}
+  .aibtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .aibtns button{padding:11px 20px;font-size:14px;}
+  a.btnlink{display:inline-block;font-weight:600;font-size:14px;padding:10px 20px;border:1px solid var(--ink);border-radius:var(--r-btn);
+    color:var(--ink);text-decoration:none;background:transparent;transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
+  a.btnlink:hover{background:var(--ink);color:#fff;}
+  a.btnlink:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
   button.quiet{border-color:transparent;background:transparent;color:var(--g600);padding:6px 8px;}
   button.quiet:hover{background:var(--g100);color:var(--ink);}
   button:disabled{opacity:.45;cursor:not-allowed;}
@@ -539,7 +545,11 @@
       <div id="createAi" style="margin-top:14px;">
         <fieldset><legend>Build from a transcript with AI</legend>
           <div class="note" style="margin-bottom:8px;">Studio cannot read a transcript by itself. Copy the instructions, paste them into Claude or Gemini together with your transcript or notes, then paste the JSON it returns below. The same rules the SOP Content Builder Gem uses are checked before it loads.</div>
-          <button id="btnCopyAiPrompt" class="quiet">Copy AI instructions</button>
+          <div class="aibtns">
+            <button id="btnCopyAiPrompt" class="primary">Copy AI instructions</button>
+            <a class="btnlink" id="lnkGem" href="https://gemini.google.com/gem/1qs07ZzuucEZ5r1zTkPgkgaY2C53jI9Y_?usp=sharing" target="_blank" rel="noopener noreferrer">Open the Gemini Gem</a>
+          </div>
+          <div class="note" style="margin-top:6px;">The Gem is the quicker route if you use Gemini. It writes in the older layout, so check the JSON here before it loads.</div>
           <label for="aiJson" style="margin-top:10px;">Paste the content JSON the AI returned</label>
           <textarea id="aiJson" rows="8" spellcheck="false" placeholder="{ &quot;docId&quot;: &quot;&quot;, &quot;steps&quot;: [ ... ] }"></textarea>
           <button id="btnLoadAiJson" class="primary" style="margin-top:6px;">Check and load</button>

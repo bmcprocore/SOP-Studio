@@ -32,6 +32,7 @@ assembly and template maintenance — **never redesign the document**.
   chosen size, so page counts differ between papers. (It was three until 27 Aug 2026, when the
   skill's hand-written skeleton — a second copy of the design that had already fallen behind —
   was removed. The skill now assembles content only.)
+- `imports/bmc-design-systems-apac/` — the BMC APAC Procore design system (tokens, components, locked SOP template). **Local only and git-ignored (520 MB).** It is the brand authority for the Studio UI and the SOP document: callouts, tabs, buttons, dialogs and status chips follow its `components/`. Paper stays A4 by Brendan McGurk's instruction even though its SOP template is Letter.
 - `app/SOP_Studio_v0.1.html` — the Claude-artifact app version (reference implementation).
 - `scripts/render.js` — headless render: content JSON → final standalone SOP HTML (and PDF).
 - `scripts/split-by-role.js` — master library + persona → permission-scoped content JSON.

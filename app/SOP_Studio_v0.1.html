@@ -470,6 +470,26 @@
   .stepbtns{display:flex;gap:8px;margin-left:auto;}
   .stepbtns button{padding:11px 22px;font-size:14px;}
   body.mode-library .stepbar{display:none;}
+
+  /* ---- walkthrough video: entry card + pop-up ---- */
+  .videocard{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;margin:0 0 18px;
+    background:#fff;border:1px solid var(--g200);border-radius:var(--r-card);color:var(--ink);font-weight:400;}
+  .videocard:hover{background:var(--g100);}
+  .videocard .vplay{flex:none;width:44px;height:44px;border-radius:999px;background:var(--orange);color:#fff;
+    display:flex;align-items:center;justify-content:center;}
+  .videocard:hover .vplay{background:var(--orange-hover);}
+  .videocard .vtxt{display:flex;flex-direction:column;gap:2px;}
+  .videocard b{font-size:14.5px;font-weight:600;}
+  .videocard small{font-size:12.5px;color:var(--g500);}
+  .vmodal[hidden]{display:none;}
+  .vmodal{position:fixed;inset:0;z-index:100;background:rgba(26,32,44,.6);display:flex;align-items:center;justify-content:center;padding:24px;}
+  .vbox{width:min(960px,100%);background:#fff;border-radius:var(--r-card);box-shadow:0 24px 64px rgba(20,23,29,.18);overflow:hidden;}
+  .vhead{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 10px 18px;border-bottom:1px solid var(--g200);
+    font-size:14.5px;font-weight:600;}
+  .vclose{width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--ink);}
+  .vclose:hover{background:var(--g100);}
+  .vframe{position:relative;width:100%;aspect-ratio:16/9;background:var(--ink);}
+  .vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 </style>
 </head>
 <body class="no-preview">
@@ -559,6 +579,10 @@
     </div>
 
     <div class="panel active" id="p-create">
+      <button type="button" class="videocard" id="btnWatchVideo" aria-haspopup="dialog">
+        <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg></span>
+        <span class="vtxt"><b>New here? Watch how to use the Studio</b><small>A short walkthrough, from choosing a template to downloading the PDF.</small></span>
+      </button>
       <h1>Create an SOP</h1>
       <p class="sub">Choose the region this SOP is for, then start it from one of your saved templates.</p>
       <fieldset><legend>Region</legend>
@@ -811,6 +835,17 @@
     <iframe id="frame" title="SOP preview"></iframe>
   </section>
 </main>
+<div class="vmodal" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoTitle" hidden>
+  <div class="vbox">
+    <div class="vhead">
+      <span id="videoTitle">How to use SOP Studio</span>
+      <button type="button" class="vclose" id="btnCloseVideo" aria-label="Close video">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="vframe" id="videoFrame"></div>
+  </div>
+</div>
 <footer class="appbar">
   <span>Created by <span class="who">Brendan McGurk</span> · APAC Strategic Product Consultant</span>
   <span>Questions or support: message me on Slack, or post in the <span class="chan">SOP Studio</span> channel</span>
@@ -1597,6 +1632,27 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     if (i > 0) goGate(STEPS[i - 1][0]);
   };
   syncNav('create');   // the Studio opens on SOP generation, step 1
+
+  // ---- walkthrough video pop-up ----
+  const VIDEO_ID = '10oZOh94tvbCjRToa5X5sHBJX4DmLz_XW';
+  let videoOpener = null;
+  function openVideo() {
+    videoOpener = document.activeElement;
+    $('videoFrame').innerHTML = '<iframe src="https://drive.google.com/file/d/' + VIDEO_ID + '/preview" title="How to use SOP Studio" ' +
+      'allow="autoplay; fullscreen" allowfullscreen referrerpolicy="no-referrer"></iframe>';
+    $('videoModal').hidden = false;
+    $('btnCloseVideo').focus();
+  }
+  function closeVideo() {
+    if ($('videoModal').hidden) return;
+    $('videoModal').hidden = true;
+    $('videoFrame').innerHTML = '';   // removing the frame stops playback
+    if (videoOpener && videoOpener.focus) videoOpener.focus();
+  }
+  $('btnWatchVideo').onclick = openVideo;
+  $('btnCloseVideo').onclick = closeVideo;
+  $('videoModal').addEventListener('click', (e) => { if (e.target === $('videoModal')) closeVideo(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeVideo(); });
 
   // ============================================================ uploads
   function readAsDataURL(file) {

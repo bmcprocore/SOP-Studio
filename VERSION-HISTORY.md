@@ -33,6 +33,7 @@ circulation; no technical knowledge assumed.
 | 3.18 | 27 Aug 2026 | **Template gallery** — all 80 Procore tools registered, with granular permissions per tool |
 | 3.19 | 27 Aug 2026 | **Seeded libraries** — Procore's permission matrices harvested; 11 tools now start half-built |
 | 3.20 | 2 Oct 2026 | **Hosted on Procore Sites** — a Sites build that prints to PDF; template delete confirmed by name; PDF libraries travel inside the file |
+| 3.21 | 29 Oct 2026 | **Guided flow and A4 only** — Library and SOP generation tabs, numbered steps with Back and Next, A4-only PDF, step images, transcript import, template naming, version status, walkthrough video |
 
 ---
 
@@ -500,6 +501,34 @@ write it if any trace of the PDF libraries remains. The document design is untou
 
 Version numbers: 3.18 and 3.19 changed templates and data but never moved the badge in the Studio
 itself, which still read 3.17. The badge now says 3.20 and matches this file.
+
+---
+
+## 3.21 — Guided flow and A4 only
+
+Feedback from colleagues was that the left-hand menu made it hard to see where you were and what
+came next. This version reworks the navigation and adds the features requested alongside it.
+
+- **Two tabs, five numbered steps.** *SOP generation* and *Library* sit at the top, and the Studio
+  opens on SOP generation. The steps are numbered 1 to 5 (Create, Permissions, Details, Review,
+  Generate) in a menu that pops out from the left edge, with Back and Next at the bottom right.
+  Next is held back, with a reason, if no template is chosen or the Review list is not confirmed.
+- **A4 only.** US Letter is gone. The fillable PDF was being built on Letter-sized pages and
+  stretching A4 content to fit; it is now built at true A4 size.
+- **Screenshots after each step.** Every procedure step has an image button in the Review outline.
+  A warning appears on render if a step leaves less than half a page free.
+- **Build from a transcript with AI.** Copy the SOP Content Builder instructions into Claude or
+  Gemini, paste the JSON back, and the Studio checks it against the same rules before loading. A
+  link to the Gemini Gem sits beside the button.
+- **Template names.** Templates saved from the Generate page are named Template name - Tool -
+  Customer segment - Region - 001, with the number counting up automatically.
+- **Version status.** Draft, Pending or Live, shown on the cover.
+- **Brand alignment.** No emoji, footer carries the document title, and callout boxes use a 1px
+  semantic border with no fill.
+- **Walkthrough video** on the front page, in a pop-up with a close button.
+
+Known gaps: `scripts/check-four.js` still clicks the old Templates button in the left rail, and
+the video needs its Drive file shared with the people watching it.
 
 ---
 

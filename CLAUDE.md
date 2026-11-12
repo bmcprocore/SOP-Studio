@@ -33,6 +33,7 @@ assembly and template maintenance — **never redesign the document**.
   skill's hand-written skeleton — a second copy of the design that had already fallen behind —
   was removed. The skill now assembles content only.)
 - `imports/bmc-design-systems-apac/` — the BMC APAC Procore design system (tokens, components, locked SOP template). **Local only and git-ignored (520 MB).** It is the brand authority for the Studio UI and the SOP document: callouts, tabs, buttons, dialogs and status chips follow its `components/`. Paper stays A4 by Brendan McGurk's instruction even though its SOP template is Letter.
+- **Studio chrome (v3.22):** dark shell with a glass sidebar and orange glow, by Brendan McGurk's instruction (12 Nov 2026). This is a deliberate exception to the design system's "no glassmorphism, no glow" rule and applies to the app chrome only, never to the SOP document.
 - `app/SOP_Studio_v0.1.html` — the Claude-artifact app version (reference implementation).
 - `scripts/render.js` — headless render: content JSON → final standalone SOP HTML (and PDF).
 - `scripts/split-by-role.js` — master library + persona → permission-scoped content JSON.

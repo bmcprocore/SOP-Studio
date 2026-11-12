@@ -131,29 +131,6 @@
   footer.appbar .chan{color:var(--ink);font-weight:600;}
   @media (max-width:1100px){footer.appbar span:first-child{overflow:hidden;text-overflow:ellipsis;}}
 
-  /* ---- gate rail (signature) ---- */
-  nav.rail{background:var(--ink);display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:4px;}
-  .rail-group{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;}
-  .rail-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--g400);
-    text-align:center;line-height:1.35;margin:0 0 6px;padding:0 10px;}
-  .rail .gate{width:128px;padding:12px 6px 11px;border:none;background:transparent;color:var(--g400);
-    display:flex;flex-direction:column;align-items:center;gap:7px;border-radius:var(--r-btn);cursor:pointer;
-    transition:background var(--t-base) var(--ease),color var(--t-base) var(--ease);}
-  .rail .gate:hover{background:rgba(255,255,255,.06);color:#fff;}
-  /* Gate markers use the logo. Against the dark rail the black tile recedes and the white C
-     plus orange hex carry the mark. Progress is shown by weight, never by recolouring the
-     brand: pending is muted grey, done is three-quarter strength, the current gate is full. */
-  .rail .gate .dot{width:26px;height:26px;flex:none;background:var(--logomark) no-repeat center/contain;
-    opacity:.34;filter:grayscale(1);
-    transition:opacity var(--t-base) var(--ease),filter var(--t-base) var(--ease);}
-  .rail .gate:hover .dot{opacity:.6;}
-  .rail .gate small{font-size:10px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;
-    line-height:1.3;text-align:center;}
-  .rail .gate.done .dot{opacity:.8;filter:none;}
-  .rail .gate.active{color:#fff;}
-  .rail .gate.active .dot{opacity:1;filter:none;}
-  .rail .spine{width:56px;flex:none;height:1px;background:var(--g600);margin:14px 0;}
-
   /* ---- work column ---- */
   .work{background:#fff;border-right:1px solid var(--g200);overflow-y:auto;min-height:0;padding:18px 20px 60px;}
   .panel{display:none;} .panel.active{display:block;}
@@ -432,34 +409,6 @@
   .modetabs button:hover{background:transparent;color:var(--ink);}
   .modetabs button[aria-selected="true"]{color:var(--ink);font-weight:600;border-bottom-color:var(--orange);}
 
-  /* ---- numbered steps: slim strip that pops out to show names ---- */
-  main{grid-template-columns:56px 470px 1fr;}
-  body.no-preview main{grid-template-columns:56px 1fr;}
-  body.mode-library main{grid-template-columns:0 1fr;}
-  body.mode-library nav.rail{visibility:hidden;overflow:hidden;}   /* keep the grid cell so the work column does not slide into it */
-  body.mode-library .rail-inner{display:none;}
-  body.mode-library .preview{position:fixed;left:-100000px;top:0;width:1100px;height:900px;}
-  nav.rail{position:relative;z-index:25;padding:0;display:block;background:var(--ink);overflow:visible;}
-  .rail-inner{position:absolute;top:0;bottom:0;left:0;width:56px;background:var(--ink);display:flex;flex-direction:column;
-    align-items:stretch;gap:4px;padding:12px 8px;overflow:hidden;
-    transition:width var(--t-base) var(--ease),box-shadow var(--t-base) var(--ease);}
-  nav.rail.open .rail-inner{width:236px;box-shadow:0 24px 64px rgba(20,23,29,.18);}
-  .railtoggle{display:flex;align-items:center;gap:12px;width:100%;padding:8px 9px;margin-bottom:8px;border:1px solid rgba(255,255,255,.18);
-    background:transparent;color:#fff;border-radius:var(--r-btn);white-space:nowrap;}
-  .railtoggle:hover{background:rgba(255,255,255,.08);}
-  .railtoggle .lbl,.rail .gate small{opacity:0;transition:opacity var(--t-base) var(--ease);}
-  nav.rail.open .railtoggle .lbl,nav.rail.open .gate small{opacity:1;}
-  .rail .gate{width:100%;flex-direction:row;justify-content:flex-start;gap:12px;padding:8px 6px;white-space:nowrap;}
-  .rail .gate small{font-size:14px;font-weight:600;letter-spacing:0;text-transform:none;text-align:left;}
-  .rail .gate .num{flex:none;width:28px;height:28px;border-radius:999px;border:1.5px solid var(--g500);color:var(--g400);
-    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;
-    transition:background var(--t-base) var(--ease),border-color var(--t-base) var(--ease),color var(--t-base) var(--ease);}
-  .rail .gate:hover .num{border-color:#fff;color:#fff;}
-  .rail .gate.active .num{background:var(--orange);border-color:var(--orange);color:#fff;}
-  .rail .gate.done .num{border-color:var(--orange);color:transparent;
-    background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF5200' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") no-repeat center/16px;}
-  .rail .gate.active small{color:#fff;}
-
   /* ---- Back / Next: floating controls, no banner. The bar itself is see-through and ignores the
      mouse, so only the buttons and chips take clicks and nothing underneath is hidden. ---- */
   .stepbar{position:sticky;bottom:14px;margin:24px 0 -40px;padding:0;background:transparent;border:0;
@@ -497,6 +446,170 @@
   .vclose:hover{background:var(--g100);}
   .vframe{position:relative;width:100%;aspect-ratio:16/9;background:var(--ink);}
   .vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+
+  /* =====================================================================================
+     v3.22 shell — dark ground, glass sidebar, orange glow. Chrome only: the SOP document
+     and its locked design are untouched. Glass and glow are a deliberate exception to the
+     BMC APAC design system, made on Brendan McGurk's instruction (12 Nov 2026).
+     ===================================================================================== */
+  :root{--sb-w:256px;--glass-line:rgba(255,255,255,.14);--t-side:280ms;}
+  body{background:#10141C;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:
+    radial-gradient(720px 520px at 0% 14%,rgba(255,82,0,.30),transparent 62%),
+    radial-gradient(560px 420px at 10% 100%,rgba(255,82,0,.18),transparent 60%),
+    radial-gradient(900px 600px at 100% 0%,rgba(255,82,0,.07),transparent 60%);}
+  header.bar,main,footer.appbar,.restorebar,#jswarn{position:relative;z-index:1;}
+
+  /* top bar */
+  header.bar{background:transparent;border-bottom:0;color:#fff;gap:20px;}
+  .brand{color:#fff;white-space:nowrap;min-width:0;}
+  .brand small{color:rgba(255,255,255,.55);overflow:hidden;text-overflow:ellipsis;}
+  .brand .vtag{background:rgba(255,255,255,.08);border-color:var(--glass-line);color:rgba(255,255,255,.75);}
+  .savedchip{color:rgba(255,255,255,.5);}
+  .draftchip{background:rgba(255,255,255,.10);color:rgba(255,255,255,.78);}
+  .draftchip.ready{background:rgba(31,138,91,.28);color:#7FE0B4;}
+  .menubtn{display:none;width:40px;height:40px;padding:0;align-items:center;justify-content:center;flex:none;
+    background:rgba(255,255,255,.08);border-color:var(--glass-line);color:#fff;}
+  .menubtn:hover{background:rgba(255,255,255,.16);}
+  .modetabs button{color:rgba(255,255,255,.6);white-space:nowrap;}
+  .modetabs button:hover{color:#fff;}
+  .modetabs button[aria-selected="true"]{color:#fff;box-shadow:0 10px 18px -12px var(--orange);}
+  header.bar .actions{display:flex;gap:8px;flex:none;}
+  header.bar .actions button{background:rgba(255,255,255,.08);border-color:var(--glass-line);color:#fff;}
+  header.bar .actions button:hover:not(:disabled){background:rgba(255,255,255,.16);}
+  header.bar .actions #btnDownload:not(:disabled){background:var(--orange);border-color:var(--orange);box-shadow:0 0 22px rgba(255,82,0,.45);}
+  header.bar .actions #btnDownload:hover:not(:disabled){background:var(--orange-hover);}
+  .restorebar{background:rgba(255,255,255,.07);border-bottom:1px solid var(--glass-line);color:#fff;}
+  .restorebar .txt{color:rgba(255,255,255,.85);}
+  .restorebar button.quiet{color:rgba(255,255,255,.75);}
+  .restorebar button.quiet:hover{background:rgba(255,255,255,.12);color:#fff;}
+  footer.appbar{background:transparent;border-top:0;color:rgba(255,255,255,.45);}
+  footer.appbar .who,footer.appbar .chan{color:rgba(255,255,255,.8);}
+
+  /* layout */
+  main{grid-template-columns:var(--sb-w) 470px 1fr;padding:0 12px 4px 0;transition:grid-template-columns var(--t-side) var(--ease);}
+  body.no-preview main,body.mode-library main{grid-template-columns:var(--sb-w) 1fr;}
+  body.mode-library .stepbar{display:none;}
+  .work{border-right:0;border-radius:18px 0 0 18px;padding:28px 32px 72px;box-shadow:0 24px 64px rgba(0,0,0,.28);}
+  body.no-preview .work,body.mode-library .work{border-radius:18px;}
+  .preview{border-radius:0 18px 18px 0;overflow:hidden;}
+  body.no-preview .panel,body.mode-library .panel{margin-left:auto;margin-right:auto;}
+
+  /* calmer panels */
+  .panel h1{font-size:24px;margin-bottom:6px;}
+  .panel .sub{font-size:14px;margin-bottom:20px;}
+  fieldset{border-radius:14px;padding:16px 18px 18px;margin-bottom:18px;}
+  label{font-size:13px;margin:10px 0 4px;}
+  input[type=text],input[type=date],select,textarea{font-size:14px;padding:9px 11px;}
+  textarea{font-size:12px;}
+  .note,.seg-note{font-size:12px;}
+  .status{font-size:13px;}
+
+  /* ---- the sidebar ---- */
+  nav.rail{position:relative;padding:0 12px 0 12px;min-height:0;background:transparent;}
+  .rail-inner{position:relative;height:100%;display:flex;flex-direction:column;gap:4px;padding:14px 10px 10px;border-radius:22px;
+    overflow:hidden auto;scrollbar-width:none;
+    background:linear-gradient(165deg,rgba(255,255,255,.13),rgba(255,255,255,.04) 45%,rgba(255,255,255,.07));
+    border:1px solid var(--glass-line);
+    -webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(255,255,255,.04),0 24px 64px rgba(0,0,0,.35);}
+  .rail-inner::-webkit-scrollbar{display:none;}
+  /* a slow ember behind the glass, so there is something for it to blur */
+  nav.rail::before{content:"";position:absolute;left:-30px;top:8%;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,82,0,.55),transparent 68%);filter:blur(28px);
+    animation:ember 18s var(--ease) infinite alternate;pointer-events:none;}
+  @keyframes ember{from{transform:translate(0,0);opacity:.75}to{transform:translate(60px,58vh);opacity:1}}
+  @media (prefers-reduced-motion:reduce){nav.rail::before{animation:none;}}
+
+  .sb-prog{padding:2px 8px 12px;}
+  .sb-label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.5);
+    white-space:nowrap;overflow:hidden;margin-bottom:8px;}
+  .sb-track{height:4px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;}
+  .sb-track i{display:block;height:100%;width:20%;border-radius:999px;background:var(--orange);
+    box-shadow:0 0 12px var(--orange),0 0 4px #fff inset;transition:width var(--t-side) var(--ease);}
+  .sb-div{height:1px;margin:10px 8px;background:var(--glass-line);flex:none;}
+  .sb-spacer{flex:1;min-height:12px;}
+
+  .rail .gate,.rail .sbbtn{position:relative;display:flex;align-items:center;gap:12px;width:100%;flex:none;padding:9px 9px;
+    border:1px solid transparent;border-radius:14px;background:transparent;color:rgba(255,255,255,.66);text-align:left;
+    font-weight:400;cursor:pointer;
+    transition:background var(--t-base) var(--ease),border-color var(--t-base) var(--ease),color var(--t-base) var(--ease),
+      box-shadow var(--t-slow) var(--ease),transform var(--t-base) var(--ease);}
+  .rail .gate:hover,.rail .sbbtn:hover{background:rgba(255,255,255,.08);color:#fff;transform:translateX(2px);}
+  .rail .gate:active,.rail .sbbtn:active{transform:translateX(2px) translateY(1px);}
+  .rail .gate:focus-visible,.rail .sbbtn:focus-visible{outline:2px solid var(--orange);outline-offset:-2px;}
+  .rail .txt{display:flex;flex-direction:column;min-width:0;overflow:hidden;white-space:nowrap;
+    transition:opacity var(--t-base) var(--ease);}
+  .rail .txt small{font-size:14px;font-weight:600;line-height:1.25;letter-spacing:0;text-transform:none;color:inherit;}
+  .rail .txt em{font-style:normal;font-size:11.5px;line-height:1.3;color:rgba(255,255,255,.45);overflow:hidden;text-overflow:ellipsis;}
+  .rail .num{flex:none;width:32px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+    border:1.5px solid rgba(255,255,255,.26);color:rgba(255,255,255,.75);background:rgba(255,255,255,.04);
+    font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;
+    transition:background var(--t-base) var(--ease),border-color var(--t-base) var(--ease),color var(--t-base) var(--ease),
+      box-shadow var(--t-slow) var(--ease);}
+  .rail .gate:hover .num,.rail .sbbtn:hover .num{border-color:rgba(255,255,255,.6);color:#fff;}
+  /* the line that joins one step to the next */
+  .rail .gate.step:not(.last)::after{content:"";position:absolute;left:25px;top:46px;width:1.5px;height:18px;
+    background:rgba(255,255,255,.18);transition:background var(--t-slow) var(--ease),box-shadow var(--t-slow) var(--ease);}
+  .rail .gate.step.done::after{background:var(--orange);box-shadow:0 0 8px var(--orange);}
+  .rail .gate.done .num{border-color:var(--orange);color:transparent;
+    background:rgba(255,82,0,.12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF5200' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") no-repeat center/16px;}
+  .rail .gate.active{color:#fff;border-color:rgba(255,82,0,.5);
+    background:linear-gradient(90deg,rgba(255,82,0,.30),rgba(255,82,0,.07));
+    box-shadow:0 0 28px rgba(255,82,0,.28),inset 0 1px 0 rgba(255,255,255,.14);}
+  .rail .gate.active::before{content:"";position:absolute;left:-1px;top:24%;bottom:24%;width:3px;border-radius:0 3px 3px 0;
+    background:var(--orange);box-shadow:0 0 14px 1px var(--orange);}
+  .rail .gate.active .num{background:var(--orange);border-color:var(--orange);color:#fff;
+    box-shadow:0 0 0 4px rgba(255,82,0,.2),0 0 20px rgba(255,82,0,.8);}
+  .rail .gate.active .txt em{color:rgba(255,255,255,.7);}
+  .rail .num.play{background:var(--orange);border-color:var(--orange);color:#fff;box-shadow:0 0 16px rgba(255,82,0,.55);}
+  .rail .num.chev svg{transition:transform var(--t-side) var(--ease);}
+
+  /* collapsed to icons (desktop and tablet) */
+  @media (min-width:761px){
+    body.sb-collapsed{--sb-w:88px;}
+    body.sb-collapsed .rail .txt{opacity:0;width:0;}
+    body.sb-collapsed .rail .gate,body.sb-collapsed .rail .sbbtn{justify-content:center;gap:0;padding-left:0;padding-right:0;}
+    body.sb-collapsed .rail .gate:hover,body.sb-collapsed .rail .sbbtn:hover{transform:none;}
+    body.sb-collapsed .rail .gate.step:not(.last)::after{left:calc(50% - 1px);}
+    body.sb-collapsed .sb-label{display:none;}
+    body.sb-collapsed .sb-prog{padding:8px 8px 14px;}
+    body.sb-collapsed .rail .num.chev svg{transform:rotate(180deg);}
+  }
+
+  /* tablet: the form column gives way before the preview does */
+  @media (max-width:1180px){
+    main{grid-template-columns:var(--sb-w) minmax(340px,44%) 1fr;}
+    #docLabel,.savedchip{display:none;}
+    header.bar .actions button{padding:8px 12px;}
+    .work{padding:24px 22px 72px;}
+  }
+
+  /* phone: the sidebar becomes a drawer, form and preview stack */
+  .sb-scrim{display:none;}
+  @media (max-width:760px){
+    .menubtn{display:inline-flex;}
+    header.bar{padding:0 10px;gap:10px;}
+    .modetabs,#docLabel,.savedchip,.brand .vtag,.draftchip{display:none;}
+    .brand{flex:none;} .brand .bname{display:none;}
+    header.bar .actions{margin-left:auto;}
+    header.bar .actions button{padding:8px 10px;font-size:12px;}
+    footer.appbar{padding:0 10px;} footer.appbar span+span{display:none;}
+    main,body.no-preview main,body.mode-library main{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:8px;padding:0 8px 4px;}
+    body.no-preview main,body.mode-library main{grid-template-rows:minmax(0,1fr);}
+    .work,.preview{border-radius:16px;}
+    .work{padding:20px 16px 76px;}
+    .row2{grid-template-columns:1fr;}
+    nav.rail{position:fixed;top:0;left:0;bottom:0;width:min(300px,86vw);padding:10px;z-index:60;
+      transform:translateX(-110%);transition:transform var(--t-side) var(--ease);}
+    nav.rail::before{display:none;}
+    .rail-inner{background:linear-gradient(165deg,rgba(40,46,60,.92),rgba(20,24,33,.92));}
+    body.sb-open nav.rail{transform:none;}
+    body.sb-open .sb-scrim{display:block;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.6);}
+    .stepbar{bottom:10px;}
+    .stepinfo{display:none;}
+    #p-review .review-split{grid-template-columns:1fr !important;}
+  }
 </style>
 </head>
 <body class="no-preview">
@@ -527,7 +640,10 @@
   </span>
 </div>
 <header class="bar">
-  <div class="brand"><span class="hexmark"></span> Procore SOP Studio <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.21</span>
+  <button type="button" class="menubtn" id="btnMenu" aria-label="Open menu" aria-controls="rail">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.22</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -542,19 +658,22 @@
   </div>
 </header>
 <main>
-  <nav class="rail" id="rail" aria-label="SOP generation steps">
+  <nav class="rail" id="rail" aria-label="Studio navigation">
     <div class="rail-inner">
-      <button class="railtoggle" id="railToggle" aria-expanded="false" aria-controls="rail" title="Show or hide the steps">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <span class="lbl">Steps</span>
-      </button>
-      <button class="gate" data-p="create"><span class="num">1</span><small>Create</small></button>
-      <button class="gate" data-p="permissions"><span class="num">2</span><small>Permissions</small></button>
-      <button class="gate" data-p="details"><span class="num">3</span><small>Details</small></button>
-      <button class="gate" data-p="review"><span class="num">4</span><small>Review</small></button>
-      <button class="gate" data-p="generate"><span class="num">5</span><small>Generate</small></button>
+      <div class="sb-prog"><span class="sb-label" id="sbProg">Step 1 of 5</span><div class="sb-track"><i id="sbBar"></i></div></div>
+      <button class="gate step" data-p="create" title="Step 1: Create"><span class="num">1</span><span class="txt"><small>Create</small><em>Choose a template</em></span></button>
+      <button class="gate step" data-p="permissions" title="Step 2: Permissions"><span class="num">2</span><span class="txt"><small>Permissions</small><em>Set what the reader can do</em></span></button>
+      <button class="gate step" data-p="details" title="Step 3: Details"><span class="num">3</span><span class="txt"><small>Details</small><em>Client and document details</em></span></button>
+      <button class="gate step" data-p="review" title="Step 4: Review"><span class="num">4</span><span class="txt"><small>Review</small><em>Confirm what is included</em></span></button>
+      <button class="gate step last" data-p="generate" title="Step 5: Generate"><span class="num">5</span><span class="txt"><small>Generate</small><em>Preview and download</em></span></button>
+      <div class="sb-div"></div>
+      <button class="gate" data-p="templates" title="Template library"><span class="num ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="txt"><small>Library</small><em>Manage templates</em></span></button>
+      <div class="sb-spacer"></div>
+      <button type="button" class="sbbtn" id="btnWatchVideo" aria-haspopup="dialog" title="Watch the walkthrough"><span class="num ico play"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg></span><span class="txt"><small>Watch walkthrough</small></span></button>
+      <button type="button" class="sbbtn" id="railToggle" aria-expanded="true" aria-controls="rail" title="Collapse or expand the sidebar"><span class="num ico chev"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg></span><span class="txt"><small>Collapse</small></span></button>
     </div>
   </nav>
+  <div class="sb-scrim" id="sbScrim"></div>
 
   <section class="work">
 
@@ -586,10 +705,6 @@
     </div>
 
     <div class="panel active" id="p-create">
-      <button type="button" class="videocard" id="btnWatchVideo" aria-haspopup="dialog">
-        <span class="vplay" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg></span>
-        <span class="vtxt"><b>New here? Watch how to use the Studio</b><small>A short walkthrough, from choosing a template to downloading the PDF.</small></span>
-      </button>
       <h1>Create an SOP</h1>
       <p class="sub">Choose the region this SOP is for, then start it from one of your saved templates.</p>
       <fieldset><legend>Region</legend>
@@ -1592,7 +1707,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     gates.forEach(g => {
       const gi = STEPS.findIndex(x => x[0] === g.dataset.p);
       g.classList.toggle('active', g.dataset.p === p);
-      g.classList.toggle('done', i > -1 && gi < i);
+      g.classList.toggle('done', i > -1 && gi > -1 && gi < i);
       if (g.dataset.p === p) g.setAttribute('aria-current', 'step'); else g.removeAttribute('aria-current');
     });
     if (i > -1) {
@@ -1603,7 +1718,9 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       if (i < STEPS.length - 1) $('btnNext').textContent = 'Next: ' + STEPS[i + 1][1];
     }
     $('stepMsg').textContent = '';
-    $('rail').classList.remove('open'); $('railToggle').setAttribute('aria-expanded', 'false');
+    $('sbBar').style.width = (i > -1 ? (i + 1) / STEPS.length * 100 : 100) + '%';
+    $('sbProg').textContent = i > -1 ? 'Step ' + (i + 1) + ' of ' + STEPS.length : 'Library';
+    closeDrawer();
     const w = document.querySelector('.work'); if (w) w.scrollTop = 0;
   }
   window.__syncNav = syncNav;
@@ -1614,13 +1731,28 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   gates.forEach(g => g.onclick = () => goGate(g.dataset.p));
   $('tabLibrary').onclick = () => goGate('templates');
   $('tabSop').onclick = () => goGate(lastStep);
-  $('railToggle').onclick = (e) => {
-    e.stopPropagation();
-    const open = $('rail').classList.toggle('open');
-    $('railToggle').setAttribute('aria-expanded', String(open));
+  // Sidebar: collapses to icons on desktop and tablet, slides in as a drawer on a phone.
+  const mqPhone = window.matchMedia('(max-width:760px)');
+  function closeDrawer() { document.body.classList.remove('sb-open'); }
+  function setSidebar(collapsed, remember) {
+    document.body.classList.toggle('sb-collapsed', collapsed);
+    $('railToggle').setAttribute('aria-expanded', String(!collapsed));
+    $('railToggle').querySelector('small').textContent = mqPhone.matches ? 'Close menu' : collapsed ? 'Expand' : 'Collapse';
+    if (remember) { try { localStorage.setItem('sop-sidebar', collapsed ? '1' : '0'); } catch (_) {} }
+  }
+  $('railToggle').onclick = () => {
+    if (mqPhone.matches) { closeDrawer(); return; }
+    setSidebar(!document.body.classList.contains('sb-collapsed'), true);
   };
-  document.addEventListener('click', (e) => { if (!$('rail').contains(e.target)) { $('rail').classList.remove('open'); $('railToggle').setAttribute('aria-expanded', 'false'); } });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { $('rail').classList.remove('open'); $('railToggle').setAttribute('aria-expanded', 'false'); } });
+  $('btnMenu').onclick = () => document.body.classList.add('sb-open');
+  mqPhone.addEventListener('change', () => { closeDrawer(); setSidebar(document.body.classList.contains('sb-collapsed'), false); });
+  $('sbScrim').onclick = closeDrawer;
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+  (function () {
+    let saved = null;
+    try { saved = localStorage.getItem('sop-sidebar'); } catch (_) {}
+    setSidebar(saved !== null ? saved === '1' : window.innerWidth < 1100, false);
+  })();
   /** Why Next is held back on a step, or '' when it can go on. The rail stays free; this only guards the guided route. */
   function nextBlocked(p) {
     if (p === 'create' && !state.sop) return 'Choose a template or load some content first.';

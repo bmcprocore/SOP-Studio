@@ -34,6 +34,7 @@ circulation; no technical knowledge assumed.
 | 3.19 | 27 Aug 2026 | **Seeded libraries** — Procore's permission matrices harvested; 11 tools now start half-built |
 | 3.20 | 2 Oct 2026 | **Hosted on Procore Sites** — a Sites build that prints to PDF; template delete confirmed by name; PDF libraries travel inside the file |
 | 3.21 | 29 Oct 2026 | **Guided flow and A4 only** — Library and SOP generation tabs, numbered steps with Back and Next, A4-only PDF, step images, transcript import, template naming, version status, walkthrough video |
+| 3.22 | 12 Nov 2026 | **Glass sidebar** — dark shell, one sidebar for steps and library, collapses to icons, works on tablet and phone |
 
 ---
 
@@ -529,6 +530,25 @@ came next. This version reworks the navigation and adds the features requested a
 
 Known gaps: `scripts/check-four.js` still clicks the old Templates button in the left rail, and
 the video needs its Drive file shared with the people watching it.
+
+---
+
+## 3.22 — Glass sidebar
+
+The Studio's chrome was rebuilt to be calmer and easier to follow. The SOP document itself is
+unchanged.
+
+- **One sidebar.** The five steps and the Library sit in a single frosted-glass sidebar with a
+  progress bar, a line joining the steps, a tick on finished steps and an orange glow on the
+  current one. It collapses to icons and remembers the choice.
+- **Dark shell, light work area.** The forms sit on one rounded white card with larger type and
+  more room. The walkthrough video moved from the Create page into the sidebar.
+- **Tablet and phone.** The form column narrows first; on a phone the sidebar becomes a slide-in
+  drawer and the form and preview stack.
+- **Callouts, tabs, dialog and status chips** follow the BMC APAC design system components.
+
+Deliberate exception: that design system rules out glass effects and glow. They are used here, on
+the Studio's own chrome only, on Brendan McGurk's instruction.
 
 ---
 

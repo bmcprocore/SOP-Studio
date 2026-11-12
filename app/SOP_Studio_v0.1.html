@@ -447,6 +447,18 @@
   .vframe{position:relative;width:100%;aspect-ratio:16/9;background:var(--ink);}
   .vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 
+  /* ---- library rows and the template preview pop-up ---- */
+  .tpl.on{box-shadow:inset 3px 0 0 var(--orange);}
+  .tpl .tplopen{padding:8px 18px;flex:none;}
+  .tplbox{width:min(1080px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 48px);}
+  .tplhead{display:flex;flex-direction:column;min-width:0;}
+  .tplhead small{font-size:12px;font-weight:400;letter-spacing:0;color:var(--g500);margin-top:2px;}
+  .tplacts{display:flex;align-items:center;gap:8px;flex:none;}
+  .tplnote{padding:8px 18px;font-size:12px;color:var(--g600);background:var(--sand);border-bottom:1px solid var(--g200);}
+  .tplframe{flex:none;height:calc(100vh - 190px);min-height:240px;background:#E9E5DF;}
+  .tplframe iframe{width:100%;height:100%;border:0;display:block;}
+  @media (max-width:760px){.vmodal{padding:8px;} .tplacts #btnUseTpl{padding:8px 10px;font-size:12px;}}
+
   /* =====================================================================================
      v3.22 shell — dark ground, glass sidebar, orange glow. Chrome only: the SOP document
      and its locked design are untouched. Glass and glow are a deliberate exception to the
@@ -679,7 +691,7 @@
 
     <div class="panel" id="p-templates">
       <h1>Templates</h1>
-      <p class="sub">Shared across your whole team — templates saved here are visible to everyone using this app. Manage them here, then use one in the Create step to start an SOP.</p>
+      <p class="sub">Shared across your whole team — templates saved here are visible to everyone using this app. Select one to highlight it, then open it to see what it contains.</p>
       <div id="tplList"></div>
       <div class="status" id="libStatus">Loading library…</div>
       <fieldset>
@@ -706,7 +718,7 @@
 
     <div class="panel active" id="p-create">
       <h1>Create an SOP</h1>
-      <p class="sub">Choose the region this SOP is for, then start it from one of your saved templates.</p>
+      <p class="sub">Choose the region this SOP is for, then import existing work or start from a saved template.</p>
       <fieldset><legend>Region</legend>
         <label for="fRegion">Where is this SOP for?<span class="req" title="Required">*</span></label>
         <select id="fRegion">
@@ -726,11 +738,11 @@
       </fieldset>
 
       <div class="seg" id="createMode" role="group" aria-label="Create mode">
-        <button data-v="template" class="on">From a template</button>
-        <button data-v="new">Import existing work</button>
+        <button data-v="new" class="on">Import existing work</button>
+        <button data-v="template">From a template</button>
       </div>
 
-      <div id="createTemplate" style="margin-top:14px;">
+      <div id="createTemplate" style="display:none;margin-top:14px;">
         <fieldset><legend>Choose a saved template</legend>
           <div id="createTplList"></div>
           <div class="note">Templates are managed in the Templates section. Picking one loads every block in it — the Permissions step then decides which of them this reader is allowed to see.</div>
@@ -752,7 +764,7 @@
         </fieldset>
       </div>
 
-      <div id="createNew" style="display:none;margin-top:14px;">
+      <div id="createNew" style="margin-top:14px;">
         <fieldset><legend>Import a content JSON file</legend>
           <div class="drop" id="jsonDrop" tabindex="0">Drop a content JSON file here (.json), or click to choose</div>
           <ul class="filelist" id="jsonList"></ul>
@@ -957,6 +969,21 @@
     <iframe id="frame" title="SOP preview"></iframe>
   </section>
 </main>
+<div class="vmodal" id="tplModal" role="dialog" aria-modal="true" aria-labelledby="tplModalTitle" hidden>
+  <div class="vbox tplbox">
+    <div class="vhead">
+      <span class="tplhead"><span id="tplModalTitle"></span><small id="tplModalMeta"></small></span>
+      <span class="tplacts">
+        <button type="button" class="primary" id="btnUseTpl">Use this template</button>
+        <button type="button" class="vclose" id="btnCloseTpl" aria-label="Close preview">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </span>
+    </div>
+    <div class="tplnote">This shows every block in the template. An SOP made from it only includes the blocks its reader's permissions allow.</div>
+    <div class="tplframe" id="tplModalFrame"></div>
+  </div>
+</div>
 <div class="vmodal" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoTitle" hidden>
   <div class="vbox">
     <div class="vhead">
@@ -1618,14 +1645,62 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       return '<div class="tpl' + (state.selectedTool === n ? ' on' : '') + '" data-t="' + n + '" role="button" tabindex="0">' +
         '<div><div class="nm">' + n + (t._published ? ' <span class="pubtag">published</span>' : '') + '</div>' +
         '<div class="meta">v' + (t.version || '?') + ' · ' + (t.steps || []).length + ' steps</div></div>' +
-        '<div class="meta">' + (state.selectedTool === n ? 'SELECTED' : 'select') + '</div></div>';
+        (state.selectedTool === n
+          ? '<button type="button" class="primary tplopen" data-open="' + esc(n) + '">Open</button>'
+          : '<div class="meta">select</div>') + '</div>';
     }).join('');
     el.querySelectorAll('.tpl').forEach(t => {
-      const pick = () => { state.selectedTool = t.dataset.t; renderTplList(); syncTplEditor(); };
+      const pick = () => {
+        if (state.selectedTool === t.dataset.t) return;
+        state.selectedTool = t.dataset.t; renderTplList(); syncTplEditor();
+        const again = [...el.querySelectorAll('.tpl')].find(x => x.dataset.t === state.selectedTool);
+        if (again) again.focus();
+      };
       t.onclick = pick;
-      t.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } };
+      t.ondblclick = () => openTemplatePreview(t.dataset.t);
+      t.onkeydown = (e) => {
+        if (e.target !== t) return;
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (state.selectedTool === t.dataset.t) openTemplatePreview(t.dataset.t); else pick(); }
+      };
     });
+    el.querySelectorAll('[data-open]').forEach(b => b.onclick = (e) => { e.stopPropagation(); openTemplatePreview(b.dataset.open); });
   }
+
+  // ---- template preview: the template rendered in the locked design, every block shown ----
+  let tplPreviewName = null, tplOpener = null;
+  function openTemplatePreview(name) {
+    const tpl = state.library && state.library.tools[name];
+    if (!tpl) return;
+    if (!frameReady) { setStatus('libStatus', 'Fonts are still loading — try again in a moment.'); return; }
+    let html;
+    try {
+      const c = ensureIds(templateToContent(tpl));
+      c._detail = 'standard'; c._region = state.region || 'TBC';
+      html = documentHtml(c, frame.contentDocument);
+    } catch (e) { setStatus('libStatus', 'This template could not be previewed: ' + e.message, 'err'); return; }
+    tplPreviewName = name; tplOpener = document.activeElement;
+    $('tplModalTitle').textContent = name;
+    $('tplModalMeta').textContent = 'v' + (tpl.version || '?') + ' · ' + (tpl.steps || []).length + ' steps · ' +
+      (tpl.checklist || []).length + ' checklist items · ' + (tpl.issues || []).length + ' common issues';
+    const fr = document.createElement('iframe');
+    fr.title = 'Preview of ' + name; fr.srcdoc = html;
+    $('tplModalFrame').innerHTML = ''; $('tplModalFrame').appendChild(fr);
+    $('tplModal').hidden = false;
+    $('btnCloseTpl').focus();
+  }
+  function closeTemplatePreview() {
+    if ($('tplModal').hidden) return;
+    $('tplModal').hidden = true; $('tplModalFrame').innerHTML = '';
+    if (tplOpener && tplOpener.focus && document.contains(tplOpener)) tplOpener.focus();
+  }
+  $('btnCloseTpl').onclick = closeTemplatePreview;
+  $('tplModal').addEventListener('click', (e) => { if (e.target === $('tplModal')) closeTemplatePreview(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeTemplatePreview(); });
+  $('btnUseTpl').onclick = () => {
+    const name = tplPreviewName, tpl = state.library && state.library.tools[name];
+    closeTemplatePreview();
+    if (tpl) loadContent(templateToContent(tpl), name, 'Loaded template <strong>' + esc(name) + '</strong> — set the detail level, add client details and review below.');
+  };
   function syncTplEditor() {
     const ta = $('tplJson');
     if (ta.style.display !== 'none' && state.selectedTool) {
@@ -1832,12 +1907,13 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       renderFileList(listId, files, removeFrom);
     });
   }
-  // ---- create mode toggle. Templates lead: importing a JSON file is the specialist path.
-  let createMode = 'template';
+  // ---- create mode toggle. Importing existing work leads (Brendan McGurk, 12 Nov 2026); templates are the fallback.
+  let createMode = 'new';
   document.querySelectorAll('#createMode button').forEach(b => b.onclick = () => {
     createMode = b.dataset.v;
     document.querySelectorAll('#createMode button').forEach(x => x.classList.toggle('on', x === b));
     $('createNew').style.display = createMode === 'new' ? 'block' : 'none';
+    $('createAi').style.display = createMode === 'new' ? 'block' : 'none';
     $('createTemplate').style.display = createMode === 'template' ? 'block' : 'none';
     if (createMode === 'template') renderCreateTplList();
   });

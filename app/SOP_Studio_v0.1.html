@@ -629,7 +629,7 @@
   }
 </style>
 <!-- Vercel Web Analytics: page views only, and only when the page is served from Vercel. A copy opened as a file or on Procore Sites loads nothing. -->
-<script>if(/.vercel.app$/.test(location.hostname)){window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};var vs=document.createElement("script");vs.defer=true;vs.src="/_vercel/insights/script.js";document.head.appendChild(vs);}</script>
+<script>if(location.hostname.endsWith(".vercel.app")){window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};var vs=document.createElement("script");vs.defer=true;vs.src="/_vercel/insights/script.js";document.head.appendChild(vs);}</script>
 </head>
 <body class="no-preview">
 <div id="jswarn">
@@ -662,7 +662,7 @@
   <button type="button" class="menubtn" id="btnMenu" aria-label="Open menu" aria-controls="rail">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
-  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.25</span>
+  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.26</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -3694,6 +3694,11 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   }
   // A short burst of confetti when a finished SOP is downloaded. Drawn on a throwaway canvas that
   // ignores the mouse and removes itself; skipped when the device asks for reduced motion.
+  // Usage count for Vercel Web Analytics: the export format and the Procore tool only, never client
+  // details. Does nothing unless the analytics script is loaded (the Vercel-hosted copy).
+  function trackDownload(format, c) {
+    try { if (window.va) window.va('event', { name: 'SOP downloaded', data: { format: format, tool: String((c && c.access && c.access.tool) || '').slice(0, 60) } }); } catch (_) {}
+  }
   function confetti() {
     if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
     const cv = document.createElement('canvas');
@@ -3810,6 +3815,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       const bytes = await pdf.save();
       const name = outName(c, 'pdf');
       triggerDownload(new Blob([bytes], { type: 'application/pdf' }), name);
+      trackDownload('pdf', c);
       confetti();
       setStatus('genStatus', 'Downloaded ' + name + ' — a locked A4 PDF.', 'ok');
     } catch (e) {
@@ -4160,6 +4166,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       ].concat(media.map(m => ({ name: 'word/media/' + m.name, data: m.data }))));
       const name = outName(c, 'docx');
       triggerDownload(blob, name);
+      trackDownload('word', c);
       confetti();
       setStatus('genStatus', 'Downloaded ' + name + ' — an editable Word copy. Its layout follows the SOP but is not the locked PDF design; check page breaks before issuing.', 'ok');
     } catch (e) {

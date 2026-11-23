@@ -38,6 +38,7 @@ circulation; no technical knowledge assumed.
 | 3.23 | 23 Nov 2026 | **Optional sign-off people and Word export** — untick a sign-off person to leave them off; download the SOP as an editable .docx; template preview pop-up; import leads the Create step |
 | 3.24 | 23 Nov 2026 | Customer example on the Details step now reads C.R.E.A.M PTY LTD |
 | 3.25 | 23 Nov 2026 | **Locked, sharper PDF** — pages drawn by the browser at three times the resolution, so text is no longer garbled; form fields removed |
+| 3.26 | 23 Nov 2026 | Usage counts on the Vercel copy: page views, and a count of PDF and Word downloads by Procore tool (no client details) |
 
 ---
 

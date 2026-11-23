@@ -36,6 +36,7 @@ circulation; no technical knowledge assumed.
 | 3.21 | 29 Oct 2026 | **Guided flow and A4 only** — Library and SOP generation tabs, numbered steps with Back and Next, A4-only PDF, step images, transcript import, template naming, version status, walkthrough video |
 | 3.22 | 12 Nov 2026 | **Glass sidebar** — dark shell, one sidebar for steps and library, collapses to icons, works on tablet and phone |
 | 3.23 | 23 Nov 2026 | **Optional sign-off people and Word export** — untick a sign-off person to leave them off; download the SOP as an editable .docx; template preview pop-up; import leads the Create step |
+| 3.24 | 23 Nov 2026 | Customer example on the Details step now reads C.R.E.A.M PTY LTD |
 
 ---
 

@@ -35,6 +35,7 @@ circulation; no technical knowledge assumed.
 | 3.20 | 2 Oct 2026 | **Hosted on Procore Sites** — a Sites build that prints to PDF; template delete confirmed by name; PDF libraries travel inside the file |
 | 3.21 | 29 Oct 2026 | **Guided flow and A4 only** — Library and SOP generation tabs, numbered steps with Back and Next, A4-only PDF, step images, transcript import, template naming, version status, walkthrough video |
 | 3.22 | 12 Nov 2026 | **Glass sidebar** — dark shell, one sidebar for steps and library, collapses to icons, works on tablet and phone |
+| 3.23 | 23 Nov 2026 | **Optional sign-off people and Word export** — untick a sign-off person to leave them off; download the SOP as an editable .docx; template preview pop-up; import leads the Create step |
 
 ---
 
@@ -549,6 +550,18 @@ unchanged.
 
 Deliberate exception: that design system rules out glass effects and glow. They are used here, on
 the Studio's own chrome only, on Brendan McGurk's instruction.
+
+---
+
+## 3.23 — Optional sign-off people and Word export
+
+- **Sign-off people can be left off.** Prepared by, Reviewed by and Approved by are each included to begin with and each has an Include tickbox. An unticked person is dropped from the cover's document-control table. Unticking Reviewed by also drops the Customer process owner signature line, and unticking Prepared by drops the Procore Implementation Manager one. The choice is stored on the content as `_signoff`.
+- **Word export.** The Generate page has a Download Word (.docx) button. The file is an editable copy built from the same content: A4, one step per page, step images included. It follows the SOP's structure and colours but is not the locked design, and it uses Arial because Inter Tight is not on most machines.
+- **Library preview.** Select a template, then Open, to see it rendered in a pop-up.
+- **Import first.** Import existing work now leads the Create step, ahead of From a template.
+- **Confetti** when a finished SOP is downloaded.
+
+Known gap: the command-line renderer (`scripts/render.js`) does not read `_signoff`, so it still prints all sign-off people.
 
 ---
 

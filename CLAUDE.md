@@ -95,6 +95,7 @@ steps[]{_id,title,role,system,time,body,bullets[],callout{label,body}},
 closeoutIntro, owner, checklist[]{_id,text,hint,owner}, issues[]{_id,code,issue,resolution},
 references[]{tool,url}, _detail("simple"|"standard"|"extended")`.
 Inline markup allowed in body copy: `<code> <strong> <em>` only. Person fields: `"Name · Role"`.
+Optional `_signoff{preparedBy,reviewedBy,approvedBy}` (booleans, set by the Studio): `false` leaves that person off the cover and their signature line. The Studio honours it; `scripts/render.js` does not yet.
 Detail levels: simple = 1–2 sentence bodies, no bullets/callouts, no issues table, steps
 flow-packed; standard = as template, one step per page; extended = expanded bullets +
 common-mistake callouts, one step per page.

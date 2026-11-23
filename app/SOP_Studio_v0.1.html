@@ -660,7 +660,7 @@
   <button type="button" class="menubtn" id="btnMenu" aria-label="Open menu" aria-controls="rail">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
-  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.24</span>
+  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.25</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -960,7 +960,7 @@
       <button id="btnWord" style="width:100%;padding:11px;margin-top:8px;" disabled>Download Word (.docx)</button>
       <div class="status" id="genStatus"></div>
       <div class="note">The Word file is an editable copy. It follows the SOP's structure and colours, but only the PDF carries the locked design.</div>
-      <div class="note" id="pdfNote">File name follows the standard: Client_Tool_Persona_vX.Y.pdf. The checklist boxes and the sign-off name/date lines are fillable form fields — tick and type in any PDF reader.</div>
+      <div class="note" id="pdfNote">File name follows the standard: Client_Tool_Persona_vX.Y.pdf. The PDF is a locked A4 document: it has no form fields and cannot be edited.</div>
     </div>
 
     <div class="stepbar" id="stepbar">
@@ -1548,7 +1548,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   // library when producing a shareable build, so whoever opens that file has the approved
   // templates on first run with nothing to install. Do not edit by hand.
   const PUBLISHED_LIBRARY = null; /* PUBLISHED_LIBRARY */
-  // 'fillable' builds the PDF in-page with real form fields (needs the PDF_LIBS block above).
+  // 'fillable' builds the PDF in-page (needs the PDF_LIBS block above). The name is historical:
+  // since v3.25 the PDF is locked and carries no form fields.
   // 'print' hands the rendered document to the browser's own print dialog instead — no libraries,
   // no fillable fields. `publish-build.js --sites` sets this; do not edit by hand.
   const PDF_MODE = 'fillable'; /* PDF_MODE */
@@ -3727,10 +3728,47 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   }
 
   // PDF_FILLABLE — removed by `publish-build.js --sites`, which stubs doDownloadPDF instead.
-  // Export the locked design to PDF. The visual page is captured as an image (so the
-  // design is reproduced exactly), then real AcroForm fields are overlaid on the
-  // [data-field] targets — checklist boxes become checkboxes, sign-off name/date lines
-  // become text fields — so the PDF is fillable in any reader.
+  // Export the locked design to PDF. Each page is drawn by the browser's own text engine (an SVG
+  // snapshot of the page with the fonts embedded) at three times screen resolution and placed on an
+  // A4 page as a picture. The PDF is locked: no form fields and no editable text.
+  // html2canvas is kept only as a fallback: it misplaces letters and spaces, so it is used only
+  // where the browser refuses the snapshot.
+  let pdfFontCss = null;
+  async function pdfFonts(doc) {
+    if (pdfFontCss !== null) return pdfFontCss;
+    const link = doc.querySelector('link[href*="fonts.googleapis.com/css"]');
+    if (!link) return (pdfFontCss = '');
+    const css = await (await fetch(link.href)).text();
+    const faces = (css.match(/@font-face\s*\{[^}]*\}/g) || []).filter(b => /U\+0000-00FF/i.test(b));
+    const out = await Promise.all(faces.map(async b => {
+      const m = b.match(/url\((https:[^)]+)\)/);
+      if (!m) return '';
+      const blob = await (await fetch(m[1])).blob();
+      const data = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(blob); });
+      return b.replace(m[0], 'url(' + data + ')');
+    }));
+    return (pdfFontCss = out.join('\n'));
+  }
+  async function pagePng(pageEl, css, W, H, scale) {
+    const doc = pageEl.ownerDocument, bs = doc.defaultView.getComputedStyle(doc.body);
+    const xml = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + (W * scale) + '" height="' + (H * scale) + '" viewBox="0 0 ' + W + ' ' + H + '">' +
+      '<foreignObject x="0" y="0" width="' + W + '" height="' + H + '"><div xmlns="http://www.w3.org/1999/xhtml" style="width:' + W + 'px;height:' + H + 'px;margin:0;background:#fff;' +
+      'font-family:' + bs.fontFamily.replace(/"/g, "'") + ';font-size:' + bs.fontSize + ';line-height:' + bs.lineHeight + ';color:' + bs.color + ';-webkit-font-smoothing:antialiased;">' +
+      '<style>' + xml(css + '\n.page{box-shadow:none !important;margin:0 !important;}') + '</style>' +
+      new XMLSerializer().serializeToString(pageEl) + '</div></foreignObject></svg>';
+    const img = new Image();
+    await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('page snapshot failed')); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
+    if (img.decode) { try { await img.decode(); } catch (_) {} }
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(W * scale); cv.height = Math.round(H * scale);
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
+    if (!blob) throw new Error('page snapshot blocked');
+    return new Uint8Array(await blob.arrayBuffer());
+  }
   async function doDownloadPDF() {
     const c = assembleFinal();
     if (!c) { setStatus('genStatus', 'Nothing to render yet — create or load content first.', 'err'); return; }
@@ -3739,7 +3777,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       setStatus('genStatus', 'PDF libraries did not load (offline?). Reconnect and reload the page.', 'err'); return;
     }
     $('btnDownload').disabled = true; $('btnDownload2').disabled = true;
-    setStatus('genStatus', '<span class="spin"></span>Building fillable PDF…');
+    setStatus('genStatus', '<span class="spin"></span>Building PDF…');
     try {
       const doc = frame.contentDocument;
       const res = build(c, doc);
@@ -3748,42 +3786,30 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       const pages = Array.from(doc.querySelectorAll('#viewer .page'));
       const { PDFDocument } = window.PDFLib;
       const pdf = await PDFDocument.create();
-      const form = pdf.getForm();
-      const PT_W = 595.28, PT_H = 841.89;   // A4 in points; scale is taken from each page's measured width below
+      pdf.setTitle('Procore — ' + (c.processName || 'SOP'));
+      const PT_W = 595.28, PT_H = 841.89;   // A4 in points
+      const ps = pageSizeFor(c._region);
+      let css = null;
+      try { css = D.css + '\n' + pageSizeCss(c._region) + '\n' + await pdfFonts(doc); } catch (_) { css = null; }
       for (let i = 0; i < pages.length; i++) {
-        setStatus('genStatus', '<span class="spin"></span>Building fillable PDF — page ' + (i + 1) + ' of ' + pages.length + '…');
+        setStatus('genStatus', '<span class="spin"></span>Building PDF — page ' + (i + 1) + ' of ' + pages.length + '…');
         const pageEl = pages[i];
-        const canvas = await window.html2canvas(pageEl, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false });
-        const img = await pdf.embedPng(canvas.toDataURL('image/png'));
-        const page = pdf.addPage([PT_W, PT_H]);
-        page.drawImage(img, { x: 0, y: 0, width: PT_W, height: PT_H });
-        const pr = pageEl.getBoundingClientRect();
-        const SCALE = PT_W / pr.width;
-        Array.from(pageEl.querySelectorAll('[data-field]')).forEach((el, k) => {
-          const r = el.getBoundingClientRect();
-          const x = (r.left - pr.left) * SCALE;
-          const w = Math.max(r.width * SCALE, 10);
-          const h = Math.max(r.height * SCALE, 10);
-          const y = PT_H - (r.top - pr.top) * SCALE - h;
-          const kind = el.getAttribute('data-field');
-          const nm = kind + '_p' + i + '_' + k;
-          try {
-            if (kind === 'check') {
-              const s = Math.min(w, h);
-              form.createCheckBox(nm).addToPage(page, { x, y: y + (h - s), width: s, height: s, borderWidth: 0 });
-            } else {
-              const tf = form.createTextField(nm);
-              tf.addToPage(page, { x, y, width: w, height: Math.max(h, 12), borderWidth: 0 });
-              try { tf.setFontSize(9); } catch (_) {}
-            }
-          } catch (_) { /* skip a field that clashes rather than fail the whole export */ }
-        });
+        let img = null;
+        if (css) { try { img = await pdf.embedPng(await pagePng(pageEl, css, ps.w, ps.h, 3)); } catch (_) { img = null; } }
+        if (!img) {
+          const canvas = await window.html2canvas(pageEl, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false });
+          img = await pdf.embedPng(canvas.toDataURL('image/png'));
+        }
+        // Keep the page's own proportions: fit the picture to the sheet rather than stretching it.
+        const k = Math.min(PT_W / img.width, PT_H / img.height);
+        const w = img.width * k, h = img.height * k;
+        pdf.addPage([PT_W, PT_H]).drawImage(img, { x: (PT_W - w) / 2, y: PT_H - h, width: w, height: h });
       }
       const bytes = await pdf.save();
       const name = outName(c, 'pdf');
       triggerDownload(new Blob([bytes], { type: 'application/pdf' }), name);
       confetti();
-      setStatus('genStatus', 'Downloaded ' + name + ' — checklist boxes and sign-off name/date fields are fillable in a PDF reader.', 'ok');
+      setStatus('genStatus', 'Downloaded ' + name + ' — a locked A4 PDF.', 'ok');
     } catch (e) {
       setStatus('genStatus', 'PDF export error: ' + e.message, 'err');
     } finally {
@@ -3822,7 +3848,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       const pages = d.querySelectorAll('.page').length;
       pf.contentWindow.focus();
       pf.contentWindow.print();
-      setStatus('genStatus', 'Print dialog opened · ' + pages + ' pages. Choose "Save as PDF" — the file is named ' + esc(name) + '.pdf. Checklist boxes and sign-off lines print as static lines (not fillable).', 'ok');
+      setStatus('genStatus', 'Print dialog opened · ' + pages + ' pages. Choose "Save as PDF" — the file is named ' + esc(name) + '.pdf.', 'ok');
     };
     pf.srcdoc = html;
     document.body.appendChild(pf);
@@ -4145,7 +4171,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   const downloadPDF = PDF_MODE === 'print' ? doPrintPDF : doDownloadPDF;
   if (PDF_MODE === 'print') {
     ['btnDownload', 'btnDownload2'].forEach(id => { if ($(id)) $(id).textContent = 'Print / Save as PDF'; });
-    if ($('pdfNote')) $('pdfNote').textContent = 'Opens your browser\'s print dialog — choose "Save as PDF". The file name follows the standard: Client_Tool_Persona_vX.Y.pdf. In this build the checklist boxes and sign-off lines print as static lines rather than fillable fields.';
+    if ($('pdfNote')) $('pdfNote').textContent = 'Opens your browser\'s print dialog — choose "Save as PDF". The file name follows the standard: Client_Tool_Persona_vX.Y.pdf.';
   }
   $('btnRender').onclick = doRender; $('btnRender2').onclick = doRender;
   $('btnDownload').onclick = downloadPDF; $('btnDownload2').onclick = downloadPDF;

@@ -452,6 +452,30 @@
   .vframe{position:relative;width:100%;aspect-ratio:16/9;background:var(--ink);}
   .vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
 
+  /* ---- FAQ tab: questions and the version history ---- */
+  .faq details{border:1px solid var(--g200);border-radius:var(--r-card);background:#fff;margin:0 0 8px;}
+  .faq details[open]{border-color:var(--g300);box-shadow:inset 3px 0 0 var(--orange);}
+  .faq summary{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 16px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;list-style:none;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:'+';flex:none;font-family:var(--mono);font-size:16px;font-weight:400;color:var(--orange);}
+  .faq details[open] summary::after{content:'\2212';}
+  .faq summary:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:var(--r-card);}
+  .faq .a{padding:0 16px 14px;}
+  .faq .a p{margin:0 0 10px;font-size:13px;line-height:1.55;color:var(--g600);}
+  .faq .a p:last-child{margin-bottom:0;}
+  .faq .a b{display:block;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin-bottom:2px;}
+  .faq .a strong{color:var(--ink);}
+  .vhist{border:1px solid var(--g200);border-radius:var(--r-card);overflow:hidden;background:#fff;}
+  .vhist table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.5;}
+  .vhist th{text-align:left;padding:10px 14px;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);background:var(--sand);border-bottom:1px solid var(--g200);}
+  .vhist td{padding:10px 14px;border-bottom:1px solid var(--g200);vertical-align:top;color:var(--g600);}
+  .vhist tr:last-child td{border-bottom:0;}
+  .vhist .vv{font-family:var(--mono);font-weight:500;color:var(--ink);white-space:nowrap;}
+  .vhist .vd{white-space:nowrap;}
+  .vhist td strong{color:var(--ink);}
+  .brand .vtag{cursor:pointer;}
+  #faqVersions{scroll-margin-top:12px;}
+
   /* ---- library rows and the template preview pop-up ---- */
   .tpl.on{box-shadow:inset 3px 0 0 var(--orange);}
   .tpl .tplopen{padding:8px 18px;flex:none;}
@@ -648,7 +672,7 @@
     var p = gate.dataset.p;
     document.querySelectorAll('.rail .gate').forEach(function (g) { g.classList.toggle('active', g === gate); });
     document.querySelectorAll('.panel').forEach(function (pn) { pn.classList.toggle('active', pn.id === 'p-' + p); });
-    if (window.__syncNav) window.__syncNav(p); else document.body.classList.toggle('mode-library', p === 'templates');
+    if (window.__syncNav) window.__syncNav(p); else document.body.classList.toggle('mode-library', p === 'templates' || p === 'faq');
   });
 </script>
 <div class="restorebar" id="restoreBar" style="display:none;">
@@ -662,7 +686,7 @@
   <button type="button" class="menubtn" id="btnMenu" aria-label="Open menu" aria-controls="rail">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
-  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" title="Studio version — see VERSION-HISTORY.md">v3.26</span>
+  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" id="vTag" role="button" tabindex="0" title="Studio version. Click for the version history.">v3.27</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -670,6 +694,7 @@
   <nav class="modetabs" role="tablist" aria-label="Studio sections">
     <button role="tab" id="tabSop" data-mode="sop" aria-selected="true">SOP generation</button>
     <button role="tab" id="tabLibrary" data-mode="library" aria-selected="false">Library</button>
+    <button role="tab" id="tabFaq" data-mode="faq" aria-selected="false">FAQ</button>
   </nav>
   <div class="actions">
     <button id="btnRender" disabled>Render preview</button>
@@ -687,6 +712,7 @@
       <button class="gate step last" data-p="generate" title="Step 5: Generate"><span class="num">5</span><span class="txt"><small>Generate</small><em>Preview and download</em></span></button>
       <div class="sb-div"></div>
       <button class="gate" data-p="templates" title="Template library"><span class="num ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="txt"><small>Library</small><em>Manage templates</em></span></button>
+      <button class="gate" data-p="faq" title="FAQ and version history"><span class="num ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"/><path d="M12 17h.01"/></svg></span><span class="txt"><small>FAQ</small><em>Common errors and versions</em></span></button>
       <div class="sb-spacer"></div>
       <button type="button" class="sbbtn" id="btnWatchVideo" aria-haspopup="dialog" title="Watch the walkthrough"><span class="num ico play"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg></span><span class="txt"><small>Watch walkthrough</small></span></button>
       <button type="button" class="sbbtn" id="railToggle" aria-expanded="true" aria-controls="rail" title="Collapse or expand the sidebar"><span class="num ico chev"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg></span><span class="txt"><small>Collapse</small></span></button>
@@ -721,6 +747,73 @@
           <button id="btnSaveTpl" class="primary">Save template to shared library</button>
         </div>
       </fieldset>
+    </div>
+
+    <div class="panel" id="p-faq">
+      <h1>FAQ</h1>
+      <p class="sub">Common errors, what each one is and how to fix it. Select a question to open it. The version history is at the bottom of this page.</p>
+      <div class="faq">
+        <details><summary>The word “cite” appears in the SOP</summary><div class="a"><p><b>What it is</b>The AI added source markers to its answer, such as “cite” or “[cite: 3]”, and they came through in the JSON you pasted.</p><p><b>How to fix it</b>Go back to the Google Gemini Gem and write <strong>no cites</strong>. Copy the new JSON it gives you and load it again on the Create step.</p></div></details>
+        <details><summary>The pasted AI content will not load</summary><div class="a"><p><b>What it is</b>The Studio checks the JSON against its rules before loading it. Extra text around the JSON, or a missing bracket, fails that check.</p><p><b>How to fix it</b>Read the message under the box: it names the problem. Copy the whole JSON block, from the first { to the last }, with nothing before or after it. If it still fails, ask the AI to “return the JSON only”.</p></div></details>
+        <details><summary>Next will not let me move on</summary><div class="a"><p><b>What it is</b>A step is unfinished. Next is held back until a template or imported content is loaded, and until the Review list is confirmed.</p><p><b>How to fix it</b>Read the message beside the Next button. On Create, load content or choose a template. On Review, enter your name and select Confirm inclusions.</p></div></details>
+        <details><summary>Download PDF or Download Word is greyed out</summary><div class="a"><p><b>What it is</b>The SOP has not been confirmed and rendered yet, or a required field is empty.</p><p><b>How to fix it</b>Fill in Client name, Doc ID, Version, Process owner and Prepared by on the Details step. Confirm the list on Review, then select Render preview.</p></div></details>
+        <details><summary>The cover shows [Pending] or [DD Mmm YYYY]</summary><div class="a"><p><b>What it is</b>A name or date was left blank, so the document prints a placeholder for someone to fill in later.</p><p><b>How to fix it</b>Fill in the field on the Details step. If that person or date is not needed, untick Include beside it and the row is left off.</p></div></details>
+        <details><summary>A sign-off person I do not need is on the document</summary><div class="a"><p><b>What it is</b>Prepared by, Reviewed by, Approved by and Scheduled review are all included to begin with.</p><p><b>How to fix it</b>On the Details step, untick Include beside the one you do not need. It is left off the PDF and the Word file.</p></div></details>
+        <details><summary>The PDF takes a long time to download</summary><div class="a"><p><b>What it is</b>Each page is drawn at high resolution so the text is sharp. Allow one to two seconds a page.</p><p><b>How to fix it</b>Wait while the status line counts through the pages. Keep the tab open until the file downloads.</p></div></details>
+        <details><summary>I cannot select, search or edit the text in the PDF</summary><div class="a"><p><b>What it is</b>This is deliberate. The PDF is a locked document: each page is a picture, so nothing can be changed.</p><p><b>How to fix it</b>Use Download Word (.docx) on the Generate step when the customer needs an editable copy.</p></div></details>
+        <details><summary>The Word file looks different from the PDF</summary><div class="a"><p><b>What it is</b>The Word file is an editable copy. Word lays the text out itself and uses Arial, so page breaks and spacing differ from the locked PDF.</p><p><b>How to fix it</b>Check the page breaks in Word before you send it. Send the PDF when the document must look exactly like the Procore design.</p></div></details>
+        <details><summary>“Fonts still loading” appears when I render or download</summary><div class="a"><p><b>What it is</b>The Procore fonts load from the internet when the Studio opens, and they had not finished.</p><p><b>How to fix it</b>Wait a few seconds and try again. If it keeps happening, check your internet connection and reload the page.</p></div></details>
+        <details><summary>A step with a screenshot runs short of space</summary><div class="a"><p><b>What it is</b>The Studio warns you when a step leaves less than half a page for its image.</p><p><b>How to fix it</b>Use a smaller or more tightly cropped screenshot, or shorten the text of that step.</p></div></details>
+        <details><summary>My saved templates are missing on another computer</summary><div class="a"><p><b>What it is</b>Templates you save yourself are kept in the browser on the computer you saved them on.</p><p><b>How to fix it</b>Use the same browser on the same computer. To move one, open View / edit selected template JSON in the Library, and copy the text. On the other computer, open the same box, paste the text in and select Save template to shared library.</p></div></details>
+        <details><summary>My unfinished work has gone</summary><div class="a"><p><b>What it is</b>Work is saved automatically in this browser and offered back the next time you open the Studio. Two tabs share one saved draft, so the last one you typed in wins.</p><p><b>How to fix it</b>Select Restore it on the bar at the top when you reopen the Studio. Work in one tab at a time.</p></div></details>
+        <details><summary>The walkthrough video will not play</summary><div class="a"><p><b>What it is</b>The video is kept on Google Drive and is shared with Procore accounts only.</p><p><b>How to fix it</b>Sign in to Google with your Procore account, then open the video again.</p></div></details>
+      </div>
+      <p class="hint" style="margin:12px 0 28px;">Still stuck? Message Brendan McGurk on Slack.</p>
+
+      <h1 id="faqVersions">Version history</h1>
+      <p class="sub">Every version of SOP Studio and what changed in it, newest first.</p>
+      <div class="vhist">
+        <table>
+          <thead><tr><th>Version</th><th>Date</th><th>What changed</th></tr></thead>
+          <tbody>
+            <tr><td class="vv">3.27</td><td class="vd">25 Nov 2026</td><td><strong>Scheduled review, FAQ and version history</strong> — Scheduled review is editable and can be left off; FAQ tab with common errors and fixes; every version listed inside the Studio</td></tr>
+            <tr><td class="vv">3.26</td><td class="vd">23 Nov 2026</td><td>Usage counts on the Vercel copy: page views, and a count of PDF and Word downloads by Procore tool (no client details)</td></tr>
+            <tr><td class="vv">3.25</td><td class="vd">23 Nov 2026</td><td><strong>Locked, sharper PDF</strong> — pages drawn by the browser at three times the resolution, so text is no longer garbled; form fields removed</td></tr>
+            <tr><td class="vv">3.24</td><td class="vd">23 Nov 2026</td><td>Customer example on the Details step now reads C.R.E.A.M PTY LTD</td></tr>
+            <tr><td class="vv">3.23</td><td class="vd">23 Nov 2026</td><td><strong>Optional sign-off people and Word export</strong> — untick a sign-off person to leave them off; download the SOP as an editable .docx; template preview pop-up; import leads the Create step</td></tr>
+            <tr><td class="vv">3.22</td><td class="vd">12 Nov 2026</td><td><strong>Glass sidebar</strong> — dark shell, one sidebar for steps and library, collapses to icons, works on tablet and phone</td></tr>
+            <tr><td class="vv">3.21</td><td class="vd">29 Oct 2026</td><td><strong>Guided flow and A4 only</strong> — Library and SOP generation tabs, numbered steps with Back and Next, A4-only PDF, step images, transcript import, template naming, version status, walkthrough video</td></tr>
+            <tr><td class="vv">3.20</td><td class="vd">2 Oct 2026</td><td><strong>Hosted on Procore Sites</strong> — a Sites build that prints to PDF; template delete confirmed by name; PDF libraries travel inside the file</td></tr>
+            <tr><td class="vv">3.19</td><td class="vd">27 Aug 2026</td><td><strong>Seeded libraries</strong> — Procore's permission matrices harvested; 11 tools now start half-built</td></tr>
+            <tr><td class="vv">3.18</td><td class="vd">27 Aug 2026</td><td><strong>Template gallery</strong> — all 80 Procore tools registered, with granular permissions per tool</td></tr>
+            <tr><td class="vv">3.17.2</td><td class="vd">27 Aug 2026</td><td><strong>One document, one renderer</strong> — the SOP skill now assembles content and no longer hand-writes HTML</td></tr>
+            <tr><td class="vv">3.17.1</td><td class="vd">27 Aug 2026</td><td><strong>Command-line guides are permission-scoped again</strong> — access panel filled, Admin content no longer leaks</td></tr>
+            <tr><td class="vv">3.17</td><td class="vd">26 Aug 2026</td><td><strong>Service check</strong> — the document is now guarded; empty SOPs blocked</td></tr>
+            <tr><td class="vv">3.16.1</td><td class="vd">26 Aug 2026</td><td>Page-fitting defect found and documented; packing attempt reverted</td></tr>
+            <tr><td class="vv">3.16</td><td class="vd">24 Aug 2026</td><td><strong>Document quality</strong> — access panel, intros and close-out guidance fixed</td></tr>
+            <tr><td class="vv">3.15</td><td class="vd">24 Aug 2026</td><td>Shareable builds — templates travel with the file</td></tr>
+            <tr><td class="vv">3.14</td><td class="vd">21 Aug 2026</td><td>Review simplified — one place to decide, one to understand</td></tr>
+            <tr><td class="vv">3.13.1</td><td class="vd">21 Aug 2026</td><td>Hosting and usage-tracking note added (docs only)</td></tr>
+            <tr><td class="vv">3.13</td><td class="vd">21 Aug 2026</td><td>APAC documents now export on A4 (document design v3)</td></tr>
+            <tr><td class="vv">3.12</td><td class="vd">21 Aug 2026</td><td><strong>Accessibility overhaul</strong> — keyboard reordering, screen-reader support, autosave</td></tr>
+            <tr><td class="vv">3.11.1</td><td class="vd">21 Aug 2026</td><td>Procore permission structure captured as reference (docs only)</td></tr>
+            <tr><td class="vv">3.11</td><td class="vd">21 Aug 2026</td><td>Procore tool names adapt to the customer's account type</td></tr>
+            <tr><td class="vv">3.10</td><td class="vd">21 Aug 2026</td><td>Collapsible review; customer-segment file naming</td></tr>
+            <tr><td class="vv">3.9</td><td class="vd">21 Aug 2026</td><td>Permission upload, layout previews, overrides, gated delete</td></tr>
+            <tr><td class="vv">3.8</td><td class="vd">20 Aug 2026</td><td>Region selector and regional terminology</td></tr>
+            <tr><td class="vv">3.7</td><td class="vd">20 Aug 2026</td><td>Sections outline with tick-to-include and drag-to-reorder</td></tr>
+            <tr><td class="vv">3.6</td><td class="vd">20 Aug 2026</td><td>Save an SOP back as a template; templates finally persist</td></tr>
+            <tr><td class="vv">3.5</td><td class="vd">20 Aug 2026</td><td><strong>Approval enforced; permission scoping made real</strong></td></tr>
+            <tr><td class="vv">3.4</td><td class="vd">20 Aug 2026</td><td>Author attribution — in the tool, not the document</td></tr>
+            <tr><td class="vv">3.3</td><td class="vd">20 Aug 2026</td><td>Tells you when it cannot run</td></tr>
+            <tr><td class="vv">3.2</td><td class="vd">20 Aug 2026</td><td>Studio logo throughout; wider workflow rail</td></tr>
+            <tr><td class="vv">3.1</td><td class="vd">20 Aug 2026</td><td>Interface rebuilt to the Procore design system</td></tr>
+            <tr><td class="vv">3.0</td><td class="vd">20 Aug 2026</td><td>Second SOP system merged in; role-specific guides</td></tr>
+            <tr><td class="vv">2.0</td><td class="vd"></td><td>Colleague's adapted version, as received</td></tr>
+            <tr><td class="vv">1.0</td><td class="vd"></td><td>Original Studio, authored by Brendan McGurk</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="panel active" id="p-create">
@@ -875,7 +968,13 @@
           <div><label for="fApproved">Approved by</label><input type="text" id="fApproved"></div>
           <div><label for="fApprovedD">Date</label><input type="date" id="fApprovedD"></div>
         </div>
-        <p class="hint">All three are included to begin with. Untick one that is not needed and it is left off the document. Reviewed and approved are usually filled in after the draft has been read — leave an included one blank and the document prints it as pending.</p>
+        <div class="signrow" data-sign="scheduledReview">
+          <label class="incl" title="Untick to leave Scheduled review off the document"><input type="checkbox" id="fSchedOn" checked> Include</label>
+          <div><label for="fSched">Scheduled review by</label><input type="text" id="fSched"></div>
+          <div><label for="fSchedD">Review date</label><input type="date" id="fSchedD"></div>
+        </div>
+        <p class="hint">Scheduled review is the Customer Success Engineer review on the cover: who will review this SOP next, and when.</p>
+        <p class="hint">All four are included to begin with. Untick one that is not needed and it is left off the document. Reviewed and approved are usually filled in after the draft has been read — leave an included one blank and the document prints it as pending.</p>
       </fieldset>
 
       <fieldset><legend>Process specifics</legend>
@@ -1786,10 +1885,11 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   let curGate = 'create', lastStep = 'create';
   function syncNav(p) {
     curGate = p;
-    const lib = p === 'templates';
+    const faq = p === 'faq', lib = p === 'templates' || faq;   // both are full-width pages outside the five steps
     if (!lib) lastStep = p;
     document.body.classList.toggle('mode-library', lib);
-    $('tabLibrary').setAttribute('aria-selected', String(lib));
+    $('tabLibrary').setAttribute('aria-selected', String(p === 'templates'));
+    $('tabFaq').setAttribute('aria-selected', String(faq));
     $('tabSop').setAttribute('aria-selected', String(!lib));
     const i = STEPS.findIndex(x => x[0] === p);
     gates.forEach(g => {
@@ -1807,7 +1907,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     }
     $('stepMsg').textContent = '';
     $('sbBar').style.width = (i > -1 ? (i + 1) / STEPS.length * 100 : 100) + '%';
-    $('sbProg').textContent = i > -1 ? 'Step ' + (i + 1) + ' of ' + STEPS.length : 'Library';
+    $('sbProg').textContent = i > -1 ? 'Step ' + (i + 1) + ' of ' + STEPS.length : (faq ? 'FAQ' : 'Library');
     closeDrawer();
     const w = document.querySelector('.work'); if (w) w.scrollTop = 0;
   }
@@ -1819,6 +1919,10 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   gates.forEach(g => g.onclick = () => goGate(g.dataset.p));
   $('tabLibrary').onclick = () => goGate('templates');
   $('tabSop').onclick = () => goGate(lastStep);
+  $('tabFaq').onclick = () => goGate('faq');
+  const openVersions = () => { goGate('faq'); const v = $('faqVersions'); if (v) v.scrollIntoView({ block: 'start' }); };
+  $('vTag').onclick = openVersions;
+  $('vTag').onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openVersions(); } };
   // Sidebar: collapses to icons on desktop and tablet, slides in as a drawer on a phone.
   const mqPhone = window.matchMedia('(max-width:760px)');
   function closeDrawer() { document.body.classList.remove('sb-open'); }
@@ -2350,7 +2454,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         preparedBy: { name: $('fPrepared').value.trim(), date: formatDate($('fPreparedD').value) },
         reviewedBy: { name: $('fReviewed').value.trim(), date: formatDate($('fReviewedD').value) },
         approvedBy: { name: $('fApproved').value.trim(), date: formatDate($('fApprovedD').value) },
-        scheduledReview: { name: '', date: '' }
+        scheduledReview: { name: $('fSched').value.trim(), date: formatDate($('fSchedD').value) }
       },
       signoff: signoffState(),
       sla: $('fSla').value.trim(), naming: $('fNaming').value.trim(), escalation: $('fEscalation').value.trim()
@@ -2844,6 +2948,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     ['preparedBy', 'reviewedBy', 'approvedBy'].forEach(k => {
       if (cd.approvals[k].name) c.approvals[k] = cd.approvals[k];
     });
+    if (cd.approvals.scheduledReview.name || cd.approvals.scheduledReview.date) c.approvals.scheduledReview = cd.approvals.scheduledReview;
     c._signoff = cd.signoff;   // which sign-off people carry through to the document
     if (state.logo) c.clientLogo = state.logo;
     c._detail = state.detail;
@@ -2920,7 +3025,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         (so.preparedBy === false ? '' : dc('Prepared by', 'Procore Implementation Manager', (a.preparedBy || {}).name, (a.preparedBy || {}).date)) +
         (so.reviewedBy === false ? '' : dc('Reviewed by', 'Customer process owner', (a.reviewedBy || {}).name, (a.reviewedBy || {}).date)) +
         (so.approvedBy === false ? '' : dc('Approved by', 'Customer project sponsor', (a.approvedBy || {}).name, (a.approvedBy || {}).date)) +
-        dc('Scheduled review', 'Customer Success Engineer review', (a.scheduledReview || {}).name, (a.scheduledReview || {}).date) +
+        (so.scheduledReview === false ? '' : dc('Scheduled review', 'Customer Success Engineer review', (a.scheduledReview || {}).name, (a.scheduledReview || {}).date)) +
       '</tbody></table></div>';
     return pageEl(c, body, 1, total);
   }
@@ -3290,7 +3395,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
   // document is now written to this browser alongside the template library, restored on request,
   // and a leave warning fires while there is unsaved work.
   const CLIENT_FIELDS = ['fCustomer','fDocId','fVersion','fStatus','fOwner','fEffective','fAppliesTo',
-    'fPrepared','fPreparedD','fReviewed','fReviewedD','fApproved','fApprovedD',
+    'fPrepared','fPreparedD','fReviewed','fReviewedD','fApproved','fApprovedD','fSched','fSchedD',
     'fSla','fNaming','fEscalation'];
   const DRAFT_KEY = 'sop-draft';
   let draftDirty = false, draftTimer = null;
@@ -4316,7 +4421,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
 
   // Sign-off people: all included unless unticked. An unticked person is left off the cover's
   // document-control table (and their signature line, where they have one).
-  const SIGN = { preparedBy: 'fPrepared', reviewedBy: 'fReviewed', approvedBy: 'fApproved' };
+  const SIGN = { preparedBy: 'fPrepared', reviewedBy: 'fReviewed', approvedBy: 'fApproved', scheduledReview: 'fSched' };
   function signoffState() { const o = {}; Object.keys(SIGN).forEach(k => { o[k] = $(SIGN[k] + 'On').checked; }); return o; }
   function syncSignoff() {
     Object.keys(SIGN).forEach(k => {

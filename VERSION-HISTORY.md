@@ -39,6 +39,7 @@ circulation; no technical knowledge assumed.
 | 3.24 | 23 Nov 2026 | Customer example on the Details step now reads C.R.E.A.M PTY LTD |
 | 3.25 | 23 Nov 2026 | **Locked, sharper PDF** — pages drawn by the browser at three times the resolution, so text is no longer garbled; form fields removed |
 | 3.26 | 23 Nov 2026 | Usage counts on the Vercel copy: page views, and a count of PDF and Word downloads by Procore tool (no client details) |
+| 3.27 | 25 Nov 2026 | **Scheduled review, FAQ and version history** — Scheduled review is editable and can be left off; FAQ tab with common errors and fixes; every version listed inside the Studio |
 
 ---
 
@@ -565,6 +566,20 @@ the Studio's own chrome only, on Brendan McGurk's instruction.
 - **Confetti** when a finished SOP is downloaded.
 
 Known gap: the command-line renderer (`scripts/render.js`) does not read `_signoff`, so it still prints all sign-off people.
+
+---
+
+## 3.24 to 3.26 — PDF and usage counts
+
+- **3.24** The customer example on the Details step reads C.R.E.A.M PTY LTD.
+- **3.25 Locked, sharper PDF.** The PDF was drawn by a capture library that misplaced letters and spaces. Pages are now drawn by the browser itself at three times the resolution. The fillable form fields are removed, so the PDF cannot be typed into or edited.
+- **3.26 Usage counts.** The copy hosted on Vercel counts page views, and counts PDF and Word downloads by Procore tool. No client details are sent.
+
+## 3.27 — Scheduled review, FAQ and version history
+
+- **Scheduled review is editable.** The Scheduled review row on the cover's document-control table had no field behind it and always printed as pending. It now sits under Sign-off people on the Details step with a reviewer, a date and an Include tickbox. Untick it and the row is left off the PDF and the Word file.
+- **FAQ tab.** A third tab lists the common errors, what each one is and how to fix it. The first entry covers the word "cite" appearing in a rendered SOP: tell the Gemini Gem "no cites" and load the new JSON.
+- **Version history inside the Studio.** The FAQ tab lists every version with its date and what changed. Click the version badge to open it. The list is a copy of the table at the top of this file: add a row in both places when the version changes.
 
 ---
 

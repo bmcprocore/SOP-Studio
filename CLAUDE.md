@@ -34,6 +34,7 @@ assembly and template maintenance — **never redesign the document**.
   was removed. The skill now assembles content only.)
 - `imports/bmc-design-systems-apac/` — the BMC APAC Procore design system (tokens, components, locked SOP template). **Local only and git-ignored (520 MB).** It is the brand authority for the Studio UI and the SOP document: callouts, tabs, buttons, dialogs and status chips follow its `components/`. Paper stays A4 by Brendan McGurk's instruction even though its SOP template is Letter.
 - **Studio chrome (v3.22):** dark shell with a glass sidebar and orange glow, by Brendan McGurk's instruction (12 Nov 2026). This is a deliberate exception to the design system's "no glassmorphism, no glow" rule and applies to the app chrome only, never to the SOP document.
+- **In-app FAQ and version history (v3.27):** the FAQ tab (`#p-faq`) holds the common-error list and a copy of the table at the top of `VERSION-HISTORY.md`. On every version bump add the row in both places.
 - `app/SOP_Studio_v0.1.html` — the Claude-artifact app version (reference implementation).
 - `scripts/render.js` — headless render: content JSON → final standalone SOP HTML (and PDF).
 - `scripts/split-by-role.js` — master library + persona → permission-scoped content JSON.
@@ -95,7 +96,7 @@ steps[]{_id,title,role,system,time,body,bullets[],callout{label,body}},
 closeoutIntro, owner, checklist[]{_id,text,hint,owner}, issues[]{_id,code,issue,resolution},
 references[]{tool,url}, _detail("simple"|"standard"|"extended")`.
 Inline markup allowed in body copy: `<code> <strong> <em>` only. Person fields: `"Name · Role"`.
-Optional `_signoff{preparedBy,reviewedBy,approvedBy}` (booleans, set by the Studio): `false` leaves that person off the cover and their signature line. The Studio honours it; `scripts/render.js` does not yet.
+Optional `_signoff{preparedBy,reviewedBy,approvedBy,scheduledReview}` (booleans, set by the Studio): `false` leaves that person off the cover and their signature line (Scheduled review has a cover row only). The Studio honours it; `scripts/render.js` does not yet.
 Detail levels: simple = 1–2 sentence bodies, no bullets/callouts, no issues table, steps
 flow-packed; standard = as template, one step per page; extended = expanded bullets +
 common-mistake callouts, one step per page.

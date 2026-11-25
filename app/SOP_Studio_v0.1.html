@@ -686,7 +686,7 @@
   <button type="button" class="menubtn" id="btnMenu" aria-label="Open menu" aria-controls="rail">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
-  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" id="vTag" role="button" tabindex="0" title="Studio version. Click for the version history.">v3.27</span>
+  <div class="brand"><span class="hexmark"></span> <span class="bname">Procore SOP Studio</span> <span class="vtag" id="vTag" role="button" tabindex="0" title="Studio version. Click for the version history.">v3.28</span>
     <small id="docLabel">· no document started</small>
     <span class="draftchip" id="draftChip">Draft</span>
     <span class="savedchip" id="savedChip"></span>
@@ -776,6 +776,7 @@
         <table>
           <thead><tr><th>Version</th><th>Date</th><th>What changed</th></tr></thead>
           <tbody>
+            <tr><td class="vv">3.28</td><td class="vd">25 Nov 2026</td><td><strong>Automatic renumbering</strong> — outline labels (S1, C1, E1) and common-issue reference codes renumber when a row is removed, moved, added or unticked</td></tr>
             <tr><td class="vv">3.27</td><td class="vd">25 Nov 2026</td><td><strong>Scheduled review, FAQ and version history</strong> — Scheduled review is editable and can be left off; FAQ tab with common errors and fixes; every version listed inside the Studio</td></tr>
             <tr><td class="vv">3.26</td><td class="vd">23 Nov 2026</td><td>Usage counts on the Vercel copy: page views, and a count of PDF and Word downloads by Procore tool (no client details)</td></tr>
             <tr><td class="vv">3.25</td><td class="vd">23 Nov 2026</td><td><strong>Locked, sharper PDF</strong> — pages drawn by the browser at three times the resolution, so text is no longer garbled; form fields removed</td></tr>
@@ -2502,7 +2503,14 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
     const st = findStep(s.id);
     const n = st ? ((Array.isArray(st.images) && st.images.length) || (st.image ? 1 : 0)) : 0;
     return '<button class="ord" data-img="' + esc(s.id || '') + '" title="Upload an image for this step (appears after the step in the PDF)" ' +
-      'aria-label="Add image to ' + esc(s.id || '') + '"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>' + (n ? ' ' + n : '') + '</button>';
+      'aria-label="Add image to ' + esc(seqOf(s)) + '"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>' + (n ? ' ' + n : '') + '</button>';
+  }
+  // The label shown beside a row (S1, C2, E3) is its position in its group, so removing or moving a
+  // row renumbers the rest. The stored _id never changes: it stays the join key.
+  function seqOf(row) {
+    if (!row) return '';
+    const letter = row.type === 'step' ? 'S' : row.type === 'check' ? 'C' : 'E';
+    return letter + (state.summary.filter(x => x.type === row.type).indexOf(row) + 1);
   }
   function renderOutline() {
     const el = $('outlinePanel');
@@ -2531,11 +2539,11 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
           '<span class="ocontrols">' +
           '<span class="ogrip" aria-hidden="true">⠿</span>' +
           '<input type="checkbox" id="cbo' + i + '" data-oi="' + i + '"' + (s.included ? ' checked' : '') +
-          ' aria-label="Include ' + esc(s.id || '') + '">' +
-          moveButtons(i, esc(s.id || '')) + '</span>' +
-          '<label class="otitle" for="cbo' + i + '"><span class="oid">' + esc(s.id || '') + '</span> ' + title + '</label>' +
+          ' aria-label="Include ' + esc(seqOf(s)) + '">' +
+          moveButtons(i, esc(seqOf(s))) + '</span>' +
+          '<label class="otitle" for="cbo' + i + '"><span class="oid">' + esc(seqOf(s)) + '</span> ' + title + '</label>' +
           '<span class="rowbtns">' + (s.type === 'step' ? imageButton(s) : '') +
-          '<button class="ord del" data-del="' + i + '" aria-label="Remove ' + esc(s.id || '') + '" title="Remove">×</button></span>' +
+          '<button class="ord del" data-del="' + i + '" aria-label="Remove ' + esc(seqOf(s)) + '" title="Remove">×</button></span>' +
           '</div>';
       });
       html += '</div>';
@@ -2657,7 +2665,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       ? '<div class="askbox"><h4>' + asks.length + ' item' + (asks.length === 1 ? '' : 's') + ' need a decision</h4>' +
         'These depend on how this client has configured Procore, so the rule cannot decide them. ' +
         'Tick one below only if you have confirmed it applies.<ul style="margin:8px 0 0;padding-left:18px;">' +
-        asks.map(a => '<li>' + esc(a.id) + ' · ' + esc(a.title) + '</li>').join('') + '</ul></div>'
+        asks.map(a => '<li>' + esc(seqOf(a)) + ' · ' + esc(a.title) + '</li>').join('') + '</ul></div>'
       : '';
     const anyOpen = REV_GROUPS.some(g => !state.collapsed[g.type]);
     let html = '<div class="rev-allrow">' +
@@ -2686,7 +2694,7 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
         // Read-only: this column explains, the outline decides. One place to act, one to understand.
         html += '<div class="' + cls + '" data-i="' + i + '">' +
           '<span class="statedot" aria-hidden="true"></span>' +
-          '<div class="blk2-main"><div class="t">' + esc(s.id || '') + ' · ' + title +
+          '<div class="blk2-main"><div class="t">' + esc(seqOf(s)) + ' · ' + title +
             (s.override ? '<span class="ovr">Override</span>' : '') + '</div>' +
           '<div class="rule">' + (s.reason || '') +
             (s.override ? ' <strong style="color:var(--danger)">Included anyway by a human decision.</strong>' : '') +
@@ -2893,7 +2901,8 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       row = { id, title: checkBlock.text, type: 'check', status: 'include', reason: 'Checklist item (added)', included: true };
     } else {
       id = nextId(s.issues, 'E');
-      var issueBlock = { _id: id, code: 'REF-00', issue: 'Describe the problem the user might hit', resolution: 'Describe how to resolve it' };
+      var seed = ((s.issues || []).map(x => String(x.code || '')).find(x => /\d+$/.test(x)) || 'REF-00').replace(/\d+$/, '');
+      var issueBlock = { _id: id, code: seed + '00', issue: 'Describe the problem the user might hit', resolution: 'Describe how to resolve it' };
       (s.issues = s.issues || []).push(issueBlock);
       row = { id, title: issueBlock.issue, type: 'issue', status: 'include', reason: 'Common issue (added)', included: true };
     }
@@ -2924,6 +2933,12 @@ window.SOP_DESIGN.css += "\n  .step-figure{margin:8px 0 2px;max-width:100%;}\n  
       return out;
     };
     c.steps = orderBy(c.steps, 'step'); c.checklist = orderBy(c.checklist, 'check'); c.issues = orderBy(c.issues, 'issue');
+    // Reference codes that end in a number (RFI-03) follow the row's place in the table, so removing,
+    // unticking or moving an issue leaves no gap. A code with no number at the end is left as typed.
+    if (useFilter) c.issues.forEach((it, i) => {
+      const m = String(it.code || '').match(/^(.*?)(\d+)$/);
+      if (m) it.code = m[1] + String(i + 1).padStart(Math.max(2, m[2].length), '0');
+    });
     // audit trail: who approved this inclusion list, and the permission profile it was approved against
     if (state.confirmed) {
       c._confirmedBy = state.confirmed.by;

@@ -40,6 +40,7 @@ circulation; no technical knowledge assumed.
 | 3.25 | 23 Nov 2026 | **Locked, sharper PDF** — pages drawn by the browser at three times the resolution, so text is no longer garbled; form fields removed |
 | 3.26 | 23 Nov 2026 | Usage counts on the Vercel copy: page views, and a count of PDF and Word downloads by Procore tool (no client details) |
 | 3.27 | 25 Nov 2026 | **Scheduled review, FAQ and version history** — Scheduled review is editable and can be left off; FAQ tab with common errors and fixes; every version listed inside the Studio |
+| 3.28 | 25 Nov 2026 | **Automatic renumbering** — outline labels (S1, C1, E1) and common-issue reference codes renumber when a row is removed, moved, added or unticked |
 
 ---
 
@@ -582,6 +583,12 @@ Known gap: the command-line renderer (`scripts/render.js`) does not read `_signo
 - **Version history inside the Studio.** The FAQ tab lists every version with its date and what changed. Click the version badge to open it. The list is a copy of the table at the top of this file: add a row in both places when the version changes.
 
 ---
+
+## 3.28 — Automatic renumbering
+
+- The labels beside each row in the review outline (S1, C1, E1) now show the row position in its group. Removing E2 turns E3 into E2. The stored block id is unchanged.
+- Common-issue reference codes that end in a number (RFI-03) are renumbered in table order in the PDF, Word and preview. Removing, unticking or moving an issue leaves no gap. A code with no number at the end is left as typed.
+- A newly added issue takes the same prefix as the existing ones.
 
 ## Still outstanding
 
